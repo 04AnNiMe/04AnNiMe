@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 6
-  lastUpdatedAtString: 2020-06-19T21:47:30.426+02:00
+  lastUpdatedAtString: 2020-06-19T21:50:26.898+02:00
   initializedAtString: 2020-06-19T21:47:09.083+02:00
   entries:
   - path: .DS_Store
@@ -22,51 +22,21 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: testprojekt2/Assets/Animation.meta
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Assets/Animation.meta
-    projectPath: Assets/Animation.meta
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: testprojekt2/Assets/Clips.meta
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Assets/Clips.meta
-    projectPath: Assets/Clips.meta
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: testprojekt2/Assets/Prefabs.meta
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Assets/Prefabs.meta
-    projectPath: Assets/Prefabs.meta
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: testprojekt2/Assets/Sounds.meta
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Assets/Sounds.meta
-    projectPath: Assets/Sounds.meta
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 5
-  - path: testprojekt2/Library/ArtifactDB
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/ArtifactDB
-    projectPath: Library/ArtifactDB
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: testprojekt2/Library/ArtifactDB-lock
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/ArtifactDB-lock
-    projectPath: Library/ArtifactDB-lock
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: testprojekt2/Library/EditorInstance.json
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/EditorInstance.json
-    projectPath: Library/EditorInstance.json
+  - path: testprojekt2/Library/gfu/cache/branches.yaml
+    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/gfu/cache/branches.yaml
+    projectPath: Library/gfu/cache/branches.yaml
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
   - path: testprojekt2/Library/gfu/cache/gitlocks.yaml
     fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/gfu/cache/gitlocks.yaml
     projectPath: Library/gfu/cache/gitlocks.yaml
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: testprojekt2/Library/gfu/cache/gitlog.yaml
+    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/gfu/cache/gitlog.yaml
+    projectPath: Library/gfu/cache/gitlog.yaml
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
@@ -82,27 +52,9 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
-  - path: testprojekt2/Library/gfu/cache/repoinfo.yaml
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/gfu/cache/repoinfo.yaml
-    projectPath: Library/gfu/cache/repoinfo.yaml
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
   - path: testprojekt2/Library/SourceAssetDB
     fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/SourceAssetDB
     projectPath: Library/SourceAssetDB
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: testprojekt2/Library/SourceAssetDB-lock
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Library/SourceAssetDB-lock
-    projectPath: Library/SourceAssetDB-lock
-    originalPath: 
-    indexStatus: 0
-    workTreeStatus: 3
-  - path: testprojekt2/Temp/UnityLockfile
-    fullPath: /Users/andrej_mac/Documents/GitHub/GDV2020/04AnNiMe/testprojekt2/Temp/UnityLockfile
-    projectPath: Temp/UnityLockfile
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
