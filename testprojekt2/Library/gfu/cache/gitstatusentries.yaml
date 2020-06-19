@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cacheType: 6
-  lastUpdatedAtString: 2020-06-19T21:18:18.289+02:00
+  lastUpdatedAtString: 2020-06-19T21:18:45.817+02:00
   initializedAtString: 2020-06-19T17:33:20.996+02:00
   entries:
   - path: testprojekt2/Library/gfu/cache/branches.yaml
@@ -23,10 +23,24 @@ MonoBehaviour:
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
+  - path: testprojekt2/Library/gfu/cache/gitstatusentries.yaml
+    fullPath: /Users/andrej_mac/OneDrive - informatik.hs-fulda.de/HS-Fulda/4. Semester/Graphische
+      Datenverarbeitung (GDV)/04AnNiMe/testprojekt2/Library/gfu/cache/gitstatusentries.yaml
+    projectPath: Library/gfu/cache/gitstatusentries.yaml
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
   - path: testprojekt2/Library/gfu/cache/gittrackingstatus.yaml
     fullPath: /Users/andrej_mac/OneDrive - informatik.hs-fulda.de/HS-Fulda/4. Semester/Graphische
       Datenverarbeitung (GDV)/04AnNiMe/testprojekt2/Library/gfu/cache/gittrackingstatus.yaml
     projectPath: Library/gfu/cache/gittrackingstatus.yaml
+    originalPath: 
+    indexStatus: 0
+    workTreeStatus: 3
+  - path: testprojekt2/Library/SourceAssetDB
+    fullPath: /Users/andrej_mac/OneDrive - informatik.hs-fulda.de/HS-Fulda/4. Semester/Graphische
+      Datenverarbeitung (GDV)/04AnNiMe/testprojekt2/Library/SourceAssetDB
+    projectPath: Library/SourceAssetDB
     originalPath: 
     indexStatus: 0
     workTreeStatus: 3
