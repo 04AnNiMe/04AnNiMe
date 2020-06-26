@@ -11,7 +11,7 @@ public class characterMovement : MonoBehaviour
         public float forwardVel = 12;
         public float rotateVel = 100;
         public float JumpVel = 25;
-        public float distToGrounded = 0.1f;         //vielleicht auf .5 .8 setzen
+        public float distToGrounded = 0.1f;         //vielleicht auf .5 .8 setzen  // bei dem Cube auf 1.2
         public LayerMask ground;
     }
 
@@ -27,17 +27,17 @@ public class characterMovement : MonoBehaviour
         public float inputDelay = 0.1f;     //für einen kleinen Delay beim Drücken einer Taste
         public string FORWARD_AXIS = "Vertical";
         public string TURN_AXIS = "Horizontal";
-        public string JUMP_AXIS = "Jump";                       //bei 7:20
+        public string JUMP_AXIS = "Jump";                       
     }
 
     public MoveSettings moveSetting = new MoveSettings();
-    public PhysSettings physSettings = new PhysSettings();
-    public InputSettings inputSettings = new InputSettings();
+    public PhysSettings physSetting = new PhysSettings();
+    public InputSettings inputSetting = new InputSettings();
 
     Vector3 velocity = Vector3.zero;
     Quaternion targetRotation;
     Rigidbody rBody;
-    float forwardInput, turnInput;      //normale werte sind dann 1 und 0
+    float forwardInput, turnInput, jumpInput;      //normale werte sind dann 1 und 0
 
     public Quaternion TargetRotation    
     {
@@ -59,15 +59,15 @@ public class characterMovement : MonoBehaviour
             Debug.LogError("The charactor needs a rigidbody!!");    //Falls kein Rigidbody vorhanden ist
         }
 
-        forwardInput = turnInput = 0;                               //erste initialisierung der Variablen
+        forwardInput = turnInput = jumpInput = 0;                               //erste initialisierung der Variablen
 
     }
 
     void GetInput()
     {
-        forwardInput = Input.GetAxis("Vertical");
-        turnInput = Input.GetAxis("Horizontal");
-
+        forwardInput = Input.GetAxis(inputSetting.FORWARD_AXIS);     //interpolated
+        turnInput = Input.GetAxis(inputSetting.TURN_AXIS);          //interpolated
+        jumpInput = Input.GetAxisRaw(inputSetting.JUMP_AXIS);       //non-interpolated
     }
 
     // Update is called once per frame
@@ -81,27 +81,50 @@ public class characterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Run();
+        Jump();
+
+        rBody.velocity = transform.TransformDirection(velocity);
+        //rBody.velocity = velocity;
     }
 
     void Run()
     {
-        if (Mathf.Abs(forwardInput) > inputDelay)
+        if (Mathf.Abs(forwardInput) > inputSetting.inputDelay)
         {
             //move
-            rBody.velocity = transform.forward * forwardInput * forwardVel;     //forwardInput bestimmt ob vorwärts oder rückwärts gegangen wird
+            //rBoddy.velocity = transform.forward * forwardInput * moveSetting.forwardVel;
+            velocity.z = moveSetting.forwardVel * forwardInput;
         } else
         {
             //zero velocity
-            rBody.velocity = Vector3.zero;
+            //rBody.velocity = Vector3.zero;
+            velocity.z = 0;
         }
     }
 
     void Turn()
     {
-        if (Mathf.Abs(turnInput) > inputDelay)
+        if (Mathf.Abs(turnInput) > inputSetting.inputDelay)
         {
-            targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
+            targetRotation *= Quaternion.AngleAxis(moveSetting.rotateVel * turnInput * Time.deltaTime, Vector3.up);
         }
         transform.rotation = targetRotation;
+    }
+
+    void Jump()
+    {
+        if (jumpInput > 0 && Grounded())
+        {
+            //Jump
+            velocity.y = moveSetting.JumpVel;
+        } else if (jumpInput == 0 && Grounded())
+        {
+            //zero out our velocity.y
+            velocity.y = 0;
+        } else
+        {
+            //decrease velocity.y
+            velocity.y -= physSetting.downAccel;
+        }
     }
 }
