@@ -6,6 +6,7 @@ public class heart : MonoBehaviour
 {
     GameObject herz;
     Mesh herzMesh;
+    Rididbody rb;
    
     static Vector3 a, b, c, d;
     List<Vector3> herzVerticies;
@@ -37,6 +38,9 @@ public class heart : MonoBehaviour
         createherz(8, 4, 10);
         createherz(15, 4, 20);
         createherz(-30, 4, -10);
+
+        rb = herz.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
 
         // Lavaplatte:
         lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
