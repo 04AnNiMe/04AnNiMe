@@ -69,7 +69,6 @@ public class carott : MonoBehaviour
         gruen.transform.parent = empty.transform;
         karotte.transform.parent = empty.transform;
 
-
         empty.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
         empty.transform.Rotate(200, 0, 0);
 
