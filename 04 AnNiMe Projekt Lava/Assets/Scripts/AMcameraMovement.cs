@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraMovement : MonoBehaviour
+public class AMcameraMovement : MonoBehaviour
 {
     public Transform target;
     /*public float lookSmooth = 0.03f;
@@ -49,7 +49,7 @@ public class cameraMovement : MonoBehaviour
 
     Vector3 targetPos = Vector3.zero;
     Vector3 destination = Vector3.zero;
-    characterMovement charController;
+    AMcharacterMovement charController;
     float vOrbitInput, hOrbitInput, zoomInput, hOrbitSnapInput;
     //float rotateVel = 0;
 
@@ -70,9 +70,9 @@ public class cameraMovement : MonoBehaviour
 
         if (target != null)
         {
-            if (target.GetComponent<characterMovement>())
+            if (target.GetComponent<AMcharacterMovement>())
             {
-                charController = target.GetComponent<characterMovement>();
+                charController = target.GetComponent<AMcharacterMovement>();
             } else
             {
                 Debug.LogError("The camera's target needs a character controller");

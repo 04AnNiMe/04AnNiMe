@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class characterMovement : MonoBehaviour
+public class AMcharacterMovement : MonoBehaviour
 {
 
     [System.Serializable]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class gui_script : MonoBehaviour
+public class AMgui_script : MonoBehaviour
 {
     public GUIStyle style;
     public int collectedItems = 0;

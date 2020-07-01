@@ -631,6 +631,13 @@ MonoBehaviour:
     ORBIT_HORIZONTAL: OrbitHorizontal
     ORBIT_VERTICAL: OrbitVertical
     ZOOM: Mouse ScrollWheel
+  targetPos: {x: 0, y: 0, z: 0}
+  destination: {x: 0, y: 0, z: 0}
+  charController: {fileID: 0}
+  vOrbitInput: 0
+  hOrbitInput: 0
+  zoomInput: 0
+  hOrbitSnapInput: 0
 --- !u!1001 &988295660
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1373,7 +1380,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 54334e9f3f7b24f9d9c11864ba84183f, type: 2}
+  - {fileID: 2100000, guid: 825494863c6d742fb888f4bf50a13410, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
