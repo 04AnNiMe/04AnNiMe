@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hearts : MonoBehaviour
+public class NR_hearts : MonoBehaviour
 {
     GameObject herz;
     Mesh herzMesh;
