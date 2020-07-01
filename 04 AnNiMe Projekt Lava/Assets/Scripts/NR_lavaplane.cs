@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lavaplane : MonoBehaviour
+public class NR_lavaplane : MonoBehaviour
 {
 
     GameObject lava;
