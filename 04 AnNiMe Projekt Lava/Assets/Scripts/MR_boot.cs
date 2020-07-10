@@ -17,7 +17,7 @@ public class boot : MonoBehaviour
     List<int> faces;     
     List<Vector3> normals;   
     List<Vector2> uvs; 
-     List<Vector3> vertices2; 
+    List<Vector3> vertices2; 
     List<int> faces2;     
     List<Vector3> normals2;   
     List<Vector2> uvs2;      
@@ -69,8 +69,9 @@ public class boot : MonoBehaviour
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
 
-        // empty.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
-        // empty.transform.Rotate(200, 0, 0);
+        var bootCollider = GetComponent<Collider>();
+        bootCollider.isTrigger = false;
+        GetComponent<Collider>().attachedRigidbody.AddForce(0, 1, 0);
 
         mesh.vertices = vertices.ToArray();         
         mesh.normals = normals.ToArray();
@@ -81,6 +82,12 @@ public class boot : MonoBehaviour
         mesh2.triangles = faces2.ToArray();
         mesh2.uv = uvs2.ToArray();
     }
+
+    // void OnCollisionEnter(Collision collision)
+    // {
+    // }
+
+
 
     void createBoat()
     {
@@ -187,6 +194,6 @@ public class boot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // empty.transform.Rotate(0, 1, 0);
+        
     }
 }
