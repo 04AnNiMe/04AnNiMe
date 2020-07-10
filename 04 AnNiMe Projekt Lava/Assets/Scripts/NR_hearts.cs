@@ -95,7 +95,7 @@ public class NR_hearts : MonoBehaviour
 
     void createCube(Vector3 position)
     {
-        float hoehe = 2;
+        //float hoehe = 2;
         Vector3 a = new Vector3(1.0f, 1.0f, 0.0f) + position;
         Vector3 b = new Vector3(-1.0f, 1.0f, 0.0f) + position;
         Vector3 c = new Vector3(-1.0f, -1.0f, 0.0f) + position;
