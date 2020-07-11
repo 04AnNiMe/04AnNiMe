@@ -2,13 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class boot : MonoBehaviour
+public class MR_bootnew : MonoBehaviour
 {
     Mesh mesh;
     Mesh mesh2;
     GameObject boat;
     GameObject fahne;
     GameObject empty;
+
+    //Collisionen:
+    public Rigidbody rbBoot;
+    public MeshCollider bootCollider;
+    public Rigidbody rbCube;
+    public BoxCollider cubeCollider;
+    GameObject snakee; //steuerungsobjekt (test)
+    //
 
     public Texture texture;
     public Texture texture2;
@@ -25,7 +33,6 @@ public class boot : MonoBehaviour
     int z = 0;
     int y = 0;
     Vector3 normale;
-
 
     // Start is called before the first frame update
     void Start()
@@ -65,13 +72,9 @@ public class boot : MonoBehaviour
         createBoat();
         createFahne();
 
-        empty = new GameObject();
+        empty = new GameObject("Boot");
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
-
-        var bootCollider = GetComponent<Collider>();
-        bootCollider.isTrigger = false;
-        GetComponent<Collider>().attachedRigidbody.AddForce(0, 1, 0);
 
         mesh.vertices = vertices.ToArray();         
         mesh.normals = normals.ToArray();
@@ -81,13 +84,31 @@ public class boot : MonoBehaviour
         mesh2.normals = normals2.ToArray();
         mesh2.triangles = faces2.ToArray();
         mesh2.uv = uvs2.ToArray();
+
+        //Collisionen:
+        snakee = GameObject.CreatePrimitive(PrimitiveType.Cube); //testobjekt
+
+        bootCollider = empty.AddComponent<MeshCollider>();
+        rbBoot = empty.AddComponent<Rigidbody>();
+        rbBoot.isKinematic = true;
+
+        cubeCollider = snakee.AddComponent<BoxCollider>();
+        rbCube = snakee.AddComponent<Rigidbody>();
+        rbCube.isKinematic = true;
+        //
+
     }
 
-    // void OnCollisionEnter(Collision collision)
-    // {
-    // }
-
-
+    //Collisionen:
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "Cube")
+        {
+            Debug.Log(this.name+ "has a onTriggerEnter with: " +other.gameObject.name);
+            Destroy(other);
+        }
+    }
+    //
 
     void createBoat()
     {
@@ -194,6 +215,18 @@ public class boot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       snakee.transform.position += snakee.transform.localRotation * new Vector3(0.01f, 0, 0);
+        //Debug.Log(Time.time);
+
+        if(Input.GetKeyDown(KeyCode.A)) {
+           // Debug.Log("A was pressed");
+            snakee.transform.position += snakee.transform.localRotation * new Vector3(0.001f, 0, 0);
+            snakee.transform.rotation *= Quaternion.AngleAxis(-90, Vector3.up);
+        }
+
+        if(Input.GetKeyDown(KeyCode.D)) {
+           // Debug.Log("D was pressed");
+            snakee.transform.rotation *= Quaternion.AngleAxis(90, Vector3.up);
+        }
     }
 }
