@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NR_hearts : MonoBehaviour
+public class NR_Testscene : MonoBehaviour
 {
-    Camera mainCamera;
-    // Testspielfigur:
-    GameObject testfigur;
-    private float time = 0.0f; // Zeit von 0,5 immer wieder auf null setzen
-
-    // fürs Springen:
-    bool huepfen = false; 
-    bool runter = false;
-
-
+    // für Springen Testspielfigur:
+    public GameObject testspielfigur;
+   
 
     public GameObject herz;
     public Mesh herzMesh;
@@ -23,18 +16,19 @@ public class NR_hearts : MonoBehaviour
     public Rigidbody heartRigidbody;
    
     static Vector3 a, b, c, d;
-    public List<Vector3> herzVerticies;
-    public List<Vector3> herzNormals;
-    public List<GameObject> herzlist;
-    public List<int> herzFaces; 
+    List<Vector3> herzVerticies;
+    List<Vector3> herzNormals;
+    List<GameObject> herzlist;
+    List<int> herzFaces; 
+
     public List<Vector2> uv; 
 
     // über GUI zugewiesen:
     public Material rot;
     public Texture herzchen;
     
-    //Anzeige
-    //public GUIStyle style;
+    // Anzeige
+    public GUIStyle style;
     //public int collectedHearts = 0;
     //public int leben = 10;
     //public int score = 0;
@@ -52,26 +46,16 @@ public class NR_hearts : MonoBehaviour
     void Start()
     {
         // Testspielfigur:
-        testfigur = GameObject.CreatePrimitive(PrimitiveType.Cube); testfigur.name = "Spieler";
-        testfigur.transform.localScale = new Vector3(1, 1, 1);
+        testspielfigur = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-        // Kamera = Kind von testfigur
-        mainCamera = Camera.main;
-        mainCamera.enabled = true;
-        mainCamera.transform.position = new Vector3(0.0f, 1.0f, -5.0f);
-        mainCamera.transform.parent = testfigur.transform;
 
         herzlist = new List<GameObject>();
         //createherz(x, y(höhe), z);
-        createherz(0, 2, 0);
-        createherz(2, 2, 5);
-        createherz(8, 2, 10);
-        createherz(15, 2, 20);
-        createherz(-30, 2, -10);
-
-        // Herz Rigidbody hinzufügen:
-        heartRigidbody = herz.AddComponent<Rigidbody>();
-        heartRigidbody.isKinematic = true;
+        createherz(0, 10, 0);
+        createherz(2, 10, 5);
+        createherz(8, 10, 10);
+        createherz(15, 10, 20);
+        createherz(-30, 10, -10);
 
         // Lavaplatte:
         lava = new GameObject("Lava");
@@ -91,6 +75,10 @@ public class NR_hearts : MonoBehaviour
 
         // // Score:
         // score = GameObject.Find("Herz").GetComponent<GameObject>();
+
+        // Herz Rigidbody hinzufügen:
+        heartRigidbody = herz.AddComponent<Rigidbody>();
+        //heartRigidbody.isKinematic = true;
     }
 
 
@@ -177,93 +165,59 @@ public class NR_hearts : MonoBehaviour
 
         herz.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         herzlist.Add(herz);
-        //Debug.Log(herzlist.Count);
+        Debug.Log(herzlist.Count);
     }
 
-  
-    // void OnGui(){
-    //     GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedHearts, style);
-    //     GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
-    // }
+  /*
+    void OnGui(){
+        GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedHearts, style);
+        GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
+    }
     
-    // // Bei Berührung Triggern
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     // Bei Berührung eines Herzens soll dieses zerstört werden
-    //     if (other.gameObject.name == "Herz")
-    //     {
-    //         Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-    //         Destroy(other);
-    //         score.leben++;
-    //     }
+    // Bei Berührung Triggern
+    private void OnTriggerEnter(Collider other)
+    {
+        // Bei Berührung eines Herzens soll dieses zerstört werden
+        if (other.gameObject.name == "Herz")
+        {
+            Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
+            Destroy(other);
+            score.leben++;
+        }
 
-    //     // Bei Kollision mit der Lava: Leben--
-    //     if (other.gameObject.name == "Lava")
-    //     {
-    //         Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-    //         score.leben--;
-    //         score.collectedItems = 0;
-    //     }
+        // Bei Kollision mit der Lava: Leben--
+        if (other.gameObject.name == "Lava")
+        {
+            Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
+            score.leben--;
+            score.collectedItems = 0;
+        }
         
-    // }
-    
+    }
+    */
 
     // Update is called once per frame
     void Update()
     {
-        // Bewegung Testspielfigur:
-
-        testfigur.transform.position += testfigur.transform.localRotation * new Vector3(0.05f, 0, 0);        //Taste "a": Drehung der Orientierung um -90 Grad, nach links
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            testfigur.transform.rotation*=Quaternion.AngleAxis(-90.0f,Vector3.up);
-            Debug.Log("A key was pressed. Linksdrehung");
-        }
-
-        // Taste "d": Drehung der Orientierung um 90 Grad, nach rechts
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            testfigur.transform.rotation*=Quaternion.AngleAxis(90.0f,Vector3.up);
-            Debug.Log("D key was pressed. Rechtsdrehung");
-        }
-
-        // Taste "Space": Sprung nach oben
-         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            huepfen = true;  
-            Debug.Log("Space was pressed. Sprung");
-        }
-
-        if(Time.time >= time)
-        {            
-            time += 0.5f;
-
-            if (runter == true){
-                testfigur.transform.position += new Vector3(0.0f, -1.0f, 0.0f);     
-                runter = false;      
-            }
-
-            if (huepfen == true){
-                testfigur.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
-                huepfen = false;
-                runter = true;
-            }
-        }
-
-
         // for-Schleife für alle Herzen in der Liste
         for(int i = 0; i < herzlist.Count; i++ ){
-        herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
+            herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
 
-        //herzX = Random.Range(-20, 20);
-        //herzZ = Random.Range(-20, 20);
+        // herzX = Random.Range(-20, 20);
+        // herzZ = Random.Range(-20, 20);
         }
 
-        // if (leben == 0)
-        // {
-        //     Debug.Log("You failed...");
-        //     Scene thisScene = SceneManager.GetActiveScene();
-        //     SceneManager.LoadScene(thisScene.name);
-        // }
+
+
+        //Steuerung Testspielfigur:
+        testspielfigur.transform.position += testspielfigur.transform.localRotation * new Vector3(0.01f, 0, 0);
+        if(Input.GetKeyDown(KeyCode.A)) {
+            testspielfigur.transform.position += testspielfigur.transform.localRotation * new Vector3(0.001f, 0, 0);
+            testspielfigur.transform.rotation *= Quaternion.AngleAxis(-90, Vector3.up);
+        }
+        if(Input.GetKeyDown(KeyCode.D)) {
+            testspielfigur.transform.rotation *= Quaternion.AngleAxis(90, Vector3.up);
+        }
+
     }
 }
