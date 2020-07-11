@@ -30,15 +30,20 @@ public class MR_bootnew : MonoBehaviour
 
     //ColliderZeug:
     public Rigidbody rbBoot;
-    public MeshCollider bootCollider;
-    public Rigidbody rbCube;
-    public BoxCollider cubeCollider;
+    public BoxCollider bootCollider;
+        public Rigidbody rbCube;
+
     GameObject snakee; //steuerungsobjekt (test)
  
 
     // Start is called before the first frame update
     void Start()
     {
+        //Boden
+        GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        ground.transform.localScale = new Vector3(-10.0f*2,0.1f,10.0f*2);
+        ground.transform.Translate(-3,0,-3);
+
         //listen initialisieren
         vertices = new List<Vector3>();    
         faces = new List<int>();
@@ -93,12 +98,14 @@ public class MR_bootnew : MonoBehaviour
 
         //Collider-Zeug
         snakee = GameObject.CreatePrimitive(PrimitiveType.Cube); //testobjekt
+        snakee.name = "Cube";
+        snakee.transform.Translate(0,1,4);
 
-        bootCollider = empty.AddComponent<MeshCollider>();
+        bootCollider = empty.AddComponent<BoxCollider>();
         rbBoot = empty.AddComponent<Rigidbody>();
-        rbBoot.isKinematic = true;
+        rbBoot.isKinematic = false;
 
-        cubeCollider = snakee.AddComponent<BoxCollider>();
+       // cubeCollider = snakee.AddComponent<BoxCollider>();
         rbCube = snakee.AddComponent<Rigidbody>();
         rbCube.isKinematic = true;
 
