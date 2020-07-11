@@ -20,15 +20,16 @@ public class lavakugeln : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       int x = 0;
-       int time = 0;
+       float waittime = 2.0f;
        float speed = 0.1f;
+       float time = Time.deltaTime;
 
-        while(time >= x && time <= x+2)
+        while(time < waittime)
         {
             lavakugel.transform.position += Vector3.up * speed;
-            x++
         }
+
+
 
         
     }

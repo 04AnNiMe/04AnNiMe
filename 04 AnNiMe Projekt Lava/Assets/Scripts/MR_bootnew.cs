@@ -10,14 +10,6 @@ public class MR_bootnew : MonoBehaviour
     GameObject fahne;
     GameObject empty;
 
-    //Collisionen:
-    public Rigidbody rbBoot;
-    public MeshCollider bootCollider;
-    public Rigidbody rbCube;
-    public BoxCollider cubeCollider;
-    GameObject snakee; //steuerungsobjekt (test)
-    //
-
     public Texture texture;
     public Texture texture2;
 
@@ -30,13 +22,24 @@ public class MR_bootnew : MonoBehaviour
     List<Vector3> normals2;   
     List<Vector2> uvs2;      
     Vector3 a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x;  
+
     int z = 0;
     int y = 0;
+
     Vector3 normale;
+
+    //ColliderZeug:
+    public Rigidbody rbBoot;
+    public MeshCollider bootCollider;
+    public Rigidbody rbCube;
+    public BoxCollider cubeCollider;
+    GameObject snakee; //steuerungsobjekt (test)
+ 
 
     // Start is called before the first frame update
     void Start()
     {
+        //listen initialisieren
         vertices = new List<Vector3>();    
         faces = new List<int>();
         normals = new List<Vector3>();
@@ -46,25 +49,26 @@ public class MR_bootnew : MonoBehaviour
         normals2 = new List<Vector3>();
         uvs2 = new List<Vector2>();
 
+        //GameObject Boot
         boat = new GameObject("boat");  
-        fahne = new GameObject("fahne");  
- 
         boat.AddComponent<MeshFilter>();     
-        boat.AddComponent<MeshRenderer>();  
-
-        fahne.AddComponent<MeshFilter>();     
-        fahne.AddComponent<MeshRenderer>();  
-
+        boat.AddComponent<MeshRenderer>(); 
         mesh = new Mesh();  
-        mesh2 = new Mesh();                           
-                         
         boat.GetComponent<MeshFilter>().mesh = mesh; 
-        fahne.GetComponent<MeshFilter>().mesh = mesh2;  
 
+        //Renderer Boot
         Renderer rend = boat.GetComponent<Renderer>();   
         rend.material = new Material(Shader.Find("Diffuse"));
         rend.material.mainTexture = texture;
 
+        //GameObject Fahne
+        fahne = new GameObject("fahne");  
+        fahne.AddComponent<MeshFilter>();     
+        fahne.AddComponent<MeshRenderer>();  
+        mesh2 = new Mesh();                                      
+        fahne.GetComponent<MeshFilter>().mesh = mesh2;  
+
+        //Renderer Fahne
         Renderer rend2 = fahne.GetComponent<Renderer>();   
         rend2.material = new Material(Shader.Find("Diffuse"));
         rend2.material.mainTexture = texture2;
@@ -72,10 +76,12 @@ public class MR_bootnew : MonoBehaviour
         createBoat();
         createFahne();
 
+        //Beide unter ein empty legen
         empty = new GameObject("Boot");
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
 
+        //To-Array
         mesh.vertices = vertices.ToArray();         
         mesh.normals = normals.ToArray();
         mesh.triangles = faces.ToArray();
@@ -85,7 +91,7 @@ public class MR_bootnew : MonoBehaviour
         mesh2.triangles = faces2.ToArray();
         mesh2.uv = uvs2.ToArray();
 
-        //Collisionen:
+        //Collider-Zeug
         snakee = GameObject.CreatePrimitive(PrimitiveType.Cube); //testobjekt
 
         bootCollider = empty.AddComponent<MeshCollider>();
@@ -95,11 +101,9 @@ public class MR_bootnew : MonoBehaviour
         cubeCollider = snakee.AddComponent<BoxCollider>();
         rbCube = snakee.AddComponent<Rigidbody>();
         rbCube.isKinematic = true;
-        //
 
     }
-
-    //Collisionen:
+    //Was passiert bei einer Collision:
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Cube")
@@ -215,17 +219,15 @@ public class MR_bootnew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Steuerung:
        snakee.transform.position += snakee.transform.localRotation * new Vector3(0.01f, 0, 0);
-        //Debug.Log(Time.time);
 
         if(Input.GetKeyDown(KeyCode.A)) {
-           // Debug.Log("A was pressed");
             snakee.transform.position += snakee.transform.localRotation * new Vector3(0.001f, 0, 0);
             snakee.transform.rotation *= Quaternion.AngleAxis(-90, Vector3.up);
         }
 
         if(Input.GetKeyDown(KeyCode.D)) {
-           // Debug.Log("D was pressed");
             snakee.transform.rotation *= Quaternion.AngleAxis(90, Vector3.up);
         }
     }
