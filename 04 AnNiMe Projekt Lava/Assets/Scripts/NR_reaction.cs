@@ -42,19 +42,22 @@ public class NR_reaction : MonoBehaviour
         rend.material = new Material(Shader.Find("Diffuse"));
 
 
-        // // Collision hinzufügen mit sphere:
-        // herzCollider = sphere.AddComponent<MeshCollider>();
+        // Collision hinzufügen mit sphere:
+        herzCollider = sphere.AddComponent<MeshCollider>();
+
 
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.localScale = new Vector3(1,1,1); 
+        sphere.transform.position = new Vector3(1,0.5f,1); 
  
-        //20 Testobjekte erstellen
+        // Testobjekte erstellen
         createSphere(10);
+    
 
        
         // Text: Größe und Farbe verändern
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 24; 
+        style = new GUIStyle();
+        style.fontSize = 46; 
         style.normal.textColor = Color.red;
 
         // Score:
@@ -73,15 +76,6 @@ public class NR_reaction : MonoBehaviour
             sphereRigid = cloneObject.AddComponent<Rigidbody>();
         }
     }
-
-    void OnGui()
-    {
-        // GUIStyle style = new GUIStyle();
-        // style.fontSize = 24;
-        GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedItems, style);
-        GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
-    }    
-
 
     // Bei Berührung Triggern
     private void OnTriggerEnter(Collider other)
@@ -104,6 +98,13 @@ public class NR_reaction : MonoBehaviour
         
     }
 
+     //position von GUI:
+    void OnGui()
+    {
+        GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedItems, style);
+        GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
+    }   
+
     // Update is called once per frame
     void Update()
     {
@@ -125,11 +126,11 @@ public class NR_reaction : MonoBehaviour
 
     
 
-        // if (leben == 0)
-        // {
-        //     Debug.Log("You failed...");
-        //     Scene thisScene = SceneManager.GetActiveScene();
-        //     SceneManager.LoadScene(thisScene.name);
-        // }
+        if (leben == 0)
+        {
+            Debug.Log("You failed...");
+            Scene thisScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(thisScene.name);
+        }
     }
 }
