@@ -15,7 +15,6 @@ public class NR_hearts : MonoBehaviour
     bool runter = false;
 
 
-
     public GameObject herz;
     public Mesh herzMesh;
     private int herzX;
@@ -32,13 +31,7 @@ public class NR_hearts : MonoBehaviour
     // über GUI zugewiesen:
     public Material rot;
     public Texture herzchen;
-    
-    //Anzeige
-    //public GUIStyle style;
-    //public int collectedHearts = 0;
-    //public int leben = 10;
-    //public int score = 0;
-   
+      
     // Lavaplane:
     public GameObject lava;
 
@@ -83,14 +76,6 @@ public class NR_hearts : MonoBehaviour
         Renderer lavamaterial = lava.GetComponent<Renderer>();
         lavamaterial.material = new Material(Shader.Find("Diffuse"));
         lavamaterial.material.SetTexture("_MainTex", lavatextur);
-
-        // // Text: Größe und Farbe verändern
-        // style = new GUIStyle();
-        // style.fontSize = 24;
-        // style.normal.textColor = Color.red;
-
-        // // Score:
-        // score = GameObject.Find("Herz").GetComponent<GameObject>();
     }
 
 
@@ -181,39 +166,13 @@ public class NR_hearts : MonoBehaviour
     }
 
   
-    // void OnGui(){
-    //     GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedHearts, style);
-    //     GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
-    // }
-    
-    // // Bei Berührung Triggern
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     // Bei Berührung eines Herzens soll dieses zerstört werden
-    //     if (other.gameObject.name == "Herz")
-    //     {
-    //         Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-    //         Destroy(other);
-    //         score.leben++;
-    //     }
-
-    //     // Bei Kollision mit der Lava: Leben--
-    //     if (other.gameObject.name == "Lava")
-    //     {
-    //         Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-    //         score.leben--;
-    //         score.collectedItems = 0;
-    //     }
-        
-    // }
-    
-
     // Update is called once per frame
     void Update()
     {
         // Bewegung Testspielfigur:
 
-        testfigur.transform.position += testfigur.transform.localRotation * new Vector3(0.05f, 0, 0);        //Taste "a": Drehung der Orientierung um -90 Grad, nach links
+        testfigur.transform.position += testfigur.transform.localRotation * new Vector3(0.05f, 0, 0);        
+        //Taste "a": Drehung der Orientierung um -90 Grad, nach links
         if (Input.GetKeyDown(KeyCode.A))
         {
             testfigur.transform.rotation*=Quaternion.AngleAxis(-90.0f,Vector3.up);
@@ -259,11 +218,5 @@ public class NR_hearts : MonoBehaviour
         //herzZ = Random.Range(-20, 20);
         }
 
-        // if (leben == 0)
-        // {
-        //     Debug.Log("You failed...");
-        //     Scene thisScene = SceneManager.GetActiveScene();
-        //     SceneManager.LoadScene(thisScene.name);
-        // }
     }
 }
