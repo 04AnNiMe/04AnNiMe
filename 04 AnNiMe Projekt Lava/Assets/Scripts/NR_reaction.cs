@@ -13,15 +13,15 @@ public class NR_reaction : MonoBehaviour
     Rigidbody sphereRigid;
     private int sphereX;
     private int sphereZ;
-    public MeshCollider herzCollider;   //Herzcollider
+    public MeshCollider herzCollider;   // Herzcollider
 
 
     // Anzeige
     public GUIStyle style;
     public int collectedItems = 0;
     public int leben = 10;
-    //GameObject score = 0; ??
-
+   
+    NR_hearts score;
 
     // Start is called before the first frame update
     void Start()
@@ -42,14 +42,15 @@ public class NR_reaction : MonoBehaviour
         rend.material = new Material(Shader.Find("Diffuse"));
 
 
-        // Collision hinzufügen mit sphere:
-        herzCollider = sphere.AddComponent<MeshCollider>();
+
+        // // Collision hinzufügen mit sphere:
+        // herzCollider = sphere.AddComponent<MeshCollider>();
+
 
 
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.transform.localScale = new Vector3(1,1,1); 
         sphere.transform.position = new Vector3(1,0.5f,1); 
- 
         // Testobjekte erstellen
         createSphere(10);
     
@@ -61,7 +62,8 @@ public class NR_reaction : MonoBehaviour
         style.normal.textColor = Color.red;
 
         // Score:
-        //score = GameObject.Find("Herz").GetComponent<GameObject>();
+        score = GameObject.Find("Herz").GetComponent<NR_hearts>();
+        
     }
 
     void createSphere(int anzahl)
@@ -85,25 +87,19 @@ public class NR_reaction : MonoBehaviour
         {
             Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
             Destroy(other);
-            //score.leben++;
+            score.leben++;
         }
 
         // Bei Kollision mit der Kugel (Lava): Leben--
         if (other.gameObject.name == "Sphere")
         {
             Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-           // score.leben--;
-           // score.collectedItems = 0;
+            score.leben--;
+            score.collectedItems = 0;
         }
         
     }
 
-     //position von GUI:
-    void OnGui()
-    {
-        GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedItems, style);
-        GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
-    }   
 
     // Update is called once per frame
     void Update()
