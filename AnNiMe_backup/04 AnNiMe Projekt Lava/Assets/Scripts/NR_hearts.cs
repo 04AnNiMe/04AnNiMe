@@ -56,13 +56,14 @@ public class NR_hearts : MonoBehaviour
         // mainCamera.transform.parent = testfigur.transform;
 
         herzlist = new List<GameObject>();
+
+        // Position der Herzen hier zuweisen:
         //createherz(links/rechts, y(höhe), vorne/hinten);
         createherz(0, 4, 0);
         createherz(2, 4, 5);
         createherz(8, 4, 10);
         createherz(15, 4, 20);
         createherz(-30, 4, -10);
-    
 
         // Rigidbidy funktioniert nicht weil ich kein objekt angelegt hab
         // Herz Rigidbody hinzufügen:

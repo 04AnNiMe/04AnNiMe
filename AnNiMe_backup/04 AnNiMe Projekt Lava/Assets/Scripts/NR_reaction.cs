@@ -52,7 +52,9 @@ public class NR_reaction : MonoBehaviour
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         sphere.name = "Kugel";
         sphere.transform.localScale = new Vector3(1,1,1); 
-        sphere.transform.position = new Vector3(1,0.5f,1); 
+        sphere.transform.position = new Vector3(1,0.5f,1);
+        // für Collision hinzufügen mit sphere:
+        sphere.AddComponent<MeshCollider>(); 
 
         // Testobjekte erstellen
         createSphere(10);
