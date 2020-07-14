@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Code für Lavagrundplatte: 
 public class NR_lavaplane : MonoBehaviour
 {
 

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Code für Herzchen mit Testspielfigur:
 public class NR_hearts : MonoBehaviour
 {
-    Camera mainCamera;
+    //Camera mainCamera;
     // Testspielfigur:
     GameObject testfigur;
     private float time = 0.0f; // Zeit von 0,5 immer wieder auf null setzen
@@ -17,8 +18,9 @@ public class NR_hearts : MonoBehaviour
 
     public GameObject herz;
     public Mesh herzMesh;
-    private int herzX;
-    private int herzZ;
+    // falls sie doch noch Random gesetzt werden sollen:
+    // private int herzX;
+    // private int herzZ;
     public Rigidbody heartRigidbody;
    
     static Vector3 a, b, c, d;
@@ -40,7 +42,6 @@ public class NR_hearts : MonoBehaviour
 
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -48,23 +49,25 @@ public class NR_hearts : MonoBehaviour
         testfigur = GameObject.CreatePrimitive(PrimitiveType.Cube); testfigur.name = "Spieler";
         testfigur.transform.localScale = new Vector3(1, 1, 1);
 
-        // Kamera = Kind von testfigur
-        mainCamera = Camera.main;
-        mainCamera.enabled = true;
-        mainCamera.transform.position = new Vector3(0.0f, 1.0f, -5.0f);
-        mainCamera.transform.parent = testfigur.transform;
+        // // Kamera = Kind von Testfigur
+        // mainCamera = Camera.main;
+        // mainCamera.enabled = true;
+        // mainCamera.transform.position = new Vector3(0.0f, 1.0f, -5.0f);
+        // mainCamera.transform.parent = testfigur.transform;
 
         herzlist = new List<GameObject>();
-        //createherz(x, y(höhe), z);
-        createherz(0, 2, 0);
-        createherz(2, 2, 5);
-        createherz(8, 2, 10);
-        createherz(15, 2, 20);
-        createherz(-30, 2, -10);
+        //createherz(links/rechts, y(höhe), vorne/hinten);
+        createherz(0, 4, 0);
+        createherz(2, 4, 5);
+        createherz(8, 4, 10);
+        createherz(15, 4, 20);
+        createherz(-30, 4, -10);
+    
 
+        // Rigidbidy funktioniert nicht weil ich kein objekt angelegt hab
         // Herz Rigidbody hinzufügen:
-        heartRigidbody = herz.AddComponent<Rigidbody>();
-        heartRigidbody.isKinematic = true;
+        // heartRigidbody = herz.AddComponent<Rigidbody>();
+        // heartRigidbody.isKinematic = true;
 
         // Lavaplatte:
         lava = new GameObject("Lava");
@@ -162,7 +165,7 @@ public class NR_hearts : MonoBehaviour
 
         herz.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         herzlist.Add(herz);
-        //Debug.Log(herzlist.Count);
+        Debug.Log(herzlist.Count);
     }
 
   
@@ -171,7 +174,7 @@ public class NR_hearts : MonoBehaviour
     {
         // Bewegung Testspielfigur:
 
-        testfigur.transform.position += testfigur.transform.localRotation * new Vector3(0.05f, 0, 0);        
+        testfigur.transform.position += testfigur.transform.localRotation * new Vector3(0.01f, 0, 0);        
         //Taste "a": Drehung der Orientierung um -90 Grad, nach links
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -213,9 +216,6 @@ public class NR_hearts : MonoBehaviour
         // for-Schleife für alle Herzen in der Liste
         for(int i = 0; i < herzlist.Count; i++ ){
         herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
-
-        //herzX = Random.Range(-20, 20);
-        //herzZ = Random.Range(-20, 20);
         }
 
     }

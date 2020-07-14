@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Testcode Kollision- und Berührungsreaktionen
 public class NR_reaction : MonoBehaviour
 {  
     GameObject lava;
@@ -16,10 +17,6 @@ public class NR_reaction : MonoBehaviour
     public MeshCollider herzCollider;   // Herzcollider
 
 
-    // Anzeige
-    public GUIStyle style;
-    public int collectedItems = 0;
-    public int leben = 10;
     //GameObject score = 0; ??
 
 
@@ -28,14 +25,19 @@ public class NR_reaction : MonoBehaviour
     {
         // Lava:
         lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        lava.name = "Lava";
         lava.transform.localScale = new Vector3(10,1,10);
-        // Material:
+        lava.AddComponent<MeshCollider>();
+
+        // Material Lava:
         Renderer rendlava = lava.GetComponent<Renderer>();
         rendlava.material = new Material(Shader.Find("Diffuse"));
         
 
+
         // Testobjekt:
         testherz = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        testherz.name = "Spieler";
         testherz.transform.localScale = new Vector3(1,2,1);
         // Material:
         Renderer rend = testherz.GetComponent<Renderer>();
@@ -43,26 +45,22 @@ public class NR_reaction : MonoBehaviour
 
 
 
-        // // Collision hinzufügen mit sphere:
-        // herzCollider = sphere.AddComponent<MeshCollider>();
+        // Collision hinzufügen mit sphere:
+        //herzCollider = sphere.AddComponent<MeshCollider>();
 
-
-
+        // Testkugeln:
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.name = "Kugel";
         sphere.transform.localScale = new Vector3(1,1,1); 
         sphere.transform.position = new Vector3(1,0.5f,1); 
+
         // Testobjekte erstellen
         createSphere(10);
     
 
-       
-        // Text: Größe und Farbe verändern
-        style = new GUIStyle();
-        style.fontSize = 46; 
-        style.normal.textColor = Color.red;
 
         // Score:
-        //score = GameObject.Find("Herz").GetComponent<GameObject>();
+       // score = GameObject.Find("Herz").GetComponent<GameObject>();
     }
 
     void createSphere(int anzahl)
@@ -71,18 +69,21 @@ public class NR_reaction : MonoBehaviour
         {
             sphereX = Random.Range(-10, 10);
             sphereZ = Random.Range(-10, 10);
+
             //ein neues GameObject erstellen das eine Instanz von sphere ist
             GameObject cloneObject = Instantiate(sphere, new Vector3(sphereX, 5.0f, sphereZ), sphere.transform.rotation);
+
             // Rigidbody hinzufügen
             sphereRigid = cloneObject.AddComponent<Rigidbody>();
         }
     }
 
+
     // Bei Berührung Triggern
     private void OnTriggerEnter(Collider other)
     {
         // Bei Berührung eines Herzens soll dieses zerstört werden (Test: Herz hier Kugel)
-        if (other.gameObject.name == "Sphere")
+        if (other.gameObject.name == "Kugel")
         {
             Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
             Destroy(other);
@@ -90,21 +91,16 @@ public class NR_reaction : MonoBehaviour
         }
 
         // Bei Kollision mit der Kugel (Lava): Leben--
-        if (other.gameObject.name == "Sphere")
+        if (other.gameObject.name == "Lava")
         {
             Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-           // score.leben--;
+            //score.leben--;
            // score.collectedItems = 0;
         }
         
     }
 
-    // Position von GUI:
-    public void OnGui()
-    {
-        GUI.Label(new Rect(10, 0, 0, 0), "Collected Hearts:" + collectedItems, style);
-        GUI.Label(new Rect(10, 30, 0, 0), "Leben: " + leben, style);
-    }   
+
 
     // Update is called once per frame
     void Update()
@@ -126,12 +122,5 @@ public class NR_reaction : MonoBehaviour
         }
 
     
-
-        if (leben == 0)
-        {
-            Debug.Log("You failed...");
-            Scene thisScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(thisScene.name);
-        }
     }
 }
