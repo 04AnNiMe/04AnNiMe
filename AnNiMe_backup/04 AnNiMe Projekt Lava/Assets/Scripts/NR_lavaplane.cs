@@ -7,6 +7,7 @@ public class NR_lavaplane : MonoBehaviour
 {
 
     GameObject lava;
+    MeshCollider nlava;
 
     // über Gui zugewiesen:
     public Texture lavatextur;
@@ -17,8 +18,15 @@ public class NR_lavaplane : MonoBehaviour
     {
         // Lavaplatte:
         lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        lava.transform.position = new Vector3(-3.0f, 0.0f, -3.0f);
-        lava.transform.localScale += new Vector3(5.0f, 0.0f, 5.0f);
+        lava.name = "Lava";
+        lava.transform.position = new Vector3(175.0f, 3.0f, 175.0f);
+        lava.transform.localScale += new Vector3(35.0f, 1.0f, 35.0f);
+
+        nlava = lava.AddComponent<MeshCollider>();
+        nlava.sharedMesh = lava.GetComponent<MeshFilter>().mesh;
+        Destroy(lava.GetComponent<MeshCollider>());
+        nlava.convex = true;
+        nlava.isTrigger = true;
 
         // Material:
         Renderer lavaboden = lava.GetComponent<Renderer>();

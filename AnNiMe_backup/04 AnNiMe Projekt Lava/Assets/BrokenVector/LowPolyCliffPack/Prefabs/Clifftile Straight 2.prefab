@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 411954}
   - component: {fileID: 3349092}
   - component: {fileID: 2340874}
-  - component: {fileID: 6432540}
+  - component: {fileID: 5099514305734118249}
   m_Layer: 0
   m_Name: Clifftile Straight 2
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6432540
+--- !u!64 &5099514305734118249
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

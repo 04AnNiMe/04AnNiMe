@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 458554}
   - component: {fileID: 3348798}
   - component: {fileID: 2387624}
-  - component: {fileID: 6471330}
+  - component: {fileID: 2595742695193481909}
   m_Layer: 0
   m_Name: Clifftile Convex
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6471330
+--- !u!64 &2595742695193481909
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

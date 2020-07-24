@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 // Testcode Kollision- und Berührungsreaktionen
 public class NR_reaction : MonoBehaviour
 {  
-    GameObject lava;
+    //GameObject lava;
     GameObject testherz;
 
     // Testobjekterstellung:
@@ -23,17 +23,6 @@ public class NR_reaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Lava:
-        lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        lava.name = "Lava";
-        lava.transform.localScale = new Vector3(10,1,10);
-        lava.AddComponent<MeshCollider>();
-
-        // Material Lava:
-        Renderer rendlava = lava.GetComponent<Renderer>();
-        rendlava.material = new Material(Shader.Find("Diffuse"));
-        
-
 
         // Testobjekt:
         testherz = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -53,13 +42,12 @@ public class NR_reaction : MonoBehaviour
         sphere.name = "Kugel";
         sphere.transform.localScale = new Vector3(1,1,1); 
         sphere.transform.position = new Vector3(1,0.5f,1);
+        
         // für Collision hinzufügen mit sphere:
         sphere.AddComponent<MeshCollider>(); 
 
         // Testobjekte erstellen
         createSphere(10);
-    
-
 
         // Score:
        // score = GameObject.Find("Herz").GetComponent<GameObject>();
@@ -80,27 +68,6 @@ public class NR_reaction : MonoBehaviour
         }
     }
 
-
-    // Bei Berührung Triggern
-    private void OnTriggerEnter(Collider other)
-    {
-        // Bei Berührung eines Herzens soll dieses zerstört werden (Test: Herz hier Kugel)
-        if (other.gameObject.name == "Kugel")
-        {
-            Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-            Destroy(other);
-            //score.leben++;
-        }
-
-        // Bei Kollision mit der Kugel (Lava): Leben--
-        if (other.gameObject.name == "Lava")
-        {
-            Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-            //score.leben--;
-           // score.collectedItems = 0;
-        }
-        
-    }
 
 
 

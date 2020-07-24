@@ -62,7 +62,6 @@ GameObject:
   - component: {fileID: 7388711188983725300}
   - component: {fileID: 7388711188983725301}
   - component: {fileID: 7388711188983725303}
-  - component: {fileID: 7388711188983725302}
   m_Layer: 0
   m_Name: Grass_02(Clone)
   m_TagString: Untagged
@@ -131,17 +130,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &7388711188983725302
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7388711188983725296}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 638dc165572d2a84081d13ce1afb4d52, type: 3}

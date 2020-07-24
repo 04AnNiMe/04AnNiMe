@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 480606}
   - component: {fileID: 3302416}
   - component: {fileID: 2320378}
-  - component: {fileID: 6419714}
+  - component: {fileID: 2292548888391604506}
   m_Layer: 0
   m_Name: Clifftile Pass 1
   m_TagString: Untagged
@@ -80,7 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &6419714
+--- !u!64 &2292548888391604506
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

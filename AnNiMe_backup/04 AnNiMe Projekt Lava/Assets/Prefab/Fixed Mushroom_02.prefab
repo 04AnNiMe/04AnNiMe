@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 4144519439470796230}
   - component: {fileID: 4144519439470796231}
   - component: {fileID: 4144519439470796225}
-  - component: {fileID: 4144519439470796224}
+  - component: {fileID: 4598267343906947003}
   m_Layer: 0
   m_Name: Mushroom_02(Clone)
   m_TagString: Untagged
@@ -131,8 +131,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &4144519439470796224
-MeshCollider:
+--- !u!136 &4598267343906947003
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -141,7 +141,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 6c890c97a154a474082af84a379dffce, type: 3}
+  m_Radius: 0.08336443
+  m_Height: 0.24975109
+  m_Direction: 1
+  m_Center: {x: 0.0020095557, y: 0.0931983, z: 0.004820317}

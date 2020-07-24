@@ -4,99 +4,70 @@ using UnityEngine;
 
 public class AMcharacterMovement : MonoBehaviour
 {
+    public Animator animController;
+    public float forwardVel = 12;
+    public float rotateVel = 100;
+    public float JumpVel = 25;
+    public float distanceGround = 0.4f;
+    private float mouseRot;
+    private float mouseRotSmooth = 0.3f;
 
-    [System.Serializable]
-    public class MoveSettings
-    {
-        public float forwardVel = 12;
-        public float rotateVel = 100;
-        public float JumpVel = 25;
-        public float distToGrounded = 0.1f;         //vielleicht auf .5 .8 setzen  // bei dem Cube auf 1.2
-        public LayerMask ground;
-    }
+    public LayerMask ground;
+    public bool isGrounded = false;
 
-    [System.Serializable]
-    public class PhysSettings
-    {
-        public float downAccel = 0.75f;
-    }
-
-    [System.Serializable]
-    public class InputSettings
-    {
-        public float inputDelay = 0.1f;             //für einen kleinen Delay beim Drücken einer Taste
-        public string FORWARD_AXIS = "Vertical";
-        public string TURN_AXIS = "Horizontal";
-        public string JUMP_AXIS = "Jump";                       
-    }
-
-    //Settings erstellen um auf einzelne Elemente zugreifen zu können
-    public MoveSettings moveSetting = new MoveSettings();
-    public PhysSettings physSetting = new PhysSettings();
-    public InputSettings inputSetting = new InputSettings();
-
-    Vector3 velocity = Vector3.zero;                //Bewegung
-    Quaternion targetRotation;                      //Rotation
-    Rigidbody rBody;                                //Rigidbody
-    float forwardInput, turnInput, jumpInput;       //normale werte sind dann 1 und 0
-
-    //public Quaternion TargetRotation    
-    //{
-    //    get { return targetRotation; }
-    //}
-
-    //Abstand vom GameObject bis zum Boden
-    bool Grounded()
-    {
-        return Physics.Raycast(transform.position, Vector3.down, moveSetting.distToGrounded, moveSetting.ground);
-    }
+    public float downAccel = 1.5f;
     
+    public float inputDelay = 0.1f;                     //für einen kleinen Delay beim Drücken einer Taste
+        
+    Vector3 velocity = Vector3.zero;                    //Bewegung
+    public Quaternion targetRotation;                   //Rotation
+    Rigidbody rBody;                                    //Rigidbody
+    public float forwardInput = 0;
+    public float turnInput = 0;
+    public float jumpInput = 0;                         //normale werte sind dann 1 und 0
+
     // Start is called before the first frame update
     void Start()
     {
+        animController = GetComponent<Animator>();
         targetRotation = transform.rotation;
-        if (GetComponent<Rigidbody>()) {
+        if (GetComponent<Rigidbody>())
+        {
             rBody = GetComponent<Rigidbody>();
-        } else {
+        }
+        else
+        {
             Debug.LogError("The charactor needs a rigidbody!!");                //Falls kein Rigidbody vorhanden ist
         }
 
-        //erste initialisierung der Variablen
-        forwardInput = turnInput = jumpInput = 0;                               
-
+    }
+    //Abstand vom GameObject bis zum Boden
+    void Grounded()
+    {
+        if (!Physics.Raycast(transform.position, -Vector3.up, distanceGround + 0.1f))
+        {
+            isGrounded = false;
+        }
+        else
+        {
+            isGrounded = true;
+        }
     }
 
     void GetInput()
     {
         //Input festlegen
-        forwardInput = Input.GetAxis(inputSetting.FORWARD_AXIS);        //interpolated
-        turnInput = Input.GetAxis(inputSetting.TURN_AXIS);              //interpolated
-        jumpInput = Input.GetAxisRaw(inputSetting.JUMP_AXIS);           //non-interpolated
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        GetInput();
-        Turn();
-
-    }
-
-    private void FixedUpdate()
-    {
-        Run();
-        Jump();
-
-        rBody.velocity = transform.TransformDirection(velocity);
-        //rBody.velocity = velocity;
+        forwardInput = Input.GetAxis("Vertical");       //interpolated
+        turnInput = Input.GetAxis("Horizontal");        //interpolated
+        jumpInput = Input.GetAxisRaw("Jump");           //non-interpolated
     }
 
     void Run()
     {
-        if (Mathf.Abs(forwardInput) > inputSetting.inputDelay)
+        if (Mathf.Abs(forwardInput) > inputDelay)
         {
             //Bewegung des GameObjects
-            velocity.z = moveSetting.forwardVel * forwardInput;
+            velocity.z = forwardVel * forwardInput;
         } else
         {
             //Bewegung in Z-Achse = 0 wenn kein forwardInput
@@ -106,28 +77,83 @@ public class AMcharacterMovement : MonoBehaviour
 
     void Turn()
     {
-        if (Mathf.Abs(turnInput) > inputSetting.inputDelay)
+        if (Mathf.Abs(turnInput) > inputDelay)
         {
             //Drehung des GameObjects
-            targetRotation *= Quaternion.AngleAxis(moveSetting.rotateVel * turnInput * Time.deltaTime, Vector3.up);
+            targetRotation *= Quaternion.AngleAxis(rotateVel * turnInput * Time.deltaTime, Vector3.up);
         }
+
+        if (Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Debug.DrawLine(ray.origin, hit.point);
+                this.transform.LookAt(hit.point);
+                mouseRot = Input.mousePosition.x - Screen.width / 2;
+            }
+            targetRotation *= Quaternion.AngleAxis(mouseRot * mouseRotSmooth * Time.deltaTime, Vector3.up);
+
+        }
+
         transform.rotation = targetRotation;
     }
 
     void Jump()
     {
-        if (jumpInput > 0 && Grounded())
+        if (jumpInput > 0 && isGrounded)
         {
             //Wenn Grounded true dann Jump möglich
-            velocity.y = moveSetting.JumpVel;
-        } else if (jumpInput == 0 && Grounded())
+            velocity.y = JumpVel;
+        }
+        else if (jumpInput == 0 && isGrounded)
         {
             //Bewegung in Y-Achse = 0 wenn kein jumpInput
             velocity.y = 0;
-        } else
+        }
+        else
         {
             //Physic nach unten anwenden
-            velocity.y -= physSetting.downAccel;
+            velocity.y -= downAccel;
         }
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        GetInput();
+        Turn();
+
+        if (forwardInput != 0)
+        {
+            animController.SetInteger("Walking", 1);
+        } else
+        {
+            animController.SetInteger("Walking", 0);
+        }
+
+        if (jumpInput != 0)
+        {
+            animController.SetInteger("Walking", 2);
+        }
+        else if(forwardInput != 0)
+        {
+            animController.SetInteger("Walking", 1);
+        } else
+        {
+            animController.SetInteger("Walking", 0);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        Run();
+        Jump();
+        Grounded();
+
+        rBody.velocity = transform.TransformDirection(velocity);
     }
 }

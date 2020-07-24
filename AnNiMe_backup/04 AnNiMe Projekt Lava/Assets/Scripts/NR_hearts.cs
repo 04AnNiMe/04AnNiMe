@@ -6,22 +6,13 @@ using UnityEngine.SceneManagement;
 // Code für Herzchen mit Testspielfigur:
 public class NR_hearts : MonoBehaviour
 {
-    //Camera mainCamera;
-    // Testspielfigur:
-    GameObject testfigur;
-    private float time = 0.0f; // Zeit von 0,5 immer wieder auf null setzen
-
-    // fürs Springen:
-    bool huepfen = false; 
-    bool runter = false;
-
-
     public GameObject herz;
     public Mesh herzMesh;
+
+
     // falls sie doch noch Random gesetzt werden sollen:
     // private int herzX;
     // private int herzZ;
-    public Rigidbody heartRigidbody;
    
     static Vector3 a, b, c, d;
     public List<Vector3> herzVerticies;
@@ -33,53 +24,17 @@ public class NR_hearts : MonoBehaviour
     // über GUI zugewiesen:
     public Material rot;
     public Texture herzchen;
-      
-    // Lavaplane:
-    public GameObject lava;
-
-    // über Gui zugewiesen:
-    public Texture lavatextur;
-
-
 
     // Start is called before the first frame update
     void Start()
     {
-        // Testspielfigur:
-        testfigur = GameObject.CreatePrimitive(PrimitiveType.Cube); testfigur.name = "Spieler";
-        testfigur.transform.localScale = new Vector3(1, 1, 1);
-
-        // // Kamera = Kind von Testfigur
-        // mainCamera = Camera.main;
-        // mainCamera.enabled = true;
-        // mainCamera.transform.position = new Vector3(0.0f, 1.0f, -5.0f);
-        // mainCamera.transform.parent = testfigur.transform;
-
-        herzlist = new List<GameObject>();
+        herzlist = new List<GameObject>();     
 
         // Position der Herzen hier zuweisen:
         //createherz(links/rechts, y(höhe), vorne/hinten);
-        createherz(0, 4, 0);
-        createherz(2, 4, 5);
-        createherz(8, 4, 10);
-        createherz(15, 4, 20);
-        createherz(-30, 4, -10);
+        createherz(0, 5, 0);
+        createherz(12, 5, 70);
 
-        // Rigidbidy funktioniert nicht weil ich kein objekt angelegt hab
-        // Herz Rigidbody hinzufügen:
-        // heartRigidbody = herz.AddComponent<Rigidbody>();
-        // heartRigidbody.isKinematic = true;
-
-        // Lavaplatte:
-        lava = new GameObject("Lava");
-        lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        lava.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        lava.transform.localScale += new Vector3(5.0f, 0.0f, 5.0f);
-
-        // Material Lava:
-        Renderer lavamaterial = lava.GetComponent<Renderer>();
-        lavamaterial.material = new Material(Shader.Find("Diffuse"));
-        lavamaterial.material.SetTexture("_MainTex", lavatextur);
     }
 
 
@@ -164,59 +119,25 @@ public class NR_hearts : MonoBehaviour
         herzMesh.normals = herzNormals.ToArray();
         herzMesh.uv = uv.ToArray();
 
-        herz.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        herz.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        herz.transform.position = new Vector3(300, 0, 20);
+        
         herzlist.Add(herz);
         Debug.Log(herzlist.Count);
+        //herz.transform.Rotate(0, 0, -90);
     }
 
   
+
     // Update is called once per frame
     void Update()
     {
-        // Bewegung Testspielfigur:
-
-        testfigur.transform.position += testfigur.transform.localRotation * new Vector3(0.01f, 0, 0);        
-        //Taste "a": Drehung der Orientierung um -90 Grad, nach links
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            testfigur.transform.rotation*=Quaternion.AngleAxis(-90.0f,Vector3.up);
-            Debug.Log("A key was pressed. Linksdrehung");
-        }
-
-        // Taste "d": Drehung der Orientierung um 90 Grad, nach rechts
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            testfigur.transform.rotation*=Quaternion.AngleAxis(90.0f,Vector3.up);
-            Debug.Log("D key was pressed. Rechtsdrehung");
-        }
-
-        // Taste "Space": Sprung nach oben
-         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            huepfen = true;  
-            Debug.Log("Space was pressed. Sprung");
-        }
-
-        if(Time.time >= time)
-        {            
-            time += 0.5f;
-
-            if (runter == true){
-                testfigur.transform.position += new Vector3(0.0f, -1.0f, 0.0f);     
-                runter = false;      
-            }
-
-            if (huepfen == true){
-                testfigur.transform.position += new Vector3(0.0f, 1.0f, 0.0f);
-                huepfen = false;
-                runter = true;
-            }
-        }
-
 
         // for-Schleife für alle Herzen in der Liste
         for(int i = 0; i < herzlist.Count; i++ ){
-        herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
+            herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
+            //herzlist[i].transform.LookAt("RabbitWarrior01", new Vector3(0, 0, -10));
+
         }
 
     }

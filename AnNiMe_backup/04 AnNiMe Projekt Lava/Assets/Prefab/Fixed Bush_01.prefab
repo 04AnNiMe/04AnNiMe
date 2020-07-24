@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 870531922898662737}
   - component: {fileID: 870531922898662736}
   - component: {fileID: 870531922898662702}
-  - component: {fileID: 870531922898662703}
+  - component: {fileID: 3072091588062584748}
   m_Layer: 0
   m_Name: Bush_01(Clone)
   m_TagString: Untagged
@@ -131,8 +131,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &870531922898662703
-MeshCollider:
+--- !u!136 &3072091588062584748
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -141,7 +141,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: d8ea93d2d4757e444a5349f4bc849128, type: 3}
+  m_Radius: 0.41314238
+  m_Height: 1.1744714
+  m_Direction: 1
+  m_Center: {x: 0.028796762, y: 0.21669316, z: -0.042423368}

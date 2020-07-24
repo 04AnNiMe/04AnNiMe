@@ -5,52 +5,33 @@ using UnityEngine;
 public class AMcameraMovement : MonoBehaviour
 {
     public Transform target;
-    /*public float lookSmooth = 0.03f;
-    //public Vector3 offsetFromTarget = new Vector3(0, 6, -8);
-    public float xRotation;
-    public float yRotation;
-    //public float xTilt = 10;
-    */
-
-    [System.Serializable]
-    public class PositionSettings
-    {
-        public Vector3 targetPosOffset = new Vector3(0, 3.4f, 0);
-        public float lookSmooth = 100f;
-        public float distanceFromTarget = -8;
-        public float zoomSmooth = 100;
-        public float maxZoom = -2;
-        public float minZoom = -15;
-    }
-
-    [System.Serializable]
-    public class OrbitSettings
-    {
-        public float xRotation = -20;
-        public float yRotation = -180;
-        public float maxXRotation = 25;
-        public float minXRotation = -85;
-        public float vOrbitSmooth = 150;
-        public float hOrbitSmooth = 150;
-    }
-
-    [System.Serializable]
-    public class InputSettings
-    {
-        public string ORBIT_HORIZONTAL_SNAP = "OrbitHorizontalSnap";
-        public string ORBIT_HORIZONTAL = "OrbitHorizontal";             //Kann auch auf Mouse X umgestellt werden oder OrbitHorizontal
-        public string ORBIT_VERTICAL = "OrbitVertical";                 //Kann auch auf Mouse Y umgestellt werden oder OrbitVertical
-        public string ZOOM = "Mouse ScrollWheel";
-    }
-
-    public PositionSettings position = new PositionSettings();
-    public OrbitSettings orbit = new OrbitSettings();
-    public InputSettings input = new InputSettings();
+        
+    public Vector3 targetPosOffset = new Vector3(0, 3.4f, 0);
+    public float lookSmooth = 100f;
+    public float distanceFromTarget = -8;
+    public float zoomSmooth = 100;
+    public float maxZoom = -2;
+    public float minZoom = -15;
+    
+    public float xRotation = -20;
+    public float yRotation = -180;
+    public float maxXRotation = 25;
+    public float minXRotation = -85;
+    public float vOrbitSmooth = 150;
+    public float hOrbitSmooth = 150;
+    
+    private string ORBIT_HORIZONTAL_SNAP = "OrbitHorizontalSnap";
+    private string ORBIT_HORIZONTAL = "OrbitHorizontal";                        //Kann auch auf Mouse X umgestellt werden oder OrbitHorizontal
+    private string ORBIT_VERTICAL = "OrbitVertical";                          //Kann auch auf Mouse Y umgestellt werden oder OrbitVertical
+    private string ZOOM = "Mouse ScrollWheel";
 
     Vector3 targetPos = Vector3.zero;
     Vector3 destination = Vector3.zero;
     AMcharacterMovement charController;
-    float vOrbitInput, hOrbitInput, zoomInput, hOrbitSnapInput;
+    float vOrbitInput;
+    float hOrbitInput;
+    float zoomInput;
+    float hOrbitSnapInput;
     //float rotateVel = 0;
 
     // Start is called before the first frame update
@@ -58,8 +39,8 @@ public class AMcameraMovement : MonoBehaviour
     {
         SetCameraTarget(target);
 
-        targetPos = target.position + position.targetPosOffset;
-        destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation, 0) * -Vector3.forward * position.distanceFromTarget;
+        targetPos = target.position + targetPosOffset;
+        destination = Quaternion.Euler(xRotation, yRotation, 0) * -Vector3.forward * distanceFromTarget;
         destination += targetPos;
         transform.position = destination;
     }
@@ -85,10 +66,10 @@ public class AMcameraMovement : MonoBehaviour
 
     void GetInput()
     {
-        vOrbitInput = Input.GetAxisRaw(input.ORBIT_VERTICAL);
-        hOrbitInput = Input.GetAxisRaw(input.ORBIT_HORIZONTAL);
-        hOrbitSnapInput = Input.GetAxisRaw(input.ORBIT_HORIZONTAL_SNAP);
-        zoomInput = Input.GetAxisRaw(input.ZOOM);
+        vOrbitInput = Input.GetAxisRaw(ORBIT_VERTICAL);
+        hOrbitInput = Input.GetAxisRaw(ORBIT_HORIZONTAL);
+        hOrbitSnapInput = Input.GetAxisRaw(ORBIT_HORIZONTAL_SNAP);
+        zoomInput = Input.GetAxisRaw(ZOOM);
     }
 
     void Update()
@@ -109,9 +90,8 @@ public class AMcameraMovement : MonoBehaviour
 
     void MoveToTarget()
     {
-        targetPos = target.position + position.targetPosOffset;
-        destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation + target.eulerAngles.y, 0) * -Vector3.forward * position.distanceFromTarget;
-        //destination = charController.TargetRotation * offsetFromTarget;         //testen
+        targetPos = target.position + targetPosOffset;
+        destination = Quaternion.Euler(xRotation, yRotation + target.eulerAngles.y, 0) * -Vector3.forward * distanceFromTarget;
         destination += targetPos; 
         transform.position = destination;
     }
@@ -119,43 +99,41 @@ public class AMcameraMovement : MonoBehaviour
     void LookAtTarget()
     {
         Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, position.lookSmooth * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, lookSmooth * Time.deltaTime);
 
-        /*float eulerYAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target.eulerAngles.y, ref rotateVel, lookSmooth);
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, eulerYAngle, 0);*/
     }
 
     void OrbitTarget()
     {
         if( hOrbitSnapInput > 0)
         {
-            orbit.yRotation = -180;
+            yRotation = -180;
         }
 
-        orbit.xRotation += -vOrbitInput * orbit.vOrbitSmooth * Time.deltaTime;
-        orbit.yRotation += -hOrbitInput * orbit.hOrbitSmooth * Time.deltaTime;
+        xRotation += -vOrbitInput * vOrbitSmooth * Time.deltaTime;
+        yRotation += -hOrbitInput * hOrbitSmooth * Time.deltaTime;
 
-        if (orbit.xRotation > orbit.maxXRotation)
+        if (xRotation > maxXRotation)
         {
-            orbit.xRotation = orbit.maxXRotation;
+            xRotation = maxXRotation;
         }
-        if (orbit.xRotation < orbit.minXRotation)
+        if (xRotation < minXRotation)
         {
-            orbit.xRotation = orbit.minXRotation;
+            xRotation = minXRotation;
         }
     }
 
     void ZoomInOnTarget()
     {
-        position.distanceFromTarget += zoomInput * position.zoomSmooth * Time.deltaTime;
+        distanceFromTarget += zoomInput * zoomSmooth * Time.deltaTime;
 
-        if (position.distanceFromTarget > position.maxZoom)
+        if (distanceFromTarget > maxZoom)
         {
-            position.distanceFromTarget = position.maxZoom;
+            distanceFromTarget = maxZoom;
         }
-        if (position.distanceFromTarget < position.minZoom)
+        if (distanceFromTarget < minZoom)
         {
-            position.distanceFromTarget = position.minZoom;
+            distanceFromTarget = minZoom;
         }
     }
 }

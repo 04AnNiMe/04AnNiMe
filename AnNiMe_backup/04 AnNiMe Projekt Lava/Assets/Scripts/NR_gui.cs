@@ -14,16 +14,19 @@ public class NR_gui : MonoBehaviour
     void Start()
     {
         style = new GUIStyle();
-        style.fontSize = 40;
+        style.fontSize = 25;
         style.normal.textColor = Color.red;
     }
 
 
     public void OnGUI()
     {
-        GUI.Label(new Rect(10, 0, 0, 0), "Gesammelte Herzchen: " + collectedItems, style);
-        GUI.Label(new Rect(10, 40, 0, 0), "Gesammelte Karotten: " + collectedItems, style);
-        GUI.Label(new Rect(10, 80, 0, 0), "Leben: " + leben, style);
+        GUI.color = Color.red;
+        GUI.Label(new Rect(15, 0, 15, 0), "Carotts: " + collectedItems, style);
+        //Herzchen sind Leben++
+        GUI.Label(new Rect(15, 25, 15, 0), "Lives: " + leben, style);
+        GUI.Label(new Rect(555, 0, 15, 0), "Level: 1", style);
+
     }
 
     // Update is called once per frame
@@ -35,5 +38,6 @@ public class NR_gui : MonoBehaviour
             Scene thisScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(thisScene.name);
         }
+        
     }
 }

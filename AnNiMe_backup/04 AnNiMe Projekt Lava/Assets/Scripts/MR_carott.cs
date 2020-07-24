@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class carott : MonoBehaviour
+public class MR_carott : MonoBehaviour
 {
     Mesh mesh;
     Mesh mesh2;
@@ -65,12 +65,13 @@ public class carott : MonoBehaviour
         createCarott();
         createGreen();
 
-        empty = new GameObject();
+        empty = new GameObject("KarottenEmpty");
         gruen.transform.parent = empty.transform;
         karotte.transform.parent = empty.transform;
 
-        empty.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
+        empty.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
         empty.transform.Rotate(200, 0, 0);
+        empty.transform.position = new Vector3(322, 7, 18);
 
         mesh.vertices = vertices.ToArray();         
         mesh.normals = normals.ToArray();
@@ -80,6 +81,18 @@ public class carott : MonoBehaviour
         mesh2.normals = normals2.ToArray();
         mesh2.triangles = faces2.ToArray();
         mesh2.uv = uvs2.ToArray();
+
+        Quaternion rotation = Quaternion.Euler(200f, 0f, 0f);
+
+        Instantiate(empty, new Vector3(314, 7, 21), rotation );
+        Instantiate(empty, new Vector3(307, 8, 17), rotation );
+        Instantiate(empty, new Vector3(297, 9, 20), rotation );
+        Instantiate(empty, new Vector3(292, 10, 23), rotation );
+
+        MeshCollider mc = empty.AddComponent<MeshCollider>();
+        Rigidbody rb = empty.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        mc.sharedMesh = empty.GetComponent<MeshFilter>().mesh;
 
     }
 

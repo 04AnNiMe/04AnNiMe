@@ -8,7 +8,7 @@ public class MR_bootnew : MonoBehaviour
     Mesh mesh2;
     GameObject boat;
     GameObject fahne;
-    GameObject empty;
+    public GameObject empty;
 
     public Texture texture;
     public Texture texture2;
@@ -28,22 +28,13 @@ public class MR_bootnew : MonoBehaviour
 
     Vector3 normale;
 
-    //ColliderZeug:
-    public Rigidbody rbBoot;
-    public BoxCollider bootCollider;
-        public Rigidbody rbCube;
-
-    GameObject snakee; //steuerungsobjekt (test)
+    Rigidbody rb;
+    MeshCollider mc;
  
 
     // Start is called before the first frame update
     void Start()
     {
-        //Boden
-        GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        ground.transform.localScale = new Vector3(-10.0f*2,0.1f,10.0f*2);
-        ground.transform.Translate(-3,0,-3);
-
         //listen initialisieren
         vertices = new List<Vector3>();    
         faces = new List<int>();
@@ -82,9 +73,11 @@ public class MR_bootnew : MonoBehaviour
         createFahne();
 
         //Beide unter ein empty legen
-        empty = new GameObject("Boot");
+        empty = new GameObject("EmptyBoot");
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
+        empty.AddComponent<MeshFilter>();
+         // empty.AddComponent<MeshRenderer>();  
 
         //To-Array
         mesh.vertices = vertices.ToArray();         
@@ -96,30 +89,18 @@ public class MR_bootnew : MonoBehaviour
         mesh2.triangles = faces2.ToArray();
         mesh2.uv = uvs2.ToArray();
 
-        //Collider-Zeug
-        snakee = GameObject.CreatePrimitive(PrimitiveType.Cube); //testobjekt
-        snakee.name = "Cube";
-        snakee.transform.Translate(0,1,4);
+        //Collider
+        mc = empty.AddComponent<MeshCollider>();
+        rb = empty.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        //mc.sharedMesh = empty.GetComponent<MeshFilter>().mesh;
+        mc.convex = true;
+        mc.isTrigger = true;
 
-        bootCollider = empty.AddComponent<BoxCollider>();
-        rbBoot = empty.AddComponent<Rigidbody>();
-        rbBoot.isKinematic = false;
-
-       // cubeCollider = snakee.AddComponent<BoxCollider>();
-        rbCube = snakee.AddComponent<Rigidbody>();
-        rbCube.isKinematic = true;
+        empty.transform.position = new Vector3(250, 3, 24);
+        empty.transform.localScale = new Vector3(3,3,3);
 
     }
-    //Was passiert bei einer Collision:
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Cube")
-        {
-            Debug.Log(this.name+ "has a onTriggerEnter with: " +other.gameObject.name);
-            Destroy(other);
-        }
-    }
-    //
 
     void createBoat()
     {
@@ -226,16 +207,11 @@ public class MR_bootnew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Steuerung:
-       snakee.transform.position += snakee.transform.localRotation * new Vector3(0.01f, 0, 0);
-
-        if(Input.GetKeyDown(KeyCode.A)) {
-            snakee.transform.position += snakee.transform.localRotation * new Vector3(0.001f, 0, 0);
-            snakee.transform.rotation *= Quaternion.AngleAxis(-90, Vector3.up);
-        }
-
-        if(Input.GetKeyDown(KeyCode.D)) {
-            snakee.transform.rotation *= Quaternion.AngleAxis(90, Vector3.up);
-        }
+    
     }
 }
+
+
+// submesh 
+// windbewegung wind force 
+// weather System 
