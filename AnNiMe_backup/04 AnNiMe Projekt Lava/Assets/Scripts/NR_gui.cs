@@ -23,7 +23,7 @@ public class NR_gui : MonoBehaviour
     {
         GUI.color = Color.red;
         GUI.Label(new Rect(15, 0, 15, 0), "Carotts: " + collectedItems, style);
-        //Herzchen sind Leben++
+        // Herzchen sind Leben++
         GUI.Label(new Rect(15, 25, 15, 0), "Lives: " + leben, style);
         GUI.Label(new Rect(555, 0, 15, 0), "Level: 1", style);
 
@@ -32,12 +32,6 @@ public class NR_gui : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (leben == 0)
-        {
-            Debug.Log("Tot");
-            Scene thisScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(thisScene.name);
-        }
         
     }
 }

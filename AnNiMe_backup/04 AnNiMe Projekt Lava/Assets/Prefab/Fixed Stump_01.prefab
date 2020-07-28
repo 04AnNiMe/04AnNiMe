@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2356761145849624351}
   - component: {fileID: 2356761145849624320}
   - component: {fileID: 2356761145849624322}
-  - component: {fileID: 1212071357599678049}
+  - component: {fileID: 1296641841206892429}
   m_Layer: 0
   m_Name: Stump_01(Clone)
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2356761145849624323}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -80,8 +80,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &1212071357599678049
-CapsuleCollider:
+--- !u!65 &1296641841206892429
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,10 +90,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2960037
-  m_Height: 0.9738884
-  m_Direction: 1
-  m_Center: {x: -0.053463727, y: 0.15944576, z: 0.020933509}
+  serializedVersion: 2
+  m_Size: {x: 0.524704, y: 0.55252934, z: 0.5311279}
+  m_Center: {x: -0.0018539429, y: 0.27626467, z: -0.0009460449}
 --- !u!1 &2356761146261871672
 GameObject:
   m_ObjectHideFlags: 0

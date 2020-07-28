@@ -62,7 +62,6 @@ GameObject:
   - component: {fileID: 870531922898662737}
   - component: {fileID: 870531922898662736}
   - component: {fileID: 870531922898662702}
-  - component: {fileID: 3072091588062584748}
   m_Layer: 0
   m_Name: Bush_01(Clone)
   m_TagString: Untagged
@@ -100,7 +99,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870531922898662701}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -131,17 +130,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &3072091588062584748
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870531922898662701}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.41314238
-  m_Height: 1.1744714
-  m_Direction: 1
-  m_Center: {x: 0.028796762, y: 0.21669316, z: -0.042423368}

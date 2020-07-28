@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Code für Lavagrundplatte: 
 public class NR_lavaplane : MonoBehaviour
 {
 
     GameObject lava;
-    MeshCollider nlava;
+    BoxCollider nlava;
 
     // über Gui zugewiesen:
     public Texture lavatextur;
@@ -22,10 +23,11 @@ public class NR_lavaplane : MonoBehaviour
         lava.transform.position = new Vector3(175.0f, 3.0f, 175.0f);
         lava.transform.localScale += new Vector3(35.0f, 1.0f, 35.0f);
 
-        nlava = lava.AddComponent<MeshCollider>();
-        nlava.sharedMesh = lava.GetComponent<MeshFilter>().mesh;
+        nlava = lava.AddComponent<BoxCollider>();
+        //nlava.sharedMesh = lava.GetComponent<MeshFilter>().mesh;
         Destroy(lava.GetComponent<MeshCollider>());
-        nlava.convex = true;
+        nlava.size = new Vector3(10, 0.2f, 10);
+        //nlava.convex = true;
         nlava.isTrigger = true;
 
         // Material:

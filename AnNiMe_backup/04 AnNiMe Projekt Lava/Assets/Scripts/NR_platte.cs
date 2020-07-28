@@ -5,7 +5,7 @@ using UnityEngine;
 // Code für Plattform die hoch und runter geht:
 public class NR_platte : MonoBehaviour
 {
-    GameObject platte;
+    public GameObject platte;
     public Texture plattentextur;
     Mesh mesh;
     MeshCollider nPlattform;
@@ -18,8 +18,20 @@ public class NR_platte : MonoBehaviour
     Vector3 a, b, c, d, e, f, g, h; 
     Vector3 n;
 
+
+    public GameObject Player;
+
     int j = 0;
     private float time = 0.0f;
+    private float waitTime = 2.0f;
+    private bool move = true;
+    public float randDelta;
+
+    // (links/rechts, hoehe, vorne/hinten);
+    public float randX;
+    public float randY;
+    public float randZ;
+
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +72,15 @@ public class NR_platte : MonoBehaviour
         nPlattform = platte.AddComponent<MeshCollider>();
         nPlattform.convex = true;
         nPlattform.GetComponent<MeshFilter>().mesh = mesh;
+
+
+        // Verbinden mit Script:
+        platte.AddComponent<AM_charHolder>();
+
+        // Test Plattform    
+        randX = 8; 
+        randY = 18; 
+        randZ = 8;
     }
 
     // Plattformen:
@@ -67,14 +88,14 @@ public class NR_platte : MonoBehaviour
     {
         Vector3 position;
         // (Verschiebung nach links/rechts, hoehe, Verschiebung vorne/hinten);
-        position = new Vector3(30.0f, 8.8f, 10.0f);
+        position = new Vector3(26.0f, 8.2f, 10.0f);
         createPlatte(position);    
     }
 
     void createPlattformZwei()
     {
         Vector3 position;
-        position = new Vector3(24.0f, 2.5f, 31.4f);
+        position = new Vector3(24.0f, 2.0f, 8.0f);
         createPlatte(position);
     }
 
@@ -166,25 +187,40 @@ public class NR_platte : MonoBehaviour
     }
 
 
-    public int count = 0;
+    void floatingup()
+    {
+        platte.transform.position = Vector3.Lerp(platte.transform.position, new Vector3(0 + randX, 0 + randY, 0 + randZ), Time.deltaTime * randDelta);
+    }
+
+    void floatingdown()
+    {
+        platte.transform.position = Vector3.Lerp(platte.transform.position, new Vector3(0, 0, 0), Time.deltaTime * 0.5f);
+    }
+
+    
     // Update is called once per frame
     void Update()
     {
-      // Bewegung hoch und runter:  
-      if(Time.time >= time)
-        {           
-            if (count <= 15){
-                time += 0.4f;
-                platte.transform.position += platte.transform.localRotation * new Vector3(0.0f, 1.0f, 0.0f);
-                count ++;
+            // Bewegung hoch und runter:
+            time += Time.deltaTime;
 
-            } else {
-                time += 0.5f;
-                platte.transform.position += platte.transform.localRotation * new Vector3(0.0f, -16.0f, 0.0f);
-                count = 0;
-            }
-          
-        }   
+                if (time > waitTime && move == false)
+                {
+                    floatingdown();
+                    if (time > 5)
+                    {
+                        time = 0;
+                        move = true;
+                    }
+
+                } else {  
+                    floatingup();
+                    if (time > 2)
+                    {
+                        randDelta = Random.Range(0.5f, 1.0f);
+                        move = false;
+                    }
+                }
     }
     
 }

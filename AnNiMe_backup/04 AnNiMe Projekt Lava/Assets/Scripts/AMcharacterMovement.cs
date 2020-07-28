@@ -5,19 +5,19 @@ using UnityEngine;
 public class AMcharacterMovement : MonoBehaviour
 {
     public Animator animController;
-    public float forwardVel = 12;
+    public float forwardVel = 8;
     public float rotateVel = 100;
-    public float JumpVel = 25;
-    public float distanceGround = 0.4f;
+    public float JumpVel = 33;
+    public float distanceGround = 0.2f;
     private float mouseRot;
     private float mouseRotSmooth = 0.3f;
 
     public LayerMask ground;
     public bool isGrounded = false;
 
-    public float downAccel = 1.5f;
+    public float downAccel = 2.5f;
     
-    public float inputDelay = 0.1f;                     //für einen kleinen Delay beim Drücken einer Taste
+    public float inputDelay = 0.01f;                     //für einen kleinen Delay beim Drücken einer Taste
         
     Vector3 velocity = Vector3.zero;                    //Bewegung
     public Quaternion targetRotation;                   //Rotation

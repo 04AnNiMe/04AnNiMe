@@ -8,7 +8,9 @@ public class NR_hearts : MonoBehaviour
 {
     public GameObject herz;
     public Mesh herzMesh;
+    MeshCollider collHerz;
 
+    public GameObject character;
 
     // falls sie doch noch Random gesetzt werden sollen:
     // private int herzX;
@@ -28,13 +30,18 @@ public class NR_hearts : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        herzlist = new List<GameObject>();     
+        herzlist = new List<GameObject>();
+
+        character = GameObject.Find("RabbitWarrior01");
+        
 
         // Position der Herzen hier zuweisen:
         //createherz(links/rechts, y(höhe), vorne/hinten);
         createherz(0, 5, 0);
-        createherz(12, 5, 70);
-
+        createherz(0, 5, -21);
+        createherz(12, 5, 70); 
+        createherz(20, 5, 60); 
+        createherz(30, 5, 70); 
     }
 
 
@@ -75,7 +82,7 @@ public class NR_hearts : MonoBehaviour
         uv.Add(new Vector2(1.0f, 0.0f)); 
     }
 
-    // Position von Spieler hier hin und in Update lookat auf Spieler machen
+    // Position von Spieler gegebenfalls hier hin und in Update lookat auf Spieler machen
 
     void createCube(Vector3 position)
     {
@@ -91,11 +98,12 @@ public class NR_hearts : MonoBehaviour
     void createherz(float x, float y, float z)
     { 
         Vector3 position = new Vector3(x, y, z);
-        Debug.Log(position);
+        //Debug.Log(position);
         herz = new GameObject();
         herz.name = "Herz";     
         herz.AddComponent<MeshFilter>();
         herz.AddComponent<MeshRenderer>();
+        //herz.AddComponent<NR_Collisionen>();
 
         herzMesh = new Mesh();
         herzMesh.Clear();
@@ -121,10 +129,17 @@ public class NR_hearts : MonoBehaviour
 
         herz.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         herz.transform.position = new Vector3(300, 0, 20);
+        herz.transform.Rotate(0, -90, 0);
+        
+        // Collider:
+        collHerz = herz.AddComponent<MeshCollider>();
+        collHerz.sharedMesh = herz.GetComponent<MeshFilter>().mesh;
+        Destroy(herz.GetComponent<MeshCollider>());
+        collHerz.convex = true;
+        collHerz.isTrigger = true;
         
         herzlist.Add(herz);
-        Debug.Log(herzlist.Count);
-        //herz.transform.Rotate(0, 0, -90);
+        //Debug.Log(herzlist.Count);
     }
 
   
@@ -133,12 +148,12 @@ public class NR_hearts : MonoBehaviour
     void Update()
     {
 
-        // for-Schleife für alle Herzen in der Liste
-        for(int i = 0; i < herzlist.Count; i++ ){
-            herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
-            //herzlist[i].transform.LookAt("RabbitWarrior01", new Vector3(0, 0, -10));
+        // // for-Schleife für alle Herzen in der Liste
+        // for(int i = 0; i < herzlist.Count; i++ ){
+        //     herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
+        // }
 
-        }
+        transform.LookAt(character.transform.position);
 
     }
 }
