@@ -23,17 +23,6 @@ public class NR_reaction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // // Lava:
-        // lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        // lava.name = "Lava";
-        // lava.transform.localScale = new Vector3(10,1,10);
-        // lava.AddComponent<MeshCollider>();
-
-        // // Material Lava:
-        // Renderer rendlava = lava.GetComponent<Renderer>();
-        // rendlava.material = new Material(Shader.Find("Diffuse"));
-        
-
 
         // Testobjekt:
         testherz = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -53,13 +42,12 @@ public class NR_reaction : MonoBehaviour
         sphere.name = "Kugel";
         sphere.transform.localScale = new Vector3(1,1,1); 
         sphere.transform.position = new Vector3(1,0.5f,1);
+        
         // für Collision hinzufügen mit sphere:
         sphere.AddComponent<MeshCollider>(); 
 
         // Testobjekte erstellen
         createSphere(10);
-    
-
 
         // Score:
        // score = GameObject.Find("Herz").GetComponent<GameObject>();

@@ -12,7 +12,7 @@ public class AM_plattformen : MonoBehaviour
     GameObject Plattform5;
     BoxCollider colPlattform;
     BoxCollider colMovingChar;
-    AM_charHolder charHalter;
+   // AM_charHolder charHalter;
 
     private List<Vector3> vPlattform;
     private List<int> fPlattform;
@@ -40,17 +40,25 @@ public class AM_plattformen : MonoBehaviour
     private float timer = 0.0f;
     private float waitTime = 2.0f;
     private bool moving = true;
-    private float randDelta;
-    private float randY1;
-    private float randY2;
-    private float randY3;
-    private float randY4;
-    private float randY5;
-    private float randZ1;
-    private float randZ2;
-    private float randZ3;
-    private float randZ4;
-    private float randZ5;
+    public float randDelta;
+
+    public float randX1;
+    public float randX2;
+    public float randX3;
+    public float randX4;
+    public float randX5;
+
+    public float randY1;
+    public float randY2;
+    public float randY3;
+    public float randY4;
+    public float randY5;
+
+    public float randZ1;
+    public float randZ2;
+    public float randZ3;
+    public float randZ4;
+    public float randZ5;
 
     int z = 0;
 
@@ -74,29 +82,36 @@ public class AM_plattformen : MonoBehaviour
 
         goPlattform.GetComponent<MeshFilter>().mesh = mPlattform;
 
-        createPlattform(2, 1, 4);
+        createPlattform(2, 0.2f, 4);
         //322, 3, 18
 
-        Plattform2 = Instantiate(goPlattform, new Vector3(314, 3.8f, 21), goPlattform.transform.rotation);
+        Plattform2 = Instantiate(goPlattform, new Vector3(316, 3.8f, 21), goPlattform.transform.rotation);
         Plattform2.name = "Plattform2";
-        Plattform3 = Instantiate(goPlattform, new Vector3(307, 4.3f, 17), goPlattform.transform.rotation);
+        Plattform3 = Instantiate(goPlattform, new Vector3(308, 4.3f, 17), goPlattform.transform.rotation);
         Plattform3.name = "Plattform3";
-        Plattform4 = Instantiate(goPlattform, new Vector3(297, 5.8f, 20), goPlattform.transform.rotation);
+        Plattform4 = Instantiate(goPlattform, new Vector3(301, 5.8f, 20), goPlattform.transform.rotation);
         Plattform4.name = "Plattform4";
-        Plattform5 = Instantiate(goPlattform, new Vector3(292, 6.9f, 23), goPlattform.transform.rotation);
+        Plattform5 = Instantiate(goPlattform, new Vector3(295, 6.9f, 26), goPlattform.transform.rotation);
         Plattform5.name = "Plattform5";
 
         randDelta = Random.Range(0.4f, 0.9f);
-        randY1 = Random.Range(0.3f, 0.7f);
-        randY2 = Random.Range(0.3f, 0.7f);
-        randY3 = Random.Range(0.3f, 0.7f);
-        randY4 = Random.Range(0.3f, 0.7f);
-        randY5 = Random.Range(0.3f, 0.7f);
-        randZ1 = Random.Range(2.1f, 6.7f);
-        randZ2 = Random.Range(2.1f, 3.1f);
-        randZ3 = Random.Range(2.1f, 4.4f);
-        randZ4 = Random.Range(2.1f, 2.7f);
-        randZ5 = Random.Range(2.1f, 4f);
+        randX1 = 2;
+        randX2 = -6;
+        randX3 = 3;
+        randX4 = 6;
+        randX5 = -7;
+
+        randY1 = 3;
+        randY2 = 5;
+        randY3 = -1.2f;
+        randY4 = 4;
+        randY5 = 4;
+
+        randZ1 = -4;
+        randZ2 = -11.75f;
+        randZ3 = 15;
+        randZ4 = 4;
+        randZ5 = 4;
 
         
     }
@@ -180,7 +195,7 @@ public class AM_plattformen : MonoBehaviour
         goPlattform.transform.position = new Vector3(322, 3, 18);
         colPlattform.size = new Vector3(breite * 2, hoehe * 2, tiefe * 2);
         colMovingChar.size = new Vector3(breite * 2, hoehe / 2, tiefe * 2);
-        colMovingChar.center = new Vector3(0, 1.25f, 0);
+        colMovingChar.center = new Vector3(0, 0.5f, 0);
 
         goPlattform.AddComponent<AM_charHolder>();
     }
@@ -189,20 +204,20 @@ public class AM_plattformen : MonoBehaviour
 
     void floatingup()
     {
-        goPlattform.transform.position = Vector3.Lerp(goPlattform.transform.position, new Vector3(322, 3 + randY1, 18 + randZ1), Time.deltaTime * randDelta);
-        Plattform2.transform.position = Vector3.Lerp(Plattform2.transform.position, new Vector3(314, 3.8f + randY2, 21 + randZ2), Time.deltaTime * randDelta);
-        Plattform3.transform.position = Vector3.Lerp(Plattform3.transform.position, new Vector3(307, 4.3f + randY3, 17 + randZ3), Time.deltaTime * randDelta);
-        Plattform4.transform.position = Vector3.Lerp(Plattform4.transform.position, new Vector3(297, 4.4f + randY4, 20 + randZ4), Time.deltaTime * randDelta);
-        Plattform5.transform.position = Vector3.Lerp(Plattform5.transform.position, new Vector3(292, 4.8f + randY5, 23 + randZ5), Time.deltaTime * randDelta);
+        goPlattform.transform.position = Vector3.Lerp(goPlattform.transform.position, new Vector3(322 + randX1, 3 + randY1, 18 + randZ1), Time.deltaTime * randDelta);
+        Plattform2.transform.position = Vector3.Lerp(Plattform2.transform.position, new Vector3(316 + randX2, 3.8f + randY2, 21 + randZ2), Time.deltaTime * randDelta);
+        Plattform3.transform.position = Vector3.Lerp(Plattform3.transform.position, new Vector3(308 + randX3, 4.3f + randY3, 17 + randZ3), Time.deltaTime * randDelta);
+        Plattform4.transform.position = Vector3.Lerp(Plattform4.transform.position, new Vector3(301 + randX4, 4.4f + randY4, 20 + randZ4), Time.deltaTime * randDelta);
+        Plattform5.transform.position = Vector3.Lerp(Plattform5.transform.position, new Vector3(295 + randX5, 4.8f + randY5, 26 + randZ5), Time.deltaTime * randDelta);
     }
 
     void floatingdown()
     {
         goPlattform.transform.position = Vector3.Lerp(goPlattform.transform.position, new Vector3(322, 3, 18), Time.deltaTime * .7f);
-        Plattform2.transform.position = Vector3.Lerp(Plattform2.transform.position, new Vector3(314, 3.8f, 21), Time.deltaTime * .7f);
-        Plattform3.transform.position = Vector3.Lerp(Plattform3.transform.position, new Vector3(307, 4.3f, 17), Time.deltaTime * .7f);
-        Plattform4.transform.position = Vector3.Lerp(Plattform4.transform.position, new Vector3(297, 4.4f, 20), Time.deltaTime * .7f);
-        Plattform5.transform.position = Vector3.Lerp(Plattform5.transform.position, new Vector3(292, 4.8f, 23), Time.deltaTime * .7f);
+        Plattform2.transform.position = Vector3.Lerp(Plattform2.transform.position, new Vector3(316, 3.8f, 21), Time.deltaTime * .7f);
+        Plattform3.transform.position = Vector3.Lerp(Plattform3.transform.position, new Vector3(308, 4.3f, 17), Time.deltaTime * .7f);
+        Plattform4.transform.position = Vector3.Lerp(Plattform4.transform.position, new Vector3(301, 4.4f, 20), Time.deltaTime * .7f);
+        Plattform5.transform.position = Vector3.Lerp(Plattform5.transform.position, new Vector3(295, 4.8f, 26), Time.deltaTime * .7f);
     }
 
     // Update is called once per frame
@@ -227,17 +242,7 @@ public class AM_plattformen : MonoBehaviour
             if (timer > 5)
             {
                 randDelta = Random.Range(0.4f, 0.9f);
-                randY1 = Random.Range(1.4f, 5.7f);
-                randY2 = Random.Range(0.7f, 4.7f);
-                randY3 = Random.Range(1.3f, 6.7f);
-                randY4 = Random.Range(1.6f, 9.7f);
-                randY5 = Random.Range(1.9f, 7.7f);
-
-                randZ1 = Random.Range(-2.1f, 6.7f);
-                randZ2 = Random.Range(-2.1f, 3.1f);
-                randZ3 = Random.Range(-2.1f, 4.4f);
-                randZ4 = Random.Range(-2.1f, 2.7f);
-                randZ5 = Random.Range(-2.1f, 4f);
+               
                 moving = false;
             }
         }
