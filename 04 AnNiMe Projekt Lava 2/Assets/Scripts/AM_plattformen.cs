@@ -19,7 +19,7 @@ public class AM_plattformen : MonoBehaviour
     private List<Vector3> nPlattform;
     private List<Vector2> uvPlattform;
 
-    public Texture pTexture;
+    public Material MPlatte;
     public Vector3 position;
     private Vector3 norPlattform;
 
@@ -190,7 +190,7 @@ public class AM_plattformen : MonoBehaviour
 
         Renderer rendPlattform = goPlattform.GetComponent<Renderer>();
         rendPlattform.material = new Material(Shader.Find("Diffuse"));
-        rendPlattform.material.mainTexture = pTexture;
+        rendPlattform.material = MPlatte;
 
         goPlattform.transform.position = new Vector3(322, 3, 18);
         colPlattform.size = new Vector3(breite * 2, hoehe * 2, tiefe * 2);
