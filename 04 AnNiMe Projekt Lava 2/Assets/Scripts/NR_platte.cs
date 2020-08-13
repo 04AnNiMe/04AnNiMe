@@ -70,7 +70,7 @@ public class NR_platte : MonoBehaviour
         mesh.uv = uvs.ToArray();
 
         nPlattform = platte.AddComponent<MeshCollider>();
-        nPlattform.convex = true;
+        //nPlattform.convex = true;
         nPlattform.GetComponent<MeshFilter>().mesh = mesh;
 
 
@@ -87,7 +87,7 @@ public class NR_platte : MonoBehaviour
     void createPlattformEins()
     {
         Vector3 position;
-        // (Verschiebung nach links/rechts, hoehe, Verschiebung vorne/hinten);
+        // (Verschiebung nach vorne/hinten, hoehe, Verschiebung links/rechts);
         position = new Vector3(26.0f, 8.2f, 10.0f);
         createPlatte(position);    
     }
@@ -102,7 +102,7 @@ public class NR_platte : MonoBehaviour
     void createPlattformDrei()
     {
         Vector3 position;
-        position = new Vector3(17.5f, 2.5f, 34.5f);
+        position = new Vector3(45.5f, 0.3f, 23.5f);
         createPlatteQuer(position);  
     }
 
@@ -178,11 +178,11 @@ public class NR_platte : MonoBehaviour
         uvs.Add(new Vector2(1, 1)); 
 
         faces.Add(j);
-        faces.Add(j + 2);
-        faces.Add(j + 1);
-        faces.Add(j + 2);
-        faces.Add(j + 0);
-        faces.Add(j + 3);
+        faces.Add(2 + j);
+        faces.Add(1 + j);
+        faces.Add(2 + j);
+        faces.Add(0 + j);
+        faces.Add(3 + j);
         j += 4;   
     }
 

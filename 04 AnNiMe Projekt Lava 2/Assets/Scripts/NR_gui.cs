@@ -11,6 +11,8 @@ public class NR_gui : MonoBehaviour
     public int collectedItems = 0;
     public int leben = 5;
 
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,21 +29,32 @@ public class NR_gui : MonoBehaviour
     public void OnGUI()
     {
         GUI.color = Color.red;
+
+        // Button:
+        // GUILayout.Button("Press to Start");
+   
+        // GUI.Button(new Rect(260, 200, 0, 0), "Press to Start");
+        // Debug.Log("Clicked the button start");
+
+
+        // Text:
         GUI.Label(new Rect(15, 0, 15, 0), "Carotts: " + collectedItems, style);
         // Herzchen sind Leben++
         GUI.Label(new Rect(15, 25, 15, 0), "Lives: " + leben, style);
-        GUI.Label(new Rect(555, 0, 15, 0), "Level: 1", style);
+        GUI.Label(new Rect(810, 0, 15, 0), "Level: 1", style);
+
+
+        if (leben == 0)
+                {
+                    GUI.Label(new Rect(260, 200, 0, 0), "Try again!", styleA);
+                    Debug.Log("Unfortunately died!");
+                }
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if (leben = 0)
-        // {
-        //    // GUI.Label(new Rect(150, 120, 0, 0), "Versuch es nocheinmal!", styleA);
-        //     Debug.Log("Leider gestorben!");
-        // }
         
     }
 }

@@ -36,12 +36,23 @@ public class NR_hearts : MonoBehaviour
         
 
         // Position der Herzen hier zuweisen:
-        //createherz(links/rechts, y(höhe), vorne/hinten);
-        createherz(0, 5, 0);
+        // links/rechts, y(höhe), vorne/hinten von Spielstart
+
+        // beim Start zum testen:
         createherz(0, 5, -21);
-        createherz(12, 5, 70); 
-        createherz(20, 5, 60); 
-        createherz(30, 5, 70); 
+
+        // bei den AM_Plattformen:
+        createherz(0, 5, 0);
+
+        // bei dem Boot:
+        createherz(5, 3, 65); 
+
+        // bei der kleinen Insel:
+        createherz(2, 6, 100); 
+
+        // beim kleinen Hügel:
+        createherz(6, 6, 150); 
+        
     }
 
 
@@ -147,7 +158,6 @@ public class NR_hearts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // // for-Schleife für alle Herzen in der Liste
         // for(int i = 0; i < herzlist.Count; i++ ){
         //     herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
