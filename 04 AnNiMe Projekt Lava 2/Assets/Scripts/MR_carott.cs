@@ -10,6 +10,9 @@ public class MR_carott : MonoBehaviour
     GameObject gruen;
     GameObject empty;
 
+    MeshCollider mc;
+    CapsuleCollider cc;
+
     public Texture texture;
     public Texture texture2;
 
@@ -17,7 +20,7 @@ public class MR_carott : MonoBehaviour
     List<int> faces;     
     List<Vector3> normals;   
     List<Vector2> uvs; 
-     List<Vector3> vertices2; 
+    List<Vector3> vertices2; 
     List<int> faces2;     
     List<Vector3> normals2;   
     List<Vector2> uvs2;      
@@ -39,64 +42,42 @@ public class MR_carott : MonoBehaviour
         normals2 = new List<Vector3>();
         uvs2 = new List<Vector2>();
 
-        karotte = new GameObject("carott");  
-        gruen = new GameObject("grün");  
- 
-        karotte.AddComponent<MeshFilter>();     
-        karotte.AddComponent<MeshRenderer>();  
+        //Stage1 start und höhle
+        createCarott(331, 6, 16);
+        createCarott(281, 10, 28);
+        createCarott(266, 10, 27);
+        createCarott(259, 10, 26);
 
-        gruen.AddComponent<MeshFilter>();     
-        gruen.AddComponent<MeshRenderer>();  
+        //Stage2 erste Insel incl zusatzinsel
+        createCarott(166, 7, 25);
+        createCarott(205, 7, 58);
+        createCarott(211, 7, 61);
+        createCarott(158, 7, 26);
+        createCarott(141, 7, 25);
+        createCarott(135, 9, 36);
 
-        mesh = new Mesh();  
-        mesh2 = new Mesh();                           
-                         
-        karotte.GetComponent<MeshFilter>().mesh = mesh; 
-        gruen.GetComponent<MeshFilter>().mesh = mesh2;  
+        //Stage3 oben
+        createCarott(127, 20, 54);
+        createCarott(112, 19, 56);
+        createCarott(101, 16, 56);
 
-        Renderer rend = karotte.GetComponent<Renderer>();   
-        rend.material = new Material(Shader.Find("Diffuse"));
-        rend.material.mainTexture = texture;
+        //Stage4 insel kurve
+        createCarott(96, 7, 30);
+        createCarott(84, 7, 29);
+        createCarott(60, 7, 34);
+        createCarott(51, 7, 49);
+        createCarott(53, 7, 74);
+        createCarott(51, 7, 95);
+        createCarott(59, 7, 119);
+        createCarott(67, 7, 138);
 
-        Renderer rend2 = gruen.GetComponent<Renderer>();   
-        rend2.material = new Material(Shader.Find("Diffuse"));
-        rend2.material.mainTexture = texture2;
-
-        createCarott();
-        createGreen();
-
-        empty = new GameObject("KarottenEmpty");
-        gruen.transform.parent = empty.transform;
-        karotte.transform.parent = empty.transform;
-
-        empty.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
-        empty.transform.Rotate(200, 0, 0);
-        empty.transform.position = new Vector3(322, 7, 18);
-
-        mesh.vertices = vertices.ToArray();         
-        mesh.normals = normals.ToArray();
-        mesh.triangles = faces.ToArray();
-        mesh.uv = uvs.ToArray();
-        mesh2.vertices = vertices2.ToArray();         
-        mesh2.normals = normals2.ToArray();
-        mesh2.triangles = faces2.ToArray();
-        mesh2.uv = uvs2.ToArray();
-
-        Quaternion rotation = Quaternion.Euler(200f, 0f, 0f);
-
-        Instantiate(empty, new Vector3(314, 7, 21), rotation );
-        Instantiate(empty, new Vector3(307, 8, 17), rotation );
-        Instantiate(empty, new Vector3(297, 9, 20), rotation );
-        Instantiate(empty, new Vector3(292, 10, 23), rotation );
-
-        MeshCollider mc = empty.AddComponent<MeshCollider>();
-        Rigidbody rb = empty.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
-        mc.sharedMesh = empty.GetComponent<MeshFilter>().mesh;
+        //Stage5 rollende steine 1
+        createCarott(67, 6, 157);
+        createCarott(78, 6, 149);
 
     }
 
-    void createCarott()
+    void createOrange()
     {
         a = new Vector3(1.0f, 0.0f, 1.0f);
         b = new Vector3(-1.0f, 0.0f, 1.0f);
@@ -138,10 +119,6 @@ public class MR_carott : MonoBehaviour
         createFaces(l, k, g, h);
         createFaces(j, i, e, f);
         createFaces(k, j, f, g);
-
-       // karotte.transform.Rotate(0, 0, rotation);
-        // karotte.transform.position = new Vector3();
-        // karotte.transform.localScale = new Vector3();
     }
 
     void createGreen()
@@ -189,6 +166,61 @@ public class MR_carott : MonoBehaviour
         faces2.Add(y+0);
         faces2.Add(y+3);
         y+=4;  
+    }
+
+    void createCarott(int x, int y, int z){
+
+        karotte = new GameObject("carott");  
+        gruen = new GameObject("grün");  
+ 
+        karotte.AddComponent<MeshFilter>();     
+        karotte.AddComponent<MeshRenderer>();  
+
+        gruen.AddComponent<MeshFilter>();     
+        gruen.AddComponent<MeshRenderer>();  
+
+        mesh = new Mesh();  
+        mesh2 = new Mesh();                           
+                         
+        karotte.GetComponent<MeshFilter>().mesh = mesh; 
+        gruen.GetComponent<MeshFilter>().mesh = mesh2;  
+
+        Renderer rend = karotte.GetComponent<Renderer>();   
+        rend.material = new Material(Shader.Find("Diffuse"));
+        rend.material.mainTexture = texture;
+
+        Renderer rend2 = gruen.GetComponent<Renderer>();   
+        rend2.material = new Material(Shader.Find("Diffuse"));
+        rend2.material.mainTexture = texture2;
+
+        createOrange();
+        createGreen();
+
+        empty = new GameObject("KarottenEmpty");
+        gruen.transform.parent = empty.transform;
+        karotte.transform.parent = empty.transform;
+
+        mesh.vertices = vertices.ToArray();         
+        mesh.normals = normals.ToArray();
+        mesh.triangles = faces.ToArray();
+        mesh.uv = uvs.ToArray();
+        mesh2.vertices = vertices2.ToArray();         
+        mesh2.normals = normals2.ToArray();
+        mesh2.triangles = faces2.ToArray();
+        mesh2.uv = uvs2.ToArray();
+
+        empty.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
+        empty.transform.Rotate(200, 0, 0);
+        empty.transform.position = new Vector3(x, y, z);
+        Quaternion rotation = Quaternion.Euler(200f, 0f, 0f);
+
+        mc = empty.AddComponent<MeshCollider>();
+        cc = empty.AddComponent<CapsuleCollider>();
+        cc.isTrigger = true;
+
+        cc.center = new Vector3(-0.26f, 2.6f, -0.09f);
+        cc.height = 11.59f;
+        cc.radius = 1.35f;
     }
 
     // Update is called once per frame

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Code für Herzchen mit Testspielfigur:
-public class NR_hearts : MonoBehaviour
+public class NR_hearts_right : MonoBehaviour
 {
     public GameObject character;
     public GameObject herz;
@@ -22,41 +21,28 @@ public class NR_hearts : MonoBehaviour
     public Material rot;
     public Texture herzchen;
 
+
     // Start is called before the first frame update
     void Start()
     {
         herzlist = new List<GameObject>();
-        character = GameObject.Find("RabbitWarrior01");
 
         // Position der Herzen hier zuweisen:
-        // links/rechts, höhe, vorne/hinten von Spielstart
+        // links/rechts, höhe, vorne/hinten
 
-        // beim Start zum testen:
-        // createherz(0, 5, -21);
+        // auf kleiner Insel vorne: 
+        createherz(-140, 8, -130);
 
-        // bei der Insel in der Ecke:
-        createherz(190, 7, -15);
+         // auf kleiner Insel: 
+        createherz(-110, 8, -100);
 
-        // bei den AM_Plattformen:
-        createherz(0, 5, 0);
+        // auf großer Insel: 
+        createherz(-102, 6, -65);
+        createherz(-125, 6, -20);
 
-        // bei dem Boot:
-        createherz(5, 3, 65); 
-
-        // bei der kleinen Insel:
-        createherz(2, 6, 100); 
-
-        // neben dem kleinen Hügel:
-        createherz(-8, 6, 146); 
-
-        // beim kleinen Hügel:
-        createherz(6, 6, 150); 
-
-        // auf großem Hügel:
-        createherz(37, 22, 115); 
-        createherz(37, 23, 130); 
-    }
-
+        // auf Insel in der Ecke: 
+        createherz(-190, 6, 0);
+    } 
 
     private Vector3 getNormal(Vector3 a, Vector3 b, Vector3 c)
     {
@@ -111,7 +97,7 @@ public class NR_hearts : MonoBehaviour
     { 
         Vector3 position = new Vector3(x, y, z);
         herz = new GameObject();
-        herz.name = "Herz";     
+        herz.name = "Herz_right";     
         herz.AddComponent<MeshFilter>();
         herz.AddComponent<MeshRenderer>();
 
@@ -139,15 +125,14 @@ public class NR_hearts : MonoBehaviour
 
         herz.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         herz.transform.position = new Vector3(300, 0, 20);
-        herz.transform.Rotate(0, -90, 0);
+        herz.transform.Rotate(0, 90, 0);
         
         // Collider:
         collHerz = herz.AddComponent<MeshCollider>();
         collHerz.sharedMesh = herz.GetComponent<MeshFilter>().mesh;
-        //Destroy(herz.GetComponent<MeshCollider>());
         collHerz.convex = true;
         collHerz.isTrigger = true;
-        
+
         herzlist.Add(herz);
     }
   
@@ -155,11 +140,6 @@ public class NR_hearts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // for-Schleife für alle Herzen in der Liste
-        // for(int i = 0; i < herzlist.Count; i++ ){
-        //     herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
-        // }
 
-        transform.LookAt(character.transform.position);
     }
 }

@@ -7,43 +7,59 @@ public class MR_CollisionScript : MonoBehaviour
     public GameObject sphere;
     //public GameObject empty; //Boot
     public MR_bootnew bootScript;
-    bool bootBewegung = false;
+    public GameObject boot;
+    public bool bootBewegung;
+    private float distanceGround;
+   // public bool isGround;
 
     // Start is called before the first frame update
     void Start()
     {
         bootBewegung = GameObject.Find("EmptyBoot").GetComponent<MR_bootnew>();
+        distanceGround = GetComponent<Collider>().bounds.extents.y;
     }
 
-    void OnTriggerEnter(Collider collision)
+    void FixedUpdate()
     {
-        Debug.Log(this.name + " collides with: " + collision.gameObject.name);
-        
-        // if(collision.gameObject.name == "Sphere"){
-        //   Destroy(collision.gameObject);
-        // }
-
-        // if(collision.gameObject.name == "Boot"){
-        // }
-        //     //Destroy(collision.gameObject);
-        //     bootBewegung = true;
-        // } else{
-        //     bootBewegung = false;
-        // }
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,-Vector3.up, out hit, distanceGround+0.1f)) {
+            if (hit.collider.tag == "boot") {
+                bootBewegung = true;
+            }
+        } else {
+            bootBewegung = false;
+        }
     }
+
+    // void OnTriggerEnter(Collider collision)
+    // {
+    //     //Debug.Log(this.name + " collides with: " + collision.gameObject.name);
+    //    // Debug.Log("HELLO");
+    //     // if(collision.gameObject.name == "Sphere"){
+    //     //   Destroy(collision.gameObject);
+    //     // }
+
+    //      if(collision.gameObject.name == "EmptyBoot"){
+    //     // }
+    //     //     //Destroy(collision.gameObject);
+    //          bootBewegung = true;
+    //      } else{
+    //          bootBewegung = false;
+    //      }
+    // }
 
     // Update is called once per frame
     void Update()
     {
-        // if(bootBewegung == true)
-        // {
-        //     Debug.Log("hallo");
-        //     //bootBewegung = false;
-        //     //bootScript.empty.transform.Translate(1,0,0);
-        //     // if(bootScript.empty.position = new Vector3(8,0,0))
-        //     // {
-        //     //     bootBewegung = false;
-        //     // }
-        // } 
+        while(bootBewegung == true)
+        {
+            Debug.Log("jetzt sollte sich das boot bewegen");
+            //bootBewegung = false;
+            bootScript.empty.transform.Translate(-0.2f,0,0);
+            // if(bootScript.empty.position = new Vector3(8,0,0))
+            // {
+            bootBewegung = false;
+            // }
+        } 
     }
 }

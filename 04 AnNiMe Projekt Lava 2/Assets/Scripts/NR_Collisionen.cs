@@ -7,13 +7,14 @@ public class NR_Collisionen : MonoBehaviour
 {
 
     public NR_gui guiScript;
-
+    public MR_carott guiScript2;
     
     // Start is called before the first frame update
     void Start()
     {
         // verlinken:
         guiScript = GameObject.Find("NR_GuiEmpty").GetComponent<NR_gui>();
+        guiScript2 = GameObject.Find("MR_carott").GetComponent<MR_carott>();
     }
 
     // Bei Berührung Triggern
@@ -31,25 +32,23 @@ public class NR_Collisionen : MonoBehaviour
          if (other.gameObject.name == "KarottenEmpty")
          {
             Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
-            guiScript.collectedItems++;
             Destroy(other.gameObject);
-            //script.collectedItems = 0;
+            guiScript.collectedItems++;
         }
 
-        // Bei Kollision mit der Kugel (Lava): Leben--
+        // Bei Kollision mit der Lava: Leben--
         if (other.gameObject.name == "Lava")
         {
             Debug.Log(this.name + " has a OnTriggerEnter with " + other.gameObject.name);
             guiScript.leben--;
 
-                if (guiScript.leben == 0)
-                {
-                    Debug.Log("Tot");
-                    Scene thisScene = SceneManager.GetActiveScene();
-                    SceneManager.LoadScene(thisScene.name);
-                }
+                //if (guiScript.leben == 0)
+                //{
+                //    Debug.Log("Tot");
+                //    Scene thisScene = SceneManager.GetActiveScene();
+                //    SceneManager.LoadScene(thisScene.name);
+                //}
         }
-
         
     }
 

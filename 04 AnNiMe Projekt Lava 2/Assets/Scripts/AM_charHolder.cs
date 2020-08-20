@@ -16,6 +16,7 @@ public class AM_charHolder : MonoBehaviour
         //if (other.gameObject == Player)
         //{
         Player.transform.parent = transform;
+        Debug.Log("Test");
         //}
     }
 

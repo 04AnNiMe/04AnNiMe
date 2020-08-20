@@ -29,7 +29,8 @@ public class MR_bootnew : MonoBehaviour
     Vector3 normale;
 
     Rigidbody rb;
-    MeshCollider mc;
+    CapsuleCollider cc;
+    BoxCollider bc;
  
 
     // Start is called before the first frame update
@@ -51,7 +52,7 @@ public class MR_bootnew : MonoBehaviour
         boat.AddComponent<MeshRenderer>(); 
         mesh = new Mesh();  
         boat.GetComponent<MeshFilter>().mesh = mesh; 
-
+        
         //Renderer Boot
         Renderer rend = boat.GetComponent<Renderer>();   
         rend.material = new Material(Shader.Find("Diffuse"));
@@ -77,6 +78,9 @@ public class MR_bootnew : MonoBehaviour
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
         empty.AddComponent<MeshFilter>();
+        empty.tag = "boot";
+       // empty.AddComponent<MR_boatPath>();
+
          // empty.AddComponent<MeshRenderer>();  
 
         //To-Array
@@ -90,16 +94,20 @@ public class MR_bootnew : MonoBehaviour
         mesh2.uv = uvs2.ToArray();
 
         //Collider
-        mc = empty.AddComponent<MeshCollider>();
-        rb = empty.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
-        //mc.sharedMesh = empty.GetComponent<MeshFilter>().mesh;
-        mc.convex = true;
-        mc.isTrigger = true;
+        //cc = empty.AddComponent<CapsuleCollider>();
+        bc = empty.AddComponent<BoxCollider>();
 
-        empty.transform.position = new Vector3(250, 3, 24);
+        //cc.isTrigger = true;
+
+        bc.size = new Vector3(4.11f, 1.0f, 1.38f);
+        bc.center = new Vector3(0, 0.45f, 0);
+
+        // cc.radius = 1.5f;
+        // cc.height = 4.83f;
+        // cc.direction = 0; //x-achse
+
+        empty.transform.position = new Vector3(251, 3, 25);
         empty.transform.localScale = new Vector3(3,3,3);
-
     }
 
     void createBoat()
