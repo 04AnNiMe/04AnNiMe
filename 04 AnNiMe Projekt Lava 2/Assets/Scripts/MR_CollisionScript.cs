@@ -10,6 +10,7 @@ public class MR_CollisionScript : MonoBehaviour
     public GameObject boot;
     public bool bootBewegung;
     private float distanceGround;
+    public bool lavaKugel;
    // public bool isGround;
 
     // Start is called before the first frame update
@@ -26,8 +27,15 @@ public class MR_CollisionScript : MonoBehaviour
             if (hit.collider.tag == "boot") {
                 bootBewegung = true;
             }
-        } else {
-            bootBewegung = false;
+            if (hit.collider.tag == "lavakugel") {
+                lavaKugel = true;
+
+            } 
+            else 
+            {
+                bootBewegung = false;
+                lavaKugel = false;
+            }
         }
     }
 

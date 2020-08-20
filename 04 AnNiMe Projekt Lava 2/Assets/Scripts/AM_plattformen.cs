@@ -20,7 +20,7 @@ public class AM_plattformen : MonoBehaviour
     private List<Vector2> uvPlattform;
 
     public Material MPlatte;
-    public Vector3 position;
+    //public Vector3 position;
     private Vector3 norPlattform;
 
     private Vector3 b1;

@@ -5,6 +5,7 @@ using UnityEngine;
 // Code für Plattform die hoch und runter geht:
 public class NR_platte : MonoBehaviour
 {
+    public GameObject Player;
     public GameObject platte;
     public GameObject platte2;
     public GameObject platte3;
@@ -25,8 +26,6 @@ public class NR_platte : MonoBehaviour
     
     Vector3 a, b, c, d, e, f, g, h; 
     Vector3 n;
-
-    public GameObject Player;
 
     int j = 0;
     private float time = 0.0f;
@@ -56,13 +55,13 @@ public class NR_platte : MonoBehaviour
         platte.AddComponent<MeshFilter>();     
         platte.AddComponent<MeshRenderer>(); 
 
-         platte2.AddComponent<MeshFilter>();     
+        platte2.AddComponent<MeshFilter>();     
         platte2.AddComponent<MeshRenderer>(); 
 
-         platte3.AddComponent<MeshFilter>();     
+        platte3.AddComponent<MeshFilter>();     
         platte3.AddComponent<MeshRenderer>(); 
 
-         platte4.AddComponent<MeshFilter>();     
+        platte4.AddComponent<MeshFilter>();     
         platte4.AddComponent<MeshRenderer>();  
 
         mesh = new Mesh();
@@ -98,6 +97,7 @@ public class NR_platte : MonoBehaviour
         rend.material = new Material(Shader.Find("Diffuse"));
         rend.material.SetTexture("_MainTex", plattentextur);
        
+
         // mehrere Platten erzeugen:
         createPlattformEins();
         mesh.vertices = vertices.ToArray();         
@@ -125,7 +125,6 @@ public class NR_platte : MonoBehaviour
 
         // createPlattformFuenf();
 
-    
 
         // // MeshCollider:
         // nPlattform = platte.AddComponent<MeshCollider>();
@@ -144,24 +143,25 @@ public class NR_platte : MonoBehaviour
         // nPlattform.GetComponent<MeshFilter>().mesh = mesh4;
         // nPlattform.isTrigger = true;
 
+        
         // BoxCollider:
         cplatte = platte.AddComponent<BoxCollider>();
-        cplatte.isTrigger = true;
+        cplatte.isTrigger = false;
         cplatte.size = new Vector3(8, 4, 4);
         cplatte.center = new Vector3(0, 0.5f, 0);
 
         cplatte = platte2.AddComponent<BoxCollider>();
-        cplatte.isTrigger = true;
-        cplatte.size = new Vector3(8, 4, 4);
+        cplatte.isTrigger = false;
+        cplatte.size = new Vector3(8, 4, 5);
         cplatte.center = new Vector3(0, 0.5f, 0);
 
         cplatte = platte3.AddComponent<BoxCollider>();
-        cplatte.isTrigger = true;
+        cplatte.isTrigger = false;
         cplatte.size = new Vector3(8, 4, 4);
         cplatte.center = new Vector3(0, 0.5f, 0);
 
         cplatte = platte4.AddComponent<BoxCollider>();
-        cplatte.isTrigger = true;
+        cplatte.isTrigger = false;
         cplatte.size = new Vector3(8, 4, 4);
         cplatte.center = new Vector3(0, 0.5f, 0);
 

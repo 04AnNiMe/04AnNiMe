@@ -37,7 +37,7 @@ public class MR_lavaballs : MonoBehaviour
     void Update()
     {
        //float waittime = 20.0f;
-       float speed = 0.1f;
+       float speed = 0.3f;
        float time = Time.deltaTime;
 
         lavakugel.transform.position += Vector3.up * speed;

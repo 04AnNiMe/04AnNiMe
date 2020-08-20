@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ab68c31498a62440eaea210b6a396906
+guid: 38067561e927a4ddab3ac5c5ab7b8dd9
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: M_Trampolin
-    second: {fileID: 2100000, guid: 95e2c94295c1f40efbc390ea66d9cb71, type: 2}
+      name: "M_Checkpoint_H\xFClle"
+    second: {fileID: 2100000, guid: 14c5bb21c71c549a2990d6e9db7989ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Checkpoint_Knopf
+    second: {fileID: 2100000, guid: fca1a270d1702455aa9f17a21d86ba7a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
