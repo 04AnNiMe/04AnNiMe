@@ -14,7 +14,7 @@ public class AM_charHolder : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Player.transform.parent = transform;
-        Debug.Log("Test");
+        Debug.Log(this.name + " ist nun Parent von " + other.gameObject.name);
     }
 
     private void OnTriggerExit(Collider other)

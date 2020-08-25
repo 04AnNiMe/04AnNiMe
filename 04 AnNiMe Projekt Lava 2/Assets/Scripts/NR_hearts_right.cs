@@ -31,17 +31,20 @@ public class NR_hearts_right : MonoBehaviour
         // links/rechts, höhe, vorne/hinten
 
         // auf kleiner Insel vorne: 
-        createherz(-140, 8, -130);
+        createherz(-140, 6, -130);
 
          // auf kleiner Insel: 
-        createherz(-110, 8, -100);
+        createherz(-110, 6, -100);
 
         // auf großer Insel: 
-        createherz(-102, 6, -65);
-        createherz(-125, 6, -20);
+        createherz(-102, 7, -65);
+        createherz(-125, 7, -20);
 
         // auf Insel in der Ecke: 
-        createherz(-190, 6, 0);
+        createherz(-130, 7, -10);
+
+        // bei Spielende:
+        createherz(-280, 6, 0);
     } 
 
     private Vector3 getNormal(Vector3 a, Vector3 b, Vector3 c)

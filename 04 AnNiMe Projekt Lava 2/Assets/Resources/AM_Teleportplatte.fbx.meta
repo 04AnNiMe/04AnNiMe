@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 38067561e927a4ddab3ac5c5ab7b8dd9
+guid: ceeda84f0da2b4e19a55ac69b1ceec63
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: "M_Checkpoint_H\xFClle"
-    second: {fileID: 2100000, guid: 14c5bb21c71c549a2990d6e9db7989ce, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Checkpoint_Knopf
-    second: {fileID: 2100000, guid: fca1a270d1702455aa9f17a21d86ba7a, type: 2}
+      name: M_Teleporter
+    second: {fileID: 2100000, guid: 8517977d7ff284ff78fa053ba8abcaf3, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

@@ -35,7 +35,7 @@ public class NR_hearts : MonoBehaviour
         // createherz(0, 5, -21);
 
         // bei der Insel in der Ecke:
-        createherz(190, 7, -15);
+        createherz(192, 7, 0);
 
         // bei den AM_Plattformen:
         createherz(0, 5, 0);
@@ -53,8 +53,9 @@ public class NR_hearts : MonoBehaviour
         createherz(6, 6, 150); 
 
         // auf großem Hügel:
-        createherz(37, 22, 115); 
-        createherz(37, 23, 130); 
+        createherz(40, 23, 132); 
+        createherz(37, 22, 118); 
+        
     }
 
 

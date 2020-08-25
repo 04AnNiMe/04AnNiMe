@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MR_bootnew : MonoBehaviour
+public class MR_bootnew2 : MonoBehaviour
 {
     Mesh mesh;
     Mesh mesh2;
@@ -29,7 +29,7 @@ public class MR_bootnew : MonoBehaviour
     Vector3 normale;
 
     Rigidbody rb;
-BoxCollider cc;
+    BoxCollider cc;
     BoxCollider bc;
  
 
@@ -79,7 +79,7 @@ BoxCollider cc;
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
         empty.AddComponent<MeshFilter>();
-        empty.tag = "boot";
+        empty.tag = "boot2";
         empty.AddComponent<AM_charHolder>();
 
         // empty.AddComponent<MeshRenderer>();  
@@ -106,7 +106,8 @@ BoxCollider cc;
         cc.size = new Vector3(4.11f, 5, 1.38f);
         cc.center = new Vector3(0, 0.8f, 0);
        
-        empty.transform.position = new Vector3(251.0f, 2.17f, 25.0f);
+        empty.transform.position = new Vector3(320.7f, 2.17f, 179.6f);
+        empty.transform.Rotate(0.0f, -265.55f,0.0f);
         empty.transform.localScale = new Vector3(2.5f,2.5f,2.5f);
     }
 

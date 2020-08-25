@@ -5,48 +5,48 @@ using UnityEngine;
 public class MR_lavaballs : MonoBehaviour
 {
     GameObject lavakugel;
-   // BoxCollider hc;
-    SphereCollider lc;
-    SphereCollider lcc;
-    //Rigidbody rig;
+    BoxCollider lc;
+    float speed = 0.3f;
+    Random ran;
+    float time;
 
     // Start is called before the first frame update
     void Start()
     {
-        lavakugel = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //rig = lavakugel.AddComponent<Rigidbody>();
-        //rig.isKinematic = false;
-        lc = lavakugel.AddComponent<SphereCollider>();
-        lcc = lavakugel.AddComponent<SphereCollider>();
-        lcc.isTrigger = true;
+       for(int i = 0; i<100; i++)
+       {
+           int zufall = Random.Range(0,5);
+           if(time == zufall) 
+           {
+                time = 0;
+                int zufall1 = Random.Range(0,100);
+                int zufall2 = Random.Range(0,100);
+                lavakugel = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                lc = lavakugel.AddComponent<BoxCollider>();
+                lc.isTrigger = true;
+                lavakugel.transform.Translate(zufall1, 0, zufall2);
+                lavakugel.GetComponent<Renderer>().material.color = Color.red;
+           }
+       }
+    }
 
-        lavakugel.tag = "lavaball";
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Funktioniert");
 
-        // //Himmel
-        // GameObject himmel = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        // himmel.name = "himmmel";
-        // himmel.transform.localScale = new Vector3(1000,0.1f,1000);
-        // himmel.transform.Translate(217.0f,105.9f,157.0f);
-
-        // hc = himmel.AddComponent<BoxCollider>();
-        // hc.size = new Vector3(1000.0f,0.1f,1000.0f);
-
+        if (other.tag == "himmel")
+        {
+            Debug.Log("fällt runter");
+            //speed = 0.0f;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-       //float waittime = 20.0f;
-       float speed = 0.3f;
-       float time = Time.deltaTime;
-
-        lavakugel.transform.position += Vector3.up * speed;
-       // if(lavakugel.position)
-        //Debug.Log(time);
-        if(time == 6.0f)
-        {
-            //rig.isKinematic = true;
-        }
- 
+        time+= Time.deltaTime;
+        this.lavakugel.transform.position += Vector3.up * speed;
     }
+
+    
 }

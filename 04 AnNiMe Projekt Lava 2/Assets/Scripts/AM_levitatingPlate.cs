@@ -22,7 +22,7 @@ public class AM_levitatingPlate : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("RabbitWarrior01");
-        plattform1 = GameObject.Find("AM_Trampolin01");
+        plattform1 = GameObject.Find("AM_Trampolin");
         startPos1 = plattform1.transform.position;
         endPos1 = plattform1.transform.position + new Vector3(26.13f, 2, 16.266f);
     }

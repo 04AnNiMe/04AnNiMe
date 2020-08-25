@@ -1,9 +1,24 @@
 fileFormatVersion: 2
-guid: 77f4651a411a44d4f8d5001a847e76ac
+guid: b33d9f2d590be4c6db7ea70ec3cdf301
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Checkpoint_Ausrufezeichen
+    second: {fileID: 2100000, guid: 91ce61a1a33364e11a2bb4b85db9fe7f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "M_Checkpoint_H\xFClle"
+    second: {fileID: 2100000, guid: 14c5bb21c71c549a2990d6e9db7989ce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Checkpoint_Knopf
+    second: {fileID: 2100000, guid: fca1a270d1702455aa9f17a21d86ba7a, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

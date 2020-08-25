@@ -6,6 +6,9 @@ TagManager:
   tags:
   - boot
   - lavaball
+  - destinyBoot
+  - himmel
+  - boot2
   layers:
   - Default
   - TransparentFX

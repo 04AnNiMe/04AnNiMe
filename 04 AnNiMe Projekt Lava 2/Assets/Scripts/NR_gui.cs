@@ -13,8 +13,11 @@ public class NR_gui : MonoBehaviour
     public GUIStyle style;
     public GUIStyle styleA;
     public GUIStyle styleB;
+    public GUIStyle styleC;
+    public GUIStyle styleD;
     public int collectedItems = 0;
     public int leben = 5;
+    
 
     public Texture2D background;
 
@@ -28,21 +31,25 @@ public class NR_gui : MonoBehaviour
 
         styleA = new GUIStyle();
         styleA.font = (Font)Resources.Load("Lemon");
-        //styleA.fontSize = 35;
-        //styleA.normal.textColor = Color.black;
-        //styleA.normal.background = background;
-        //styleA.border.top = -20;
-        //styleA.border.bottom = -20;
-        //styleA.border.left = -20;
-        //styleA.border.right = -20;
 
         styleB = new GUIStyle();
         styleB.font = (Font)Resources.Load("Lemon");
-        styleB.fontSize = 20;
-        styleB.normal.textColor = Color.black;
+        styleB.fontSize = 30;
+        styleB.normal.textColor = Color.white;
+
+        styleC = new GUIStyle();
+        styleC.font = (Font)Resources.Load("Lemon");
+        styleC.fontSize = 45;
+        styleC.normal.textColor = Color.red;
+
+        styleD = new GUIStyle();
+        styleD.font = (Font)Resources.Load("Lemon");
+        styleD.fontSize = 100;
+        styleD.normal.textColor = Color.red;
+
 
         Button btn = restartBTN.GetComponent<Button>();
-        btn.onClick.AddListener(Restard);
+        btn.onClick.AddListener(Restart);
 
     }
 
@@ -57,33 +64,46 @@ public class NR_gui : MonoBehaviour
 
 
         // Text:
-        GUI.Label(new Rect(15, 0, 0, 0), "Carotts: " + collectedItems, style);
-        GUI.Label(new Rect(15, 540, 0, 0), "Always remember the floor is LAVA!", styleB);
+        GUI.Label(new Rect(17, 15, 0, 0), "Carotts: " + collectedItems, style);
+
+        GUI.Label(new Rect(Screen.width / 2 - 125, Screen.height - 40, 0, 0), "Always remember the floor is lava!", styleB);
+
+        // für kleiner weiß: GUI.Label(new Rect(Screen.width/2 - 50, 17, 0, 0), "THE LAVA GAME", styleB); 
+        GUI.Label(new Rect(Screen.width / 2 - 80, 28, 0, 0), "THE LAVA GAME", styleC);              
 
         // Herzchen sind Leben++
-        GUI.Label(new Rect(15, 30, 0, 0), "Lives: " + leben, style);
-        GUI.Label(new Rect(810, 0, 0, 0), "Level: 1", style);
+        GUI.Label(new Rect(17, 55, 0, 0), "Lives: " + leben, style);
+        GUI.Label(new Rect(Screen.width - 106, 15, 0, 0), "Level: 1", style);
+
+
+
+        // geht noch nicht ...
+        // wenn man ein Herz oder eine Karotte einsammelt soll kurz +1 erscheinen:
+        // if (collectedItems++)
+        // {
+        //     GUI.Label(new Rect(Screen.width / 2 - 20, Screen.height / 2 + 10, 0, 0), "+ 1", styleD);
+        //     Debug.Log("+ 1 Carott");
+        // }
+
 
 
         if (leben == 0)
         {
-            GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, Screen.width / 10, Screen.height / 10), "Try again!", styleA);
+            //GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, Screen.width / 10, Screen.height / 10), "Try again!", styleA);
             Debug.Log("You died!");
 
             deathScreen.SetActive(true);
             PauseGame();
-        } else
-        {
+        } else {
             ResumeGame();
         }
 
     }
 
-    public void Restard()
+    public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         deathScreen.SetActive(false);
-        
     }
 
     void PauseGame()

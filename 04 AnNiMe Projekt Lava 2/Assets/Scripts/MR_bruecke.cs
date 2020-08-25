@@ -47,7 +47,13 @@ public class MR_bruecke : MonoBehaviour
         rend.material = new Material(Shader.Find("Diffuse"));
         rend.material.mainTexture = texture;
 
-        createBridge(13);
+        createBridge(7);
+        bridge.transform.Translate(268.26f, 7.96f, 309.25f);
+        bridge.transform.Rotate(0, -82.68f, 0);
+        bridge.transform.localScale = new Vector3(1.0f,2.2f,2.42f);
+        MeshCollider mc = bridge.AddComponent<MeshCollider>();
+        mc.convex = true;
+        mc.convex = false;
 
         mesh.vertices = vertices.ToArray();         
         mesh.normals = normals.ToArray();
@@ -59,7 +65,7 @@ public class MR_bruecke : MonoBehaviour
     {
         Vector3 position;
         for(int i=0; i<anzahlBretter; i++){
-            x=x+1.1f;
+            x=x+1.5f;   //abstand
             if(i<=anzahlBretter/2){
                 y-=0.3f;
             } else {
@@ -115,22 +121,22 @@ public class MR_bruecke : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        float speed = 1.0f;
+        // time += Time.deltaTime;
+        // float speed = 1.0f;
 
-        while(time > 3.0f)
-        {
-            time += Time.deltaTime;
-            Debug.Log("x");
-            bridge.transform.position -= Vector3.right * speed;
+        // while(time > 3.0f)
+        // {
+        //     time += Time.deltaTime;
+        //     Debug.Log("x");
+        //     bridge.transform.position -= Vector3.right * speed;
             
-            if(time == 6.0f){
-                time = 0.0f;
-            }
-        }
+        //     if(time == 6.0f){
+        //         time = 0.0f;
+        //     }
+        // }
 
-        Debug.Log("z");
-        bridge.transform.position += Vector3.right * speed;
+        // Debug.Log("z");
+        // bridge.transform.position += Vector3.right * speed;
        
     }
 }
