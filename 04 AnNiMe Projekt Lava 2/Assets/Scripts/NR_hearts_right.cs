@@ -31,17 +31,28 @@ public class NR_hearts_right : MonoBehaviour
         // links/rechts, höhe, vorne/hinten
 
         // auf kleiner Insel vorne: 
-        createherz(-140, 6, -130);
+        createherz(-140, 6.5f, -130);
 
-         // auf kleiner Insel: 
-        createherz(-110, 6, -100);
+        // auf kleiner Insel hinten: 
+        createherz(-117, 7, -114);
+
+        // auf großer Insel vorne: 
+        createherz(-108, 7, -82);
 
         // auf großer Insel: 
-        createherz(-102, 7, -65);
-        createherz(-125, 7, -20);
+        // vorne links:
+        createherz(-118, 7, -65);
+        // vorne rechts: 
+        createherz(-98, 7, -65); 
+        // mitte:
+        // createherz(-112, 7, -42); 
+        // mitte links:
+        createherz(-130.5f, 6.5f, -40); 
+        // ganz links:
+        createherz(-131, 7, -19); 
 
-        // auf Insel in der Ecke: 
-        createherz(-130, 7, -10);
+        // auf Insel in der Ecke links: 
+        createherz(-132, 7, -10);
 
         // bei Spielende:
         createherz(-280, 6, 0);

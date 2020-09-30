@@ -33,8 +33,7 @@ public class NR_lavaplane : MonoBehaviour
         // Material:
         Renderer lavaboden = lava.GetComponent<Renderer>();
         lavaboden.material = new Material(Shader.Find("Diffuse"));
-        lavaboden.material.SetTexture("_MainTex", lavatextur);
-        
+        lavaboden.material.SetTexture("_MainTex", lavatextur);       
     }
 
     // Update is called once per frame

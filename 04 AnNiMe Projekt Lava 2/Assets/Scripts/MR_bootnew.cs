@@ -29,7 +29,7 @@ public class MR_bootnew : MonoBehaviour
     Vector3 normale;
 
     Rigidbody rb;
-BoxCollider cc;
+    BoxCollider cc;
     BoxCollider bc;
  
 
@@ -103,7 +103,7 @@ BoxCollider cc;
         bc.size = new Vector3(4.11f, 1.0f, 1.38f);
         bc.center = new Vector3(0, 0.45f, 0);
 
-        cc.size = new Vector3(4.11f, 5, 1.38f);
+        cc.size = new Vector3(4.11f, 1, 1.38f);
         cc.center = new Vector3(0, 0.8f, 0);
        
         empty.transform.position = new Vector3(251.0f, 2.17f, 25.0f);
@@ -218,8 +218,3 @@ BoxCollider cc;
     
     }
 }
-
-
-// submesh 
-// windbewegung wind force 
-// weather System 

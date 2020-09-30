@@ -11,6 +11,7 @@ public class AM_respawnPoint : MonoBehaviour
     public bool check4 = false;
     public bool check5 = false;
     public bool check6 = false;
+    public bool check7 = false;
 
     public GameObject Player;
 
@@ -21,6 +22,7 @@ public class AM_respawnPoint : MonoBehaviour
         Player = gameObject;
     }
 
+    //Diese Funktion teleportiert den Spieler an den letzten Checkpoint der mit den check bools gecheckt wird
     public void teleport()
     {
         if (check0)
@@ -67,11 +69,12 @@ public class AM_respawnPoint : MonoBehaviour
             Debug.Log("Teleport nach 6");
             Player.transform.position = GameObject.Find("Checkpoint_Knopf_6").transform.position + new Vector3(0, 0.1f, 0);
         }
+
+        if (check7)
+        {
+            Debug.Log("Teleport nach 7");
+            Player.transform.position = GameObject.Find("Checkpoint_Knopf_7").transform.position + new Vector3(0, 0.1f, 0);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

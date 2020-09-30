@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class NR_plattenew : MonoBehaviour
 {
-    
     public GameObject platte;
     public GameObject platte2;
     public GameObject platte3;
@@ -27,6 +26,8 @@ public class NR_plattenew : MonoBehaviour
     private float waitTime = 2.5f;
     private bool moving = true;
 
+    private bool plattenbewegung = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +36,10 @@ public class NR_plattenew : MonoBehaviour
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
 
-        platte = new GameObject("NR_Platte_neu"); 
+        platte = new GameObject("NR_Platte1_neu"); 
+        // platte.transform.position = new Vector3(125, 7, 39);
+        platte.transform.position = new Vector3(125, 0, 39);
+
         platte.AddComponent<MeshFilter>();
         platte.AddComponent<MeshRenderer>();
 
@@ -48,19 +52,19 @@ public class NR_plattenew : MonoBehaviour
         zweicplatte.isTrigger = true;
 
         createPlattform();
-
+      
         // weitere Platten erstellen:
-        platte2 = Instantiate(platte, new Vector3(110, 4, 32), platte.transform.rotation);
+        platte2 = Instantiate(platte, new Vector3(105, 0, 32), platte.transform.rotation);
         platte2.name = "NR_Platte2_neu";
 
-        platte3 = Instantiate(platte, new Vector3(105, 32, 62), platte.transform.rotation);
+        platte3 = Instantiate(platte, new Vector3(105, 0, 62), platte.transform.rotation);
         platte3.name = "NR_Platte3_neu";
 
-        platte4 = Instantiate(platte, new Vector3(130, 30, 57), platte.transform.rotation);
+        platte4 = Instantiate(platte, new Vector3(130, 0, 57), platte.transform.rotation);
         platte4.name = "NR_Platte4_neu";
         // Option weiter links:
         // platte4 = Instantiate(platte, new Vector3(120, 30, 58), platte.transform.rotation);
-        // platte4.name = "NR_Platte4_neu";
+        // platte4.name = "NR_Platte4_neu"; 
     }
 
 
@@ -112,7 +116,7 @@ public class NR_plattenew : MonoBehaviour
         rend.material = new Material(Shader.Find("Diffuse"));
         rend.material.SetTexture("_MainTex", steintextur);
    
-        platte.transform.position = new Vector3(125, 7, 39);
+        // platte.transform.position = new Vector3(125, 7, 39);
 
         // BoxCollider:
         cplatte.size = new Vector3(4.25f, 0.2f, 2.75f);
@@ -156,70 +160,85 @@ public class NR_plattenew : MonoBehaviour
 
     void floatingup()
     {   
-        // Platte unten, vorne:
-        platte.transform.position = Vector3.Lerp(platte.transform.position, 
-        new Vector3(125, 15, 45), Time.deltaTime * 0.6f);
+            // Platte unten, vorne:
+            platte.transform.position = Vector3.Lerp(platte.transform.position, 
+            new Vector3(125, 15, 45), Time.deltaTime * 0.6f);
 
-        // Platte unten, hinten:
-        platte2.transform.position = Vector3.Lerp(platte2.transform.position, 
-        new Vector3(105, 18, 51), Time.deltaTime * 0.6f);
+            // Platte unten, hinten:
+            platte2.transform.position = Vector3.Lerp(platte2.transform.position, 
+            new Vector3(105, 18, 51), Time.deltaTime * 0.6f);
 
-        // Platte oben, hinten:
-        platte3.transform.position = Vector3.Lerp(platte3.transform.position, 
-        new Vector3(105, 32, 62), Time.deltaTime * 0.6f);
+            // Platte oben, hinten:
+            platte3.transform.position = Vector3.Lerp(platte3.transform.position, 
+            new Vector3(105, 32, 62), Time.deltaTime * 0.6f);
 
-        // Platte oben, vorne:
-        platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
-        new Vector3(130, 30, 57), Time.deltaTime * 0.6f);
-        // Option weiter links:
-        // platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
-        // new Vector3(120, 30, 58), Time.deltaTime * 0.6f);
+            // Platte oben, vorne:
+            platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
+            new Vector3(130, 30, 57), Time.deltaTime * 0.6f);
+            // Option weiter links:
+            // platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
+            // new Vector3(120, 30, 58), Time.deltaTime * 0.6f);
+        
     }
 
     void floatingdown()
-    {
-        // Platte unten, vorne:
-        platte.transform.position = Vector3.Lerp(platte.transform.position, 
-        new Vector3(125, 7, 39), Time.deltaTime * 0.6f);
+    {   
+            // Platte unten, vorne:
+            platte.transform.position = Vector3.Lerp(platte.transform.position, 
+            new Vector3(125, 7, 39), Time.deltaTime * 0.6f);
 
-        // Platte unten, hinten:
-        platte2.transform.position = Vector3.Lerp(platte2.transform.position, 
-        new Vector3(110, 4, 32), Time.deltaTime * 0.6f);
+            // Platte unten, hinten:
+            platte2.transform.position = Vector3.Lerp(platte2.transform.position, 
+            new Vector3(105, 4, 32), Time.deltaTime * 0.6f);
 
-        // Platte oben, hinten:
-        platte3.transform.position = Vector3.Lerp(platte3.transform.position, 
-        new Vector3(105, 17, 51), Time.deltaTime * 0.6f);
+            // Platte oben, hinten:
+            platte3.transform.position = Vector3.Lerp(platte3.transform.position, 
+            new Vector3(105, 17, 51), Time.deltaTime * 0.6f);
 
-        // Platte oben, vorne:
-        platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
-        new Vector3(130, 15, 48), Time.deltaTime * 0.6f);
-        // Option weiter links:
-        // platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
-        // new Vector3(120, 14, 48), Time.deltaTime * 0.6f);
+            // Platte oben, vorne:
+            platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
+            new Vector3(130, 15, 48), Time.deltaTime * 0.6f);
+            // Option weiter links:
+            // platte4.transform.position = Vector3.Lerp(platte4.transform.position, 
+            // new Vector3(120, 14, 48), Time.deltaTime * 0.6f);
     }
 
     
     // Update is called once per frame
     void Update()
     {
-      timer += Time.deltaTime;
+        if (plattenbewegung == true){
 
-        if (timer > waitTime && moving == false) {
+             timer += Time.deltaTime;
 
-            floatingdown();
+            if (timer > waitTime && moving == false) {
 
-            if (timer > 10) {
-                timer = 0;
-                moving = true;
+                floatingdown();
+
+                if (timer > 10) {
+                    timer = 0;
+                    moving = true;
+                }
+
+            } else {
+
+                floatingup();
+
+                if (timer > 5) {
+                    moving = false;
+                }
             }
 
-        } else {
-
-            floatingup();
-
-            if (timer > 5) {
-                moving = false;
-            }
         }
+       
+    }
+
+    void OnTriggerEnter(Collider other){
+        if(other.gameObject.name == "NR_Cylinder")
+        {
+            plattenbewegung = true;
+            Debug.Log("Platten bewegen sich jetzt!");
+        }
+
     }
 }

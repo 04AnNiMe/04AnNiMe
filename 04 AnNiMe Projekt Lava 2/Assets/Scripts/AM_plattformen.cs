@@ -12,7 +12,6 @@ public class AM_plattformen : MonoBehaviour
     GameObject Plattform5;
     BoxCollider colPlattform;
     BoxCollider colMovingChar;
-   // AM_charHolder charHalter;
 
     private List<Vector3> vPlattform;
     private List<int> fPlattform;
@@ -20,7 +19,6 @@ public class AM_plattformen : MonoBehaviour
     private List<Vector2> uvPlattform;
 
     public Material MPlatte;
-    //public Vector3 position;
     private Vector3 norPlattform;
 
     private Vector3 b1;
@@ -40,6 +38,7 @@ public class AM_plattformen : MonoBehaviour
     private float timer = 0.0f;
     private float waitTime = 2.0f;
     private bool moving = true;
+    public bool timestop = false;
     public float randDelta;
 
     public float randX1;
@@ -82,7 +81,7 @@ public class AM_plattformen : MonoBehaviour
 
         goPlattform.GetComponent<MeshFilter>().mesh = mPlattform;
 
-        createPlattform(2, 0.2f, 4);
+        createPlattform(2.5f, 0.2f, 4);
         //322, 3, 18
 
         Plattform2 = Instantiate(goPlattform, new Vector3(316, 3.8f, 21), goPlattform.transform.rotation);
@@ -186,8 +185,6 @@ public class AM_plattformen : MonoBehaviour
         mPlattform.RecalculateNormals();
         mPlattform.RecalculateBounds();
 
-        //colPlattform.sharedMesh = mPlattform;
-
         Renderer rendPlattform = goPlattform.GetComponent<Renderer>();
         rendPlattform.material = new Material(Shader.Find("Diffuse"));
         rendPlattform.material = MPlatte;
@@ -201,7 +198,7 @@ public class AM_plattformen : MonoBehaviour
     }
 
     
-
+    // Bewegung einzelner Plattformen nach oben
     void floatingup()
     {
         goPlattform.transform.position = Vector3.Lerp(goPlattform.transform.position, new Vector3(322 + randX1, 3 + randY1, 18 + randZ1), Time.deltaTime * randDelta);
@@ -211,6 +208,7 @@ public class AM_plattformen : MonoBehaviour
         Plattform5.transform.position = Vector3.Lerp(Plattform5.transform.position, new Vector3(295 + randX5, 4.8f + randY5, 26 + randZ5), Time.deltaTime * randDelta);
     }
 
+    // Bewegung einzelner Plattformen nach unten
     void floatingdown()
     {
         goPlattform.transform.position = Vector3.Lerp(goPlattform.transform.position, new Vector3(322, 3, 18), Time.deltaTime * .7f);
@@ -223,29 +221,36 @@ public class AM_plattformen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-
-        if (timer > waitTime && moving == false)
+        if (timestop == false)
         {
-            floatingdown();
-            if (timer > 10)
+            timer += Time.deltaTime;
+
+            /* Wenn die Plattform sich nicht bewegt und der Timer größer als waitTime
+             * dann bewegt sich die Plattform nach unten und sonst bewegt es sich nach oben
+             * zusätztlich wird dann randDelta auf eine neue Randomzahl gesetzt um bei floatingup()
+             * eine zufällige höhe zu erreichen
+             */
+            if (timer > waitTime && moving == false)
             {
-                timer = 0;
-                moving = true;
+                floatingdown();
+                if (timer > 10)
+                {
+                    timer = 0;
+                    moving = true;
+                }
+
             }
-
-        } else 
-        {
-            
-            floatingup();
-
-            if (timer > 5)
+            else
             {
-                randDelta = Random.Range(0.4f, 0.9f);
-               
-                moving = false;
+                floatingup();
+
+                if (timer > 5)
+                {
+                    randDelta = Random.Range(0.4f, 0.9f);
+
+                    moving = false;
+                }
             }
         }
-
     }
 }

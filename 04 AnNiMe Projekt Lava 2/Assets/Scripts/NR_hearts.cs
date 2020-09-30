@@ -15,8 +15,8 @@ public class NR_hearts : MonoBehaviour
     public List<Vector3> herzVerticies;
     public List<Vector3> herzNormals;
     public List<GameObject> herzlist;
-    public List<int> herzFaces; 
-    public List<Vector2> uv; 
+    public List<int> herzFaces;
+    public List<Vector2> uv;
 
     // über GUI zugewiesen:
     public Material rot;
@@ -41,28 +41,30 @@ public class NR_hearts : MonoBehaviour
         createherz(0, 5, 0);
 
         // bei dem Boot:
-        createherz(5, 3, 65); 
+        createherz(3.5f, 4.5f, 65);
+
+        // auf der kleinen Insel bei dem Boot:
+        createherz(27.5f, 6, 62);  
 
         // bei der kleinen Insel:
-        createherz(2, 6, 100); 
+        createherz(2, 6, 100);
 
         // neben dem kleinen Hügel:
-        createherz(-8, 6, 146); 
+        createherz(-8, 6, 146);
 
-        // beim kleinen Hügel:
-        createherz(6, 6, 150); 
+        // beim kleinen Hügel (nach Checkpoint):
+        createherz(7, 6, 155);
 
         // auf großem Hügel:
-        createherz(40, 23, 132); 
-        createherz(37, 22, 118); 
-        
+        createherz(40, 23, 132);
+        createherz(37, 22, 118);
     }
 
 
     private Vector3 getNormal(Vector3 a, Vector3 b, Vector3 c)
     {
         Vector3 ba = new Vector3(b.x, b.y, b.z);
-        Vector3 ca = new Vector3(b.x, b.y, b.z); 
+        Vector3 ca = new Vector3(b.x, b.y, b.z);
         ba = b - a;
         ca = c - a;
         return (Vector3.Cross(ba, ca));
@@ -89,11 +91,11 @@ public class NR_hearts : MonoBehaviour
         herzFaces.Add(0);
         herzFaces.Add(3);
         herzFaces.Add(2);
-       
+
         uv.Add(new Vector2(1.0f, 1.0f));
         uv.Add(new Vector2(0.0f, 1.0f));
         uv.Add(new Vector2(0.0f, 0.0f));
-        uv.Add(new Vector2(1.0f, 0.0f)); 
+        uv.Add(new Vector2(1.0f, 0.0f));
     }
 
 
@@ -104,15 +106,15 @@ public class NR_hearts : MonoBehaviour
         Vector3 c = new Vector3(-1.0f, -1.0f, 0.0f) + position;
         Vector3 d = new Vector3(1.0f, -1.0f, 0.0f) + position;
 
-        createFace(a, b, c, d);       
+        createFace(a, b, c, d);
     }
 
 
     void createherz(float x, float y, float z)
-    { 
+    {
         Vector3 position = new Vector3(x, y, z);
         herz = new GameObject();
-        herz.name = "Herz";     
+        herz.name = "Herz";
         herz.AddComponent<MeshFilter>();
         herz.AddComponent<MeshRenderer>();
 
@@ -131,27 +133,32 @@ public class NR_hearts : MonoBehaviour
         uv = new List<Vector2>();
 
         // Herz erzeugen:
-        createCube(position); 
+        createCube(position);
 
         herzMesh.vertices = herzVerticies.ToArray();
-        herzMesh.triangles = herzFaces.ToArray(); 
+        herzMesh.triangles = herzFaces.ToArray();
         herzMesh.normals = herzNormals.ToArray();
         herzMesh.uv = uv.ToArray();
 
         herz.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         herz.transform.position = new Vector3(300, 0, 20);
         herz.transform.Rotate(0, -90, 0);
-        
+
         // Collider:
         collHerz = herz.AddComponent<MeshCollider>();
         collHerz.sharedMesh = herz.GetComponent<MeshFilter>().mesh;
         //Destroy(herz.GetComponent<MeshCollider>());
         collHerz.convex = true;
         collHerz.isTrigger = true;
-        
+
         herzlist.Add(herz);
+
+        AudioSource audioSource = herz.AddComponent<AudioSource>();
+        var audioClip = Resources.Load<AudioClip>("Sounds/herz");
+        audioSource.clip = audioClip;
+        audioSource.volume = 0.1f;
     }
-  
+
 
     // Update is called once per frame
     void Update()

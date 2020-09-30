@@ -9,6 +9,9 @@ TagManager:
   - destinyBoot
   - himmel
   - boot2
+  - destinyBoot2
+  - knopf2
+  - knopf1
   layers:
   - Default
   - TransparentFX

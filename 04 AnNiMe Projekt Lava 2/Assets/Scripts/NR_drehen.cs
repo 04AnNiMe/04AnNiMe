@@ -11,12 +11,12 @@ public class NR_drehen : MonoBehaviour
     public GameObject drehCubeFuenf;
     public GameObject drehCubeSechs;
     public GameObject drehCubeSieben;
+    public GameObject drehCubeAcht;
     public Texture steintextur;
     public GameObject Player;
 
     // // Geschwindigkeit:
     // private float time = 0.5f;
-
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +77,7 @@ public class NR_drehen : MonoBehaviour
         drehCubeFuenf = GameObject.CreatePrimitive(PrimitiveType.Cube);
         drehCubeFuenf.name = "sich drehender Stein 05";   
         drehCubeFuenf.transform.localScale = new Vector3(4, 3, 4);
-        drehCubeFuenf.transform.position = new Vector3(171.0f, 3, 180.5f);
+        drehCubeFuenf.transform.position = new Vector3(170.0f, 3, 182.5f);
        
         // Material:
         Renderer rendf = drehCubeFuenf.GetComponent<Renderer>();   
@@ -90,12 +90,25 @@ public class NR_drehen : MonoBehaviour
         drehCubeSechs = GameObject.CreatePrimitive(PrimitiveType.Cube);
         drehCubeSechs.name = "sich drehender Stein 06";   
         drehCubeSechs.transform.localScale = new Vector3(4, 3, 4);
-        drehCubeSechs.transform.position = new Vector3(158.5f, 3, 182.5f);
+        drehCubeSechs.transform.position = new Vector3(157.5f, 3, 182.5f);
        
         // Material:
         Renderer rends = drehCubeSechs.GetComponent<Renderer>();   
         rends.material = new Material(Shader.Find("Diffuse"));
         rends.material.SetTexture("_MainTex", steintextur);
+
+
+
+        // achter Cube:
+        drehCubeAcht = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        drehCubeAcht.name = "sich drehender Stein 08";   
+        drehCubeAcht.transform.localScale = new Vector3(4, 3, 4);
+        drehCubeAcht.transform.position = new Vector3(157.5f, 3, 187.5f);
+       
+        // Material:
+        Renderer renda = drehCubeAcht.GetComponent<Renderer>();   
+        renda.material = new Material(Shader.Find("Diffuse"));
+        renda.material.SetTexture("_MainTex", steintextur);
 
 
 

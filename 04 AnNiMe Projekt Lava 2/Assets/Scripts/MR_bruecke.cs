@@ -6,6 +6,7 @@ public class MR_bruecke : MonoBehaviour
 {
     Mesh mesh;
     GameObject bridge;
+    GameObject allBridge;
 
     public Texture texture;
 
@@ -24,49 +25,24 @@ public class MR_bruecke : MonoBehaviour
 
     float time;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
+
+        //Hier Anzahl der Bretter auswählen:
+        int anzahl = 7;
+
         vertices = new List<Vector3>();    
         faces = new List<int>();
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
+        
+        allBridge = new GameObject("GesamteBridge");  
 
-        bridge = new GameObject("bridge");  
- 
-        bridge.AddComponent<MeshFilter>();     
-        bridge.AddComponent<MeshRenderer>();  
-
-        mesh = new Mesh();  
-                         
-        bridge.GetComponent<MeshFilter>().mesh = mesh; 
-
-        Renderer rend = bridge.GetComponent<Renderer>();   
-        rend.material = new Material(Shader.Find("Diffuse"));
-        rend.material.mainTexture = texture;
-
-        createBridge(7);
-        bridge.transform.Translate(268.26f, 7.96f, 309.25f);
-        bridge.transform.Rotate(0, -82.68f, 0);
-        bridge.transform.localScale = new Vector3(1.0f,2.2f,2.42f);
-        MeshCollider mc = bridge.AddComponent<MeshCollider>();
-        mc.convex = true;
-        mc.convex = false;
-
-        mesh.vertices = vertices.ToArray();         
-        mesh.normals = normals.ToArray();
-        mesh.triangles = faces.ToArray();
-        mesh.uv = uvs.ToArray();
-    }
-
-    void createBridge(int anzahlBretter)
-    {
         Vector3 position;
-        for(int i=0; i<anzahlBretter; i++){
+        for(int i=0; i<anzahl; i++){
             x=x+1.5f;   //abstand
-            if(i<=anzahlBretter/2){
+            if(i<=anzahl/2){
                 y-=0.3f;
             } else {
                 y+=0.3f;
@@ -74,7 +50,13 @@ public class MR_bruecke : MonoBehaviour
             position = new Vector3(0, y, x);
             createBrett(position);
         }
+
+        allBridge.transform.Translate(268.26f, 7.96f, 309.25f);
+        allBridge.transform.Rotate(0, -82.68f, 0);
+        allBridge.transform.localScale = new Vector3(1.0f,2.2f,2.42f);
+
     }
+
     void createBrett(Vector3 position)
     {
         a = new Vector3(3.0f, 0.0f, 1.0f)+position;
@@ -94,6 +76,28 @@ public class MR_bruecke : MonoBehaviour
         createFaces(a, b, f, e);
         createFaces(d, a, e, h);
         createFaces(b, c, g, f);
+
+        bridge = new GameObject("bridge");  
+ 
+        bridge.AddComponent<MeshFilter>();     
+        bridge.AddComponent<MeshRenderer>();  
+
+        mesh = new Mesh();  
+                         
+        bridge.GetComponent<MeshFilter>().mesh = mesh; 
+
+        Renderer rend = bridge.GetComponent<Renderer>();   
+        rend.material = new Material(Shader.Find("Diffuse"));
+        rend.material.mainTexture = texture;
+
+        MeshCollider mc = bridge.AddComponent<MeshCollider>();
+
+        bridge.transform.parent = allBridge.transform;
+
+        mesh.vertices = vertices.ToArray();         
+        mesh.normals = normals.ToArray();
+        mesh.triangles = faces.ToArray();
+        mesh.uv = uvs.ToArray();
     }
 
     Vector3 createNormals(Vector3 a, Vector3 b, Vector3 c)
@@ -121,22 +125,14 @@ public class MR_bruecke : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // time += Time.deltaTime;
-        // float speed = 1.0f;
 
-        // while(time > 3.0f)
-        // {
-        //     time += Time.deltaTime;
-        //     Debug.Log("x");
-        //     bridge.transform.position -= Vector3.right * speed;
-            
-        //     if(time == 6.0f){
-        //         time = 0.0f;
-        //     }
-        // }
-
-        // Debug.Log("z");
-        // bridge.transform.position += Vector3.right * speed;
-       
     }
+
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.name == "bridge")
+    //     {
+    //         Debug.Log("hop");
+    //     }
+    // }
 }

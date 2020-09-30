@@ -9,6 +9,7 @@ public class MR_carott : MonoBehaviour
     GameObject karotte;
     GameObject gruen;
     GameObject empty;
+    GameObject allCarrots;
 
     MeshCollider mc;
     CapsuleCollider cc;
@@ -29,7 +30,6 @@ public class MR_carott : MonoBehaviour
     int y = 0;
     Vector3 normale;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -42,26 +42,33 @@ public class MR_carott : MonoBehaviour
         normals2 = new List<Vector3>();
         uvs2 = new List<Vector2>();
 
-        //Stage1 start und höhle
+        allCarrots = new GameObject("allCarrots");
+
+        //start und höhle
         createCarott(331, 6, 16);
         createCarott(281, 10, 28);
         createCarott(266, 10, 27);
         createCarott(259, 10, 26);
 
-        //Stage2 erste Insel incl zusatzinsel
+        //erste Insel incl zusatzinsel
         createCarott(166, 7, 25);
         createCarott(205, 7, 58);
         createCarott(211, 7, 61);
         createCarott(158, 7, 26);
-        createCarott(141, 7, 25);
+        createCarott(141, 7, 30);
         createCarott(135, 9, 36);
 
-        //Stage3 oben
+        //oben am Berg
         createCarott(127, 20, 54);
         createCarott(112, 19, 56);
-        createCarott(101, 16, 56);
+        createCarott(101, 18, 56);
 
-        //Stage4 insel kurve
+        //ganz oben
+        createCarott(133, 34, 78);
+        createCarott(120, 32, 75);
+        createCarott(104, 33, 75);
+
+        //insel kurve
         createCarott(96, 7, 30);
         createCarott(84, 7, 29);
         createCarott(60, 7, 34);
@@ -71,9 +78,68 @@ public class MR_carott : MonoBehaviour
         createCarott(59, 7, 119);
         createCarott(67, 7, 138);
 
-        //Stage5 rollende steine 1
+        //rollende steine 1
         createCarott(67, 6, 157);
         createCarott(78, 6, 149);
+
+        //ninas insel
+        createCarott(78, 9, 170);
+        createCarott(94, 8, 185);
+        createCarott(94, 8, 207);
+        createCarott(97, 8, 230);
+        createCarott(120, 8, 211);
+        createCarott(136, 8, 191);
+
+        //rollende steine 2
+        createCarott(170, 7, 188);
+        createCarott(159, 7, 183);
+
+        //Labyrinth
+        createCarott(187, 10, 182);
+        createCarott(195, 10, 182);
+        createCarott(198, 10, 192);
+        createCarott(206, 10, 199);
+        createCarott(213, 10, 187);
+        createCarott(213, 11, 163);
+        createCarott(200, 10, 170);
+        createCarott(225, 10, 170);
+        createCarott(240, 10, 153);
+        createCarott(240, 10, 190);
+        createCarott(232, 10, 199);
+        createCarott(246, 10, 217);
+        createCarott(253, 10, 196);
+        createCarott(265, 10, 183);
+        createCarott(275, 10, 202);
+        createCarott(275, 10, 219);
+        createCarott(260, 9, 171);
+        createCarott(266, 10, 151);
+        createCarott(281, 10, 156);
+        createCarott(253, 8, 155);
+        createCarott(296, 10, 148);
+        createCarott(287, 10, 139);
+        createCarott(283, 10, 179);
+        createCarott(297, 10, 186);
+        createCarott(315, 8, 181);
+        createCarott(249, 6, 256);
+        createCarott(252, 6, 264);
+        createCarott(249, 6, 260);
+
+        //Mini Insel 1
+        createCarott(333, 8, 261);
+        createCarott(333, 10, 273);
+        createCarott(328, 9, 287);
+        createCarott(318, 9, 300);
+        createCarott(284, 9, 311);
+        createCarott(270, 10, 314);
+        createCarott(253, 8, 313);
+
+        //Mini Insel 2
+        createCarott(239, 10, 315);
+        createCarott(225, 8, 316);
+        createCarott(211, 9, 315);
+        createCarott(195, 9, 312);
+        createCarott(180, 9, 312);
+        createCarott(166, 9, 313);
 
     }
 
@@ -196,9 +262,10 @@ public class MR_carott : MonoBehaviour
         createOrange();
         createGreen();
 
-        empty = new GameObject("KarottenEmpty");
+        empty = new GameObject("Karotte");
         gruen.transform.parent = empty.transform;
         karotte.transform.parent = empty.transform;
+        empty.transform.parent = allCarrots.transform;
 
         mesh.vertices = vertices.ToArray();         
         mesh.normals = normals.ToArray();
@@ -219,13 +286,18 @@ public class MR_carott : MonoBehaviour
         cc.isTrigger = true;
 
         cc.center = new Vector3(-0.26f, 2.6f, -0.09f);
-        cc.height = 11.59f;
-        cc.radius = 1.35f;
+        cc.height = 15.09f;
+        cc.radius = 3.2f;
+
+        AudioSource audioSource = empty.AddComponent<AudioSource>();
+        var audioClip = Resources.Load<AudioClip>("Sounds/chew");
+        audioSource.clip = audioClip;
+        audioSource.volume = 0.3f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        empty.transform.Rotate(0, 1, 0);
+        //empty.transform.Rotate(0, 1, 0);
     }
 }

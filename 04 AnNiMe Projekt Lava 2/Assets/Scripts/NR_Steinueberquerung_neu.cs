@@ -48,7 +48,6 @@ public class NR_Steinueberquerung_neu : MonoBehaviour
         colcube = Cube.AddComponent<BoxCollider>();
         colcube.isTrigger = true;
 
-
         aCube = Cube.AddComponent<MeshCollider>();
         aCube.GetComponent<MeshFilter>().mesh = mesh;
 

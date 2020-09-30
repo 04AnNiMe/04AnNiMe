@@ -28,8 +28,8 @@ public class AMcameraMovement : MonoBehaviour
     public float hOrbitSmooth = 150;
     
     private string ORBIT_HORIZONTAL_SNAP = "OrbitHorizontalSnap";
-    private string ORBIT_HORIZONTAL = "OrbitHorizontal";                        //Kann auch auf Mouse X umgestellt werden oder OrbitHorizontal
-    private string ORBIT_VERTICAL = "OrbitVertical";                          //Kann auch auf Mouse Y umgestellt werden oder OrbitVertical
+    private string ORBIT_HORIZONTAL = "OrbitHorizontal";                        // Kann auch auf Mouse X umgestellt werden oder OrbitHorizontal
+    private string ORBIT_VERTICAL = "OrbitVertical";                            // Kann auch auf Mouse Y umgestellt werden oder OrbitVertical
     private string ZOOM = "Mouse ScrollWheel";
 
     [System.Serializable]
@@ -46,7 +46,7 @@ public class AMcameraMovement : MonoBehaviour
     Vector3 destination = Vector3.zero;
     Vector3 adjustedDestionation = Vector3.zero;    //NEW
     Vector3 camVel = Vector3.zero;                  //NEW
-    AMcharacterMovement charController;
+    //AMcharacterMovement charController;
     float vOrbitInput;
     float hOrbitInput;
     float zoomInput;
@@ -75,19 +75,19 @@ public class AMcameraMovement : MonoBehaviour
     {
         target = t;
 
-        if (target != null)
-        {
-            if (target.GetComponent<AMcharacterMovement>())
-            {
-                charController = target.GetComponent<AMcharacterMovement>();
-            } else
-            {
-                Debug.LogError("The camera's target needs a character controller");
-            }
-        } else
-        {
-            Debug.LogError("Your camera needs a target.");
-        }
+        //if (target != null)
+        //{
+        //    if (target.GetComponent<AMcharacterMovement>())
+        //    {
+        //        charController = target.GetComponent<AMcharacterMovement>();
+        //    } else
+        //    {
+        //        Debug.LogError("The camera's target needs a character controller");
+        //    }
+        //} else
+        //{
+        //    Debug.LogError("Your camera needs a target.");
+        //}
     }
 
     void GetInput()
