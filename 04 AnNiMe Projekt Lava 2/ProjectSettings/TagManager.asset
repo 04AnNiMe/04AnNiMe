@@ -12,6 +12,7 @@ TagManager:
   - destinyBoot2
   - knopf2
   - knopf1
+  - kugeltrigger
   layers:
   - Default
   - TransparentFX

@@ -10,7 +10,6 @@ public class MR_AudioManager : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         source.Stop();
-    
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -18,5 +17,4 @@ public class MR_AudioManager : MonoBehaviour
         source.Play();
 
     }
-
 }

@@ -51,7 +51,6 @@ public class MR_BootCollision : MonoBehaviour
             knopf.GetComponent<Renderer>().material.color = Color.yellow;
             bootScript.empty.transform.position = new Vector3(251.0f, 2.17f, 25.0f);
             richtung = 0;
-
         }
     }
 

@@ -61,12 +61,13 @@ public class MR_carott : MonoBehaviour
         //oben am Berg
         createCarott(127, 20, 54);
         createCarott(112, 19, 56);
-        createCarott(101, 18, 56);
+        createCarott(120, 17, 53);
+        createCarott(104, 19, 56);
 
         //ganz oben
         createCarott(133, 34, 78);
-        createCarott(120, 32, 75);
-        createCarott(104, 33, 75);
+        createCarott(116, 32, 75);
+        createCarott(93, 32, 74);
 
         //insel kurve
         createCarott(96, 7, 30);

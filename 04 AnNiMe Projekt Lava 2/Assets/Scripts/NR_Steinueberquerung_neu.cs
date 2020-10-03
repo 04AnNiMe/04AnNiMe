@@ -133,11 +133,11 @@ public class NR_Steinueberquerung_neu : MonoBehaviour
         Cube.transform.position = new Vector3(70, 2, 140);
 
         // BoxCollider:
-        ccube.size = new Vector3(4.25f, 4.0f, 4.75f);
-        ccube.center = new Vector3(2, 0.11f, 1.25f);
+        ccube.size = new Vector3(4.25f, 4.0f, 4.5f);
+        ccube.center = new Vector3(2, 0.11f, 1.9f);
 
-        colcube.size = new Vector3(4.25f, 0.1f, 4.75f);
-        colcube.center = new Vector3(2, 2.4f, 1.25f);
+        colcube.size = new Vector3(4.25f, 0.1f, 4.5f);
+        colcube.center = new Vector3(2, 2.4f, 1.9f);
 
         // Verbinden mit Script:
         Cube.AddComponent<AM_charHolder>();

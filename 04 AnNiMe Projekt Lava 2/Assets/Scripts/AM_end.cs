@@ -13,6 +13,7 @@ public class AM_end : MonoBehaviour
     public NR_gui guiLink;
     public GameObject jumpSound;
     public GameObject backgroundMusic;
+    //public GameObject goldenCarrot;
 
     public InputField NameInputField;
     public Button BtnSave;
@@ -30,7 +31,6 @@ public class AM_end : MonoBehaviour
     void Start()
     {
         guiLink = GameObject.Find("NR_GuiEmpty").GetComponent<NR_gui>();
-        
 
         //Dem Button die Funktion SaveAll() zuweisen
         BtnSave.onClick.AddListener(delegate
@@ -49,7 +49,6 @@ public class AM_end : MonoBehaviour
         ScoreCarrots.text = PlayerPrefs.GetString("SaveCarrots");
         ScoreLife.text = PlayerPrefs.GetString("SaveLife");
 
-        
     }
 
     public void SaveAll()
@@ -85,20 +84,24 @@ public class AM_end : MonoBehaviour
     {
         //Debug.Log(this.name + " berührt " + other.gameObject.name);
 
-        //Beim Triggern die int Werte in Strings umwandeln und übergeben
-        countCarrots.text = carrots.ToString();
-        countHearts.text = hearts.ToString();
-
-        end = true;
+        //if (other.gameObject == goldenCarrot)
+        //{
+            //Beim Triggern die int Werte in Strings umwandeln und übergeben
+            countCarrots.text = carrots.ToString();
+            countHearts.text = hearts.ToString();
+            Debug.Log(this.name + " berührt " + other.gameObject.name);
+            end = true;
+        //}
     }
 
     private void Update()
     {
-            jumpSound = GameObject.Find("JumpSound");
-            backgroundMusic = GameObject.Find("Hintergrundmusik");
+        jumpSound = GameObject.Find("JumpSound");
+        backgroundMusic = GameObject.Find("Hintergrundmusik");
 
         if (hearts == 0 || end)
         {
+
             jumpSound.SetActive(false);
             backgroundMusic.SetActive(false);
         }

@@ -23,16 +23,27 @@ public class MR_bruecke : MonoBehaviour
     float x = 0.0f;
     float y = 0.0f;
 
-    float time;
-
     // Start is called before the first frame update
     void Start()
     {
 
-        //Hier Anzahl der Bretter auswählen:
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Anzahl der Bretter eingeben: (Mind. 5)
         int anzahl = 7;
 
-        vertices = new List<Vector3>();    
+        //Länge der Brücke eingeben:
+        float laenge = 17.5f;
+
+        //Startpunkt eingeben:
+        float punktX = 268.26f;
+        float punktY = 7.96f;
+        float punktZ = 309.25f;
+
+        //Rotation eingeben:
+        float rot = -82.68f;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        vertices = new List<Vector3>();     
         faces = new List<int>();
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
@@ -41,7 +52,7 @@ public class MR_bruecke : MonoBehaviour
 
         Vector3 position;
         for(int i=0; i<anzahl; i++){
-            x=x+1.5f;   //abstand
+            x=x+1.5f; //festgelegter abstand zw Brettern
             if(i<=anzahl/2){
                 y-=0.3f;
             } else {
@@ -51,9 +62,11 @@ public class MR_bruecke : MonoBehaviour
             createBrett(position);
         }
 
-        allBridge.transform.Translate(268.26f, 7.96f, 309.25f);
-        allBridge.transform.Rotate(0, -82.68f, 0);
-        allBridge.transform.localScale = new Vector3(1.0f,2.2f,2.42f);
+        float breite = laenge/anzahl; //dynamische Breite der Platten
+
+        allBridge.transform.Translate(punktX, punktY, punktZ);
+        allBridge.transform.Rotate(0, rot, 0);
+        allBridge.transform.localScale = new Vector3(1.0f, 2.2f, breite);
 
     }
 
@@ -127,12 +140,5 @@ public class MR_bruecke : MonoBehaviour
     {
 
     }
-
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.gameObject.name == "bridge")
-    //     {
-    //         Debug.Log("hop");
-    //     }
-    // }
+    
 }

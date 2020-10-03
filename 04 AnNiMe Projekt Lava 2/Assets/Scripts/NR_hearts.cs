@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Code für Herzchen mit Testspielfigur:
+// Herzchen sollen immer nur von einer Seite zu sehen sein. 
 public class NR_hearts : MonoBehaviour
 {
     public GameObject character;

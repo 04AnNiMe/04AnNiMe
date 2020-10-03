@@ -85,12 +85,6 @@ public class MR_Sounds : MonoBehaviour
             empty3.gameObject.GetComponent<AudioSource>().Play();
         }
 
-        //  if (other.gameObject.tag == "destinyBoot" || 
-        //      other.gameObject.tag == "destinyBoot2" ) 
-        
-        // {
-        //     Debug.Log("shut up");
-        // }
 
         if (other.gameObject.name == "GoldenCarrott")
         {
@@ -99,9 +93,8 @@ public class MR_Sounds : MonoBehaviour
             Destroy(other.gameObject, 5.0f);
         }
 
-        if(other.gameObject.tag == "knopf1" || other.gameObject.tag == "knopf2" )
+        if(other.gameObject.tag == "knopf1" || other.gameObject.tag == "knopf2" || other.gameObject.name == "NR_Cylinder")
         {
-            //Debug.Log("beeep");
             other.gameObject.GetComponent<AudioSource>().Play();
 
         }

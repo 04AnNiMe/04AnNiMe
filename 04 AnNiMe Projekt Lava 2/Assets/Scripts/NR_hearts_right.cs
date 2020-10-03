@@ -21,7 +21,6 @@ public class NR_hearts_right : MonoBehaviour
     public Material rot;
     public Texture herzchen;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -148,6 +147,11 @@ public class NR_hearts_right : MonoBehaviour
         collHerz.isTrigger = true;
 
         herzlist.Add(herz);
+
+        AudioSource audioSource = herz.AddComponent<AudioSource>();
+        var audioClip = Resources.Load<AudioClip>("Sounds/herz");
+        audioSource.clip = audioClip;
+        audioSource.volume = 0.1f;
     }
   
 
