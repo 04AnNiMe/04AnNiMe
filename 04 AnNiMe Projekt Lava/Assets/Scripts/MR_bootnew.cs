@@ -8,7 +8,7 @@ public class MR_bootnew : MonoBehaviour
     Mesh mesh2;
     GameObject boat;
     GameObject fahne;
-    GameObject empty;
+    public GameObject empty;
 
     public Texture texture;
     public Texture texture2;
@@ -28,22 +28,14 @@ public class MR_bootnew : MonoBehaviour
 
     Vector3 normale;
 
-    //ColliderZeug:
-    public Rigidbody rbBoot;
-    public BoxCollider bootCollider;
-        public Rigidbody rbCube;
-
-    GameObject snakee; //steuerungsobjekt (test)
+    Rigidbody rb;
+    BoxCollider cc;
+    BoxCollider bc;
  
 
     // Start is called before the first frame update
     void Start()
     {
-        //Boden
-        GameObject ground = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        ground.transform.localScale = new Vector3(-10.0f*2,0.1f,10.0f*2);
-        ground.transform.Translate(-3,0,-3);
-
         //listen initialisieren
         vertices = new List<Vector3>();    
         faces = new List<int>();
@@ -60,7 +52,8 @@ public class MR_bootnew : MonoBehaviour
         boat.AddComponent<MeshRenderer>(); 
         mesh = new Mesh();  
         boat.GetComponent<MeshFilter>().mesh = mesh; 
-
+        //boat.tag = "boot";
+        
         //Renderer Boot
         Renderer rend = boat.GetComponent<Renderer>();   
         rend.material = new Material(Shader.Find("Diffuse"));
@@ -82,9 +75,14 @@ public class MR_bootnew : MonoBehaviour
         createFahne();
 
         //Beide unter ein empty legen
-        empty = new GameObject("Boot");
+        empty = new GameObject("EmptyBoot");
         boat.transform.parent = empty.transform;
         fahne.transform.parent = empty.transform;
+        empty.AddComponent<MeshFilter>();
+        empty.tag = "boot";
+        empty.AddComponent<AM_charHolder>();
+
+        // empty.AddComponent<MeshRenderer>();  
 
         //To-Array
         mesh.vertices = vertices.ToArray();         
@@ -96,30 +94,21 @@ public class MR_bootnew : MonoBehaviour
         mesh2.triangles = faces2.ToArray();
         mesh2.uv = uvs2.ToArray();
 
-        //Collider-Zeug
-        snakee = GameObject.CreatePrimitive(PrimitiveType.Cube); //testobjekt
-        snakee.name = "Cube";
-        snakee.transform.Translate(0,1,4);
+        //Collider
+        cc = empty.AddComponent<BoxCollider>();
+        bc = empty.AddComponent<BoxCollider>();
 
-        bootCollider = empty.AddComponent<BoxCollider>();
-        rbBoot = empty.AddComponent<Rigidbody>();
-        rbBoot.isKinematic = false;
+        cc.isTrigger = true;
 
-       // cubeCollider = snakee.AddComponent<BoxCollider>();
-        rbCube = snakee.AddComponent<Rigidbody>();
-        rbCube.isKinematic = true;
+        bc.size = new Vector3(4.11f, 1.0f, 1.38f);
+        bc.center = new Vector3(0, 0.45f, 0);
 
+        cc.size = new Vector3(4.11f, 1, 1.38f);
+        cc.center = new Vector3(0, 0.8f, 0);
+       
+        empty.transform.position = new Vector3(251.0f, 2.17f, 25.0f);
+        empty.transform.localScale = new Vector3(2.5f,2.5f,2.5f);
     }
-    //Was passiert bei einer Collision:
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "Cube")
-        {
-            Debug.Log(this.name+ "has a onTriggerEnter with: " +other.gameObject.name);
-            Destroy(other);
-        }
-    }
-    //
 
     void createBoat()
     {
@@ -226,16 +215,6 @@ public class MR_bootnew : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Steuerung:
-       snakee.transform.position += snakee.transform.localRotation * new Vector3(0.01f, 0, 0);
-
-        if(Input.GetKeyDown(KeyCode.A)) {
-            snakee.transform.position += snakee.transform.localRotation * new Vector3(0.001f, 0, 0);
-            snakee.transform.rotation *= Quaternion.AngleAxis(-90, Vector3.up);
-        }
-
-        if(Input.GetKeyDown(KeyCode.D)) {
-            snakee.transform.rotation *= Quaternion.AngleAxis(90, Vector3.up);
-        }
+    
     }
 }

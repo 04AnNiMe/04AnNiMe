@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - boot
+  - lavaball
+  - destinyBoot
+  - himmel
+  - boot2
+  - destinyBoot2
+  - knopf2
+  - knopf1
+  - kugeltrigger
   layers:
   - Default
   - TransparentFX
@@ -13,9 +22,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Lava
+  - Ground
+  - Player
   - 
   - 
   - 

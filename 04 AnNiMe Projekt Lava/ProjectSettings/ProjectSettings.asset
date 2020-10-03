@@ -653,6 +653,10 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Build: 1
+    Collab: 1
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -666,10 +670,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: e4b325e0-da69-4026-bbd7-32b252f9c8ff
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: 04 AnNiMe Projekt Lava
+  organizationId: 04-anime
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

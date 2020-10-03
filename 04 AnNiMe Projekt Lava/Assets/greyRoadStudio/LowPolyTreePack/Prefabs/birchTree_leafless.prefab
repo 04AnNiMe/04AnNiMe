@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4630278680922556}
   - component: {fileID: 33678087506648804}
   - component: {fileID: 23463164656403728}
-  - component: {fileID: 64465819217667424}
+  - component: {fileID: 7551670250958015127}
+  - component: {fileID: 7804820506698786174}
   m_Layer: 0
-  m_Name: birchTree_leafless
+  m_Name: FixedbirchTree_leafless
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,8 +81,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &64465819217667424
-MeshCollider:
+--- !u!136 &7551670250958015127
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,7 +91,25 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 05bac68c5ab8b3d4a89f1030377162ab, type: 3}
+  m_Radius: 0.19253439
+  m_Height: 3.824347
+  m_Direction: 1
+  m_Center: {x: 0.03612393, y: 1.6388009, z: 0.023544252}
+--- !u!205 &7804820506698786174
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983694637467298}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0
+    fadeTransitionWidth: 0
+    renderers: []
+  m_Enabled: 1

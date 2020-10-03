@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class carott : MonoBehaviour
+public class MR_carott : MonoBehaviour
 {
     Mesh mesh;
     Mesh mesh2;
     GameObject karotte;
     GameObject gruen;
     GameObject empty;
+    GameObject allCarrots;
+
+    MeshCollider mc;
+    CapsuleCollider cc;
 
     public Texture texture;
     public Texture texture2;
@@ -17,7 +21,7 @@ public class carott : MonoBehaviour
     List<int> faces;     
     List<Vector3> normals;   
     List<Vector2> uvs; 
-     List<Vector3> vertices2; 
+    List<Vector3> vertices2; 
     List<int> faces2;     
     List<Vector3> normals2;   
     List<Vector2> uvs2;      
@@ -25,7 +29,6 @@ public class carott : MonoBehaviour
     int z = 0;
     int y = 0;
     Vector3 normale;
-
 
     // Start is called before the first frame update
     void Start()
@@ -39,51 +42,109 @@ public class carott : MonoBehaviour
         normals2 = new List<Vector3>();
         uvs2 = new List<Vector2>();
 
-        karotte = new GameObject("carott");  
-        gruen = new GameObject("grün");  
- 
-        karotte.AddComponent<MeshFilter>();     
-        karotte.AddComponent<MeshRenderer>();  
+        allCarrots = new GameObject("allCarrots");
 
-        gruen.AddComponent<MeshFilter>();     
-        gruen.AddComponent<MeshRenderer>();  
+        //start und höhle
+        createCarott(331, 6, 16);
+        createCarott(281, 10, 28);
+        createCarott(266, 10, 27);
+        createCarott(259, 10, 26);
 
-        mesh = new Mesh();  
-        mesh2 = new Mesh();                           
-                         
-        karotte.GetComponent<MeshFilter>().mesh = mesh; 
-        gruen.GetComponent<MeshFilter>().mesh = mesh2;  
+        //erste Insel incl zusatzinsel
+        createCarott(166, 7, 25);
+        createCarott(205, 7, 58);
+        createCarott(211, 7, 61);
+        createCarott(158, 7, 26);
+        createCarott(141, 7, 30);
+        createCarott(135, 9, 36);
 
-        Renderer rend = karotte.GetComponent<Renderer>();   
-        rend.material = new Material(Shader.Find("Diffuse"));
-        rend.material.mainTexture = texture;
+        //oben am Berg
+        createCarott(127, 20, 54);
+        createCarott(112, 19, 56);
+        createCarott(120, 17, 53);
+        createCarott(104, 19, 56);
 
-        Renderer rend2 = gruen.GetComponent<Renderer>();   
-        rend2.material = new Material(Shader.Find("Diffuse"));
-        rend2.material.mainTexture = texture2;
+        //ganz oben
+        createCarott(133, 34, 78);
+        createCarott(116, 32, 75);
+        createCarott(93, 32, 74);
 
-        createCarott();
-        createGreen();
+        //insel kurve
+        createCarott(96, 7, 30);
+        createCarott(84, 7, 29);
+        createCarott(60, 7, 34);
+        createCarott(51, 7, 49);
+        createCarott(53, 7, 74);
+        createCarott(51, 7, 95);
+        createCarott(59, 7, 119);
+        createCarott(67, 7, 138);
 
-        empty = new GameObject();
-        gruen.transform.parent = empty.transform;
-        karotte.transform.parent = empty.transform;
+        //rollende steine 1
+        createCarott(67, 6, 157);
+        createCarott(78, 6, 149);
 
-        empty.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
-        empty.transform.Rotate(200, 0, 0);
+        //ninas insel
+        createCarott(78, 9, 170);
+        createCarott(94, 8, 185);
+        createCarott(94, 8, 207);
+        createCarott(97, 8, 230);
+        createCarott(120, 8, 211);
+        createCarott(136, 8, 191);
 
-        mesh.vertices = vertices.ToArray();         
-        mesh.normals = normals.ToArray();
-        mesh.triangles = faces.ToArray();
-        mesh.uv = uvs.ToArray();
-        mesh2.vertices = vertices2.ToArray();         
-        mesh2.normals = normals2.ToArray();
-        mesh2.triangles = faces2.ToArray();
-        mesh2.uv = uvs2.ToArray();
+        //rollende steine 2
+        createCarott(170, 7, 188);
+        createCarott(159, 7, 183);
+
+        //Labyrinth
+        createCarott(187, 10, 182);
+        createCarott(195, 10, 182);
+        createCarott(198, 10, 192);
+        createCarott(206, 10, 199);
+        createCarott(213, 10, 187);
+        createCarott(213, 11, 163);
+        createCarott(200, 10, 170);
+        createCarott(225, 10, 170);
+        createCarott(240, 10, 153);
+        createCarott(240, 10, 190);
+        createCarott(232, 10, 199);
+        createCarott(246, 10, 217);
+        createCarott(253, 10, 196);
+        createCarott(265, 10, 183);
+        createCarott(275, 10, 202);
+        createCarott(275, 10, 219);
+        createCarott(260, 9, 171);
+        createCarott(266, 10, 151);
+        createCarott(281, 10, 156);
+        createCarott(253, 8, 155);
+        createCarott(296, 10, 148);
+        createCarott(287, 10, 139);
+        createCarott(283, 10, 179);
+        createCarott(297, 10, 186);
+        createCarott(315, 8, 181);
+        createCarott(249, 6, 256);
+        createCarott(252, 6, 264);
+        createCarott(249, 6, 260);
+
+        //Mini Insel 1
+        createCarott(333, 8, 261);
+        createCarott(333, 10, 273);
+        createCarott(328, 9, 287);
+        createCarott(318, 9, 300);
+        createCarott(284, 9, 311);
+        createCarott(270, 10, 314);
+        createCarott(253, 8, 313);
+
+        //Mini Insel 2
+        createCarott(239, 10, 315);
+        createCarott(225, 8, 316);
+        createCarott(211, 9, 315);
+        createCarott(195, 9, 312);
+        createCarott(180, 9, 312);
+        createCarott(166, 9, 313);
 
     }
 
-    void createCarott()
+    void createOrange()
     {
         a = new Vector3(1.0f, 0.0f, 1.0f);
         b = new Vector3(-1.0f, 0.0f, 1.0f);
@@ -125,10 +186,6 @@ public class carott : MonoBehaviour
         createFaces(l, k, g, h);
         createFaces(j, i, e, f);
         createFaces(k, j, f, g);
-
-       // karotte.transform.Rotate(0, 0, rotation);
-        // karotte.transform.position = new Vector3();
-        // karotte.transform.localScale = new Vector3();
     }
 
     void createGreen()
@@ -178,9 +235,70 @@ public class carott : MonoBehaviour
         y+=4;  
     }
 
+    void createCarott(int x, int y, int z){
+
+        karotte = new GameObject("carott");  
+        gruen = new GameObject("grün");  
+ 
+        karotte.AddComponent<MeshFilter>();     
+        karotte.AddComponent<MeshRenderer>();  
+
+        gruen.AddComponent<MeshFilter>();     
+        gruen.AddComponent<MeshRenderer>();  
+
+        mesh = new Mesh();  
+        mesh2 = new Mesh();                           
+                         
+        karotte.GetComponent<MeshFilter>().mesh = mesh; 
+        gruen.GetComponent<MeshFilter>().mesh = mesh2;  
+
+        Renderer rend = karotte.GetComponent<Renderer>();   
+        rend.material = new Material(Shader.Find("Diffuse"));
+        rend.material.mainTexture = texture;
+
+        Renderer rend2 = gruen.GetComponent<Renderer>();   
+        rend2.material = new Material(Shader.Find("Diffuse"));
+        rend2.material.mainTexture = texture2;
+
+        createOrange();
+        createGreen();
+
+        empty = new GameObject("Karotte");
+        gruen.transform.parent = empty.transform;
+        karotte.transform.parent = empty.transform;
+        empty.transform.parent = allCarrots.transform;
+
+        mesh.vertices = vertices.ToArray();         
+        mesh.normals = normals.ToArray();
+        mesh.triangles = faces.ToArray();
+        mesh.uv = uvs.ToArray();
+        mesh2.vertices = vertices2.ToArray();         
+        mesh2.normals = normals2.ToArray();
+        mesh2.triangles = faces2.ToArray();
+        mesh2.uv = uvs2.ToArray();
+
+        empty.transform.localScale = new Vector3(0.2f,0.2f,0.2f);
+        empty.transform.Rotate(200, 0, 0);
+        empty.transform.position = new Vector3(x, y, z);
+        Quaternion rotation = Quaternion.Euler(200f, 0f, 0f);
+
+        mc = empty.AddComponent<MeshCollider>();
+        cc = empty.AddComponent<CapsuleCollider>();
+        cc.isTrigger = true;
+
+        cc.center = new Vector3(-0.26f, 2.6f, -0.09f);
+        cc.height = 15.09f;
+        cc.radius = 3.2f;
+
+        AudioSource audioSource = empty.AddComponent<AudioSource>();
+        var audioClip = Resources.Load<AudioClip>("Sounds/chew");
+        audioSource.clip = audioClip;
+        audioSource.volume = 0.3f;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        empty.transform.Rotate(0, 1, 0);
+        //empty.transform.Rotate(0, 1, 0);
     }
 }

@@ -5,52 +5,52 @@ using UnityEngine;
 public class AMcameraMovement : MonoBehaviour
 {
     public Transform target;
-    /*public float lookSmooth = 0.03f;
-    //public Vector3 offsetFromTarget = new Vector3(0, 6, -8);
-    public float xRotation;
-    public float yRotation;
-    //public float xTilt = 10;
-    */
+        
+    public Vector3 targetPosOffset = new Vector3(0, 3.4f, 0);
+    public float lookSmooth = 100f;
+    public float distanceFromTarget = -8;
+    public float zoomSmooth = 100;
+    public float maxZoom = -2;
+    public float minZoom = -15;
+    public bool smoothFollow = true;
+    public float smooth = 0.05f;
+
+    [HideInInspector]
+    public float newDistance = -8; //set by zoom input
+    [HideInInspector]
+    public float adujstmentDistance = -8;
+
+    public float xRotation = -20;
+    public float yRotation = -180;
+    public float maxXRotation = 25;
+    public float minXRotation = -85;
+    public float vOrbitSmooth = 150;
+    public float hOrbitSmooth = 150;
+    
+    private string ORBIT_HORIZONTAL_SNAP = "OrbitHorizontalSnap";
+    private string ORBIT_HORIZONTAL = "OrbitHorizontal";                        // Kann auch auf Mouse X umgestellt werden oder OrbitHorizontal
+    private string ORBIT_VERTICAL = "OrbitVertical";                            // Kann auch auf Mouse Y umgestellt werden oder OrbitVertical
+    private string ZOOM = "Mouse ScrollWheel";
 
     [System.Serializable]
-    public class PositionSettings
+    public class DebugSettings
     {
-        public Vector3 targetPosOffset = new Vector3(0, 3.4f, 0);
-        public float lookSmooth = 100f;
-        public float distanceFromTarget = -8;
-        public float zoomSmooth = 100;
-        public float maxZoom = -2;
-        public float minZoom = -15;
+        public bool drawDesiredCollisionLines = true;
+        public bool drawAdjustedCollisionLines = true;
     }
 
-    [System.Serializable]
-    public class OrbitSettings
-    {
-        public float xRotation = -20;
-        public float yRotation = -180;
-        public float maxXRotation = 25;
-        public float minXRotation = -85;
-        public float vOrbitSmooth = 150;
-        public float hOrbitSmooth = 150;
-    }
-
-    [System.Serializable]
-    public class InputSettings
-    {
-        public string ORBIT_HORIZONTAL_SNAP = "OrbitHorizontalSnap";
-        public string ORBIT_HORIZONTAL = "OrbitHorizontal";             //Kann auch auf Mouse X umgestellt werden oder OrbitHorizontal
-        public string ORBIT_VERTICAL = "OrbitVertical";                 //Kann auch auf Mouse Y umgestellt werden oder OrbitVertical
-        public string ZOOM = "Mouse ScrollWheel";
-    }
-
-    public PositionSettings position = new PositionSettings();
-    public OrbitSettings orbit = new OrbitSettings();
-    public InputSettings input = new InputSettings();
+    public DebugSettings debug = new DebugSettings();
+    public CollisionHandlder collision = new CollisionHandlder();
 
     Vector3 targetPos = Vector3.zero;
     Vector3 destination = Vector3.zero;
-    AMcharacterMovement charController;
-    float vOrbitInput, hOrbitInput, zoomInput, hOrbitSnapInput;
+    Vector3 adjustedDestionation = Vector3.zero;    //NEW
+    Vector3 camVel = Vector3.zero;                  //NEW
+    //AMcharacterMovement charController;
+    float vOrbitInput;
+    float hOrbitInput;
+    float zoomInput;
+    float hOrbitSnapInput;
     //float rotateVel = 0;
 
     // Start is called before the first frame update
@@ -58,37 +58,44 @@ public class AMcameraMovement : MonoBehaviour
     {
         SetCameraTarget(target);
 
-        targetPos = target.position + position.targetPosOffset;
-        destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation, 0) * -Vector3.forward * position.distanceFromTarget;
+        targetPos = target.position + targetPosOffset;
+        destination = Quaternion.Euler(xRotation, yRotation, 0) * -Vector3.forward * distanceFromTarget;
         destination += targetPos;
         transform.position = destination;
+
+        MoveToTarget();
+
+        collision.Initialize(Camera.main);
+        collision.UpdateCameraClipPoints(transform.position, transform.rotation, ref collision.adjustedCameraClipPoints);
+        collision.UpdateCameraClipPoints(destination, transform.rotation, ref collision.desiredCameraClipPoints);
+
     }
 
     void SetCameraTarget(Transform t)
     {
         target = t;
 
-        if (target != null)
-        {
-            if (target.GetComponent<AMcharacterMovement>())
-            {
-                charController = target.GetComponent<AMcharacterMovement>();
-            } else
-            {
-                Debug.LogError("The camera's target needs a character controller");
-            }
-        } else
-        {
-            Debug.LogError("Your camera needs a target.");
-        }
+        //if (target != null)
+        //{
+        //    if (target.GetComponent<AMcharacterMovement>())
+        //    {
+        //        charController = target.GetComponent<AMcharacterMovement>();
+        //    } else
+        //    {
+        //        Debug.LogError("The camera's target needs a character controller");
+        //    }
+        //} else
+        //{
+        //    Debug.LogError("Your camera needs a target.");
+        //}
     }
 
     void GetInput()
     {
-        vOrbitInput = Input.GetAxisRaw(input.ORBIT_VERTICAL);
-        hOrbitInput = Input.GetAxisRaw(input.ORBIT_HORIZONTAL);
-        hOrbitSnapInput = Input.GetAxisRaw(input.ORBIT_HORIZONTAL_SNAP);
-        zoomInput = Input.GetAxisRaw(input.ZOOM);
+        vOrbitInput = Input.GetAxisRaw(ORBIT_VERTICAL);
+        hOrbitInput = Input.GetAxisRaw(ORBIT_HORIZONTAL);
+        hOrbitSnapInput = Input.GetAxisRaw(ORBIT_HORIZONTAL_SNAP);
+        zoomInput = Input.GetAxisRaw(ZOOM);
     }
 
     void Update()
@@ -99,63 +106,204 @@ public class AMcameraMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         //movint
         MoveToTarget();
         //rotating
         LookAtTarget();
+
+        collision.UpdateCameraClipPoints(transform.position, transform.rotation, ref collision.adjustedCameraClipPoints);
+        collision.UpdateCameraClipPoints(destination, transform.rotation, ref collision.desiredCameraClipPoints);
+
+        //draw debug lines
+        for(int i = 0; i < 5; i++)
+        {
+            if (debug.drawDesiredCollisionLines)
+            {
+                Debug.DrawLine(targetPos, collision.desiredCameraClipPoints[i], Color.white);
+            }
+            if (debug.drawAdjustedCollisionLines)
+            {
+                Debug.DrawLine(targetPos, collision.adjustedCameraClipPoints[i], Color.green);
+            }
+        }
+
+        collision.CheckColliding(targetPos); //using raycasts here
+        adujstmentDistance = collision.GetAdjustedDistanceWithRayFrom(targetPos);
     }
 
     void MoveToTarget()
     {
-        targetPos = target.position + position.targetPosOffset;
-        destination = Quaternion.Euler(orbit.xRotation, orbit.yRotation + target.eulerAngles.y, 0) * -Vector3.forward * position.distanceFromTarget;
-        //destination = charController.TargetRotation * offsetFromTarget;         //testen
+        targetPos = target.position + targetPosOffset;
+        destination = Quaternion.Euler(xRotation, yRotation + target.eulerAngles.y, 0) * -Vector3.forward * distanceFromTarget;
         destination += targetPos; 
-        transform.position = destination;
+        //transform.position = destination;
+
+        if (collision.colliding)
+        {
+            adjustedDestionation = Quaternion.Euler(xRotation, yRotation + target.eulerAngles.y, 0) * Vector3.forward * adujstmentDistance;
+            adjustedDestionation += targetPos;
+
+            if (smoothFollow)
+            {
+                //use smooth damp function
+                transform.position = Vector3.SmoothDamp(transform.position, adjustedDestionation, ref camVel, smooth);
+            }
+            else
+            {
+                transform.position = adjustedDestionation;
+            }
+        }
+        else
+        {
+            if (smoothFollow)
+            {
+                //use smooth damp function
+                transform.position = Vector3.SmoothDamp(transform.position, destination, ref camVel, smooth);
+            }
+            else
+            {
+                transform.position = destination;
+            }
+        }
     }
 
     void LookAtTarget()
     {
         Quaternion targetRotation = Quaternion.LookRotation(targetPos - transform.position);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, position.lookSmooth * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, lookSmooth * Time.deltaTime);
 
-        /*float eulerYAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, target.eulerAngles.y, ref rotateVel, lookSmooth);
-        transform.rotation = Quaternion.Euler(transform.eulerAngles.x, eulerYAngle, 0);*/
     }
 
     void OrbitTarget()
     {
         if( hOrbitSnapInput > 0)
         {
-            orbit.yRotation = -180;
+            yRotation = -180;
         }
 
-        orbit.xRotation += -vOrbitInput * orbit.vOrbitSmooth * Time.deltaTime;
-        orbit.yRotation += -hOrbitInput * orbit.hOrbitSmooth * Time.deltaTime;
+        xRotation += -vOrbitInput * vOrbitSmooth * Time.deltaTime;
+        yRotation += -hOrbitInput * hOrbitSmooth * Time.deltaTime;
 
-        if (orbit.xRotation > orbit.maxXRotation)
+        if (xRotation > maxXRotation)
         {
-            orbit.xRotation = orbit.maxXRotation;
+            xRotation = maxXRotation;
         }
-        if (orbit.xRotation < orbit.minXRotation)
+        if (xRotation < minXRotation)
         {
-            orbit.xRotation = orbit.minXRotation;
+            xRotation = minXRotation;
         }
     }
 
     void ZoomInOnTarget()
     {
-        position.distanceFromTarget += zoomInput * position.zoomSmooth * Time.deltaTime;
+        distanceFromTarget += zoomInput * zoomSmooth * Time.deltaTime;
 
-        if (position.distanceFromTarget > position.maxZoom)
+        if (distanceFromTarget > maxZoom)
         {
-            position.distanceFromTarget = position.maxZoom;
+            distanceFromTarget = maxZoom;
         }
-        if (position.distanceFromTarget < position.minZoom)
+        if (distanceFromTarget < minZoom)
         {
-            position.distanceFromTarget = position.minZoom;
+            distanceFromTarget = minZoom;
+        }
+    }
+
+    [System.Serializable]
+    public class CollisionHandlder
+    {
+        public LayerMask collisionLayer;
+
+        [HideInInspector]
+        public bool colliding = false;
+        [HideInInspector]
+        public Vector3[] adjustedCameraClipPoints;
+        [HideInInspector]
+        public Vector3[] desiredCameraClipPoints;
+
+        Camera camera;
+
+        public void Initialize(Camera cam)
+        {
+            camera = cam;
+            adjustedCameraClipPoints = new Vector3[5];
+            desiredCameraClipPoints = new Vector3[5];
+        }
+
+        public void UpdateCameraClipPoints(Vector3 cameraPosition, Quaternion atRotation, ref Vector3[] intoArray)
+        {
+            if (!camera)
+                return;
+
+            //clear the contents of intoArray
+            intoArray = new Vector3[5];
+
+            float z = camera.nearClipPlane;
+            float x = Mathf.Tan(camera.fieldOfView / 3.41f);        //kann man etwas verändern
+            float y = x / camera.aspect;
+
+            //top left
+            intoArray[0] = (atRotation * new Vector3(-x, y, z)) + cameraPosition;    //added and rotated the point relative to camera
+            //top right
+            intoArray[1] = (atRotation * new Vector3(x, y, z)) + cameraPosition;    //added and rotated the point relative to camera
+            //bottom left
+            intoArray[2] = (atRotation * new Vector3(-x, -y, z)) + cameraPosition;    //added and rotated the point relative to camera
+            //bottom right
+            intoArray[3] = (atRotation * new Vector3(x, -y, z)) + cameraPosition;    //added and rotated the point relative to camera
+            //cameras position
+            intoArray[4] = cameraPosition - camera.transform.forward;
+        }
+
+        bool CollisionDetectedAtClipPoints(Vector3[] clipPoints, Vector3 fromPosition)
+        {
+            for (int i = 0; i < clipPoints.Length; i++)
+            {
+                Ray ray = new Ray(fromPosition, clipPoints[i] - fromPosition);
+                float distance = Vector3.Distance(clipPoints[i], fromPosition);
+                if(Physics.Raycast(ray, distance, collisionLayer))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public float GetAdjustedDistanceWithRayFrom(Vector3 from)
+        {
+            float distance = -1;
+
+            for(int i = 0; i < desiredCameraClipPoints.Length; i++)
+            {
+                Ray ray = new Ray(from, desiredCameraClipPoints[i] - from);
+                RaycastHit hit;
+                if(Physics.Raycast(ray, out hit))
+                {
+                    if (distance == -1)
+                        distance = hit.distance;
+                    else
+                        if (hit.distance < distance)
+                            distance = hit.distance;
+                }
+            }
+
+            if (distance == -1)
+                return 0;
+            else
+                return distance;
+        }
+
+        public void CheckColliding(Vector3 targetPosition)
+        {
+            if (CollisionDetectedAtClipPoints(desiredCameraClipPoints, targetPosition))
+            {
+                colliding = true;
+            }
+            else
+            {
+                colliding = false;
+            }
         }
     }
 }

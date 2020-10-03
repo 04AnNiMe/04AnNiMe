@@ -1,63 +1,70 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+// Herzchen sollen immer nur von einer Seite zu sehen sein. 
 public class NR_hearts : MonoBehaviour
 {
-    GameObject herz;
-    Mesh herzMesh;
-   // Rididbody rb;
-   
-    static Vector3 a, b, c, d;
-    List<Vector3> herzVerticies;
-    List<Vector3> herzNormals;
-    List<GameObject> herzlist;
-    List<int> herzFaces; 
+    public GameObject character;
+    public GameObject herz;
+    public Mesh herzMesh;
+    MeshCollider collHerz;
 
-    public List<Vector2> uv; 
+    static Vector3 a, b, c, d;
+    public List<Vector3> herzVerticies;
+    public List<Vector3> herzNormals;
+    public List<GameObject> herzlist;
+    public List<int> herzFaces;
+    public List<Vector2> uv;
 
     // über GUI zugewiesen:
     public Material rot;
     public Texture herzchen;
 
-   
-    // Lavaplane:
-    GameObject lava;
-
-    // über Gui zugewiesen:
-    public Texture lavatextur;
-    
-
     // Start is called before the first frame update
     void Start()
     {
         herzlist = new List<GameObject>();
-        //createherz(x, y(höhe), z);
-        createherz(0, 4, 0);
-        createherz(2, 4, 5);
-        createherz(8, 4, 10);
-        createherz(15, 4, 20);
-        createherz(-30, 4, -10);
+        character = GameObject.Find("RabbitWarrior01");
 
-        // rb = herz.AddComponent<Rigidbody>();
-        //rb.isKinematic = true;
+        // Position der Herzen hier zuweisen:
+        // links/rechts, höhe, vorne/hinten von Spielstart
 
-        // Lavaplatte:
-        lava = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        lava.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-        lava.transform.localScale += new Vector3(5.0f, 0.0f, 5.0f);
+        // beim Start zum testen:
+        // createherz(0, 5, -21);
 
-        // Material:
-        Renderer lavamaterial = lava.GetComponent<Renderer>();
-        lavamaterial.material = new Material(Shader.Find("Diffuse"));
-        lavamaterial.material.SetTexture("_MainTex", lavatextur);
+        // bei der Insel in der Ecke:
+        createherz(192, 7, 0);
+
+        // bei den AM_Plattformen:
+        createherz(0, 5, 0);
+
+        // bei dem Boot:
+        createherz(3.5f, 4.5f, 65);
+
+        // auf der kleinen Insel bei dem Boot:
+        createherz(27.5f, 6, 62);  
+
+        // bei der kleinen Insel:
+        createherz(2, 6, 100);
+
+        // neben dem kleinen Hügel:
+        createherz(-8, 6, 146);
+
+        // beim kleinen Hügel (nach Checkpoint):
+        createherz(7, 6, 155);
+
+        // auf großem Hügel:
+        createherz(40, 23, 132);
+        createherz(37, 22, 118);
     }
-    
+
 
     private Vector3 getNormal(Vector3 a, Vector3 b, Vector3 c)
     {
         Vector3 ba = new Vector3(b.x, b.y, b.z);
-        Vector3 ca = new Vector3(b.x, b.y, b.z); 
+        Vector3 ca = new Vector3(b.x, b.y, b.z);
         ba = b - a;
         ca = c - a;
         return (Vector3.Cross(ba, ca));
@@ -84,33 +91,30 @@ public class NR_hearts : MonoBehaviour
         herzFaces.Add(0);
         herzFaces.Add(3);
         herzFaces.Add(2);
-       
+
         uv.Add(new Vector2(1.0f, 1.0f));
         uv.Add(new Vector2(0.0f, 1.0f));
         uv.Add(new Vector2(0.0f, 0.0f));
-        uv.Add(new Vector2(1.0f, 0.0f)); 
+        uv.Add(new Vector2(1.0f, 0.0f));
     }
 
-    // Position von Spieler hier hin und in Update lookat auf Spieler machen
 
     void createCube(Vector3 position)
     {
-        float hoehe = 2;
         Vector3 a = new Vector3(1.0f, 1.0f, 0.0f) + position;
         Vector3 b = new Vector3(-1.0f, 1.0f, 0.0f) + position;
         Vector3 c = new Vector3(-1.0f, -1.0f, 0.0f) + position;
         Vector3 d = new Vector3(1.0f, -1.0f, 0.0f) + position;
 
-        createFace(a, b, c, d);       
+        createFace(a, b, c, d);
     }
 
 
     void createherz(float x, float y, float z)
-    { 
+    {
         Vector3 position = new Vector3(x, y, z);
-        Debug.Log(position);
         herz = new GameObject();
-        herz.name = "herz";     
+        herz.name = "Herz";
         herz.AddComponent<MeshFilter>();
         herz.AddComponent<MeshRenderer>();
 
@@ -122,34 +126,48 @@ public class NR_hearts : MonoBehaviour
         Renderer herzRenderer = herz.GetComponent<MeshRenderer>();
         herzRenderer.material = rot;
 
+        // Herz-Listen:
         herzVerticies = new List<Vector3>();
         herzNormals = new List<Vector3>();
         herzFaces = new List<int>();
         uv = new List<Vector2>();
 
-        createCube(position); // Herz erzeugen
+        // Herz erzeugen:
+        createCube(position);
 
         herzMesh.vertices = herzVerticies.ToArray();
-        herzMesh.triangles = herzFaces.ToArray(); 
+        herzMesh.triangles = herzFaces.ToArray();
         herzMesh.normals = herzNormals.ToArray();
         herzMesh.uv = uv.ToArray();
 
-        herz.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        herz.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        herz.transform.position = new Vector3(300, 0, 20);
+        herz.transform.Rotate(0, -90, 0);
+
+        // Collider:
+        collHerz = herz.AddComponent<MeshCollider>();
+        collHerz.sharedMesh = herz.GetComponent<MeshFilter>().mesh;
+        //Destroy(herz.GetComponent<MeshCollider>());
+        collHerz.convex = true;
+        collHerz.isTrigger = true;
+
         herzlist.Add(herz);
-        Debug.Log(herzlist.Count);
+
+        AudioSource audioSource = herz.AddComponent<AudioSource>();
+        var audioClip = Resources.Load<AudioClip>("Sounds/herz");
+        audioSource.clip = audioClip;
+        audioSource.volume = 0.1f;
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        // for-Schleife für alle Herzen in der liste
-        for(int i = 0; i < herzlist.Count; i++ ){
-        //herz.transform.rotation *= Quaternion.AngleAxis(-90.0f, Vector3.up);
-        herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
-        }
+        // for-Schleife für alle Herzen in der Liste
+        // for(int i = 0; i < herzlist.Count; i++ ){
+        //     herzlist[i].transform.LookAt(new Vector3(0, 0, -10));
+        // }
 
-        //lookat ausgehend von jedem Herzen auf den Spieler 
-        //position von jedem Herzen über Liste übergeben
-
+        transform.LookAt(character.transform.position);
     }
 }

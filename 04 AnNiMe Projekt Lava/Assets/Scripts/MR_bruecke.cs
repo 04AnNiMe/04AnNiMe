@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bruecke : MonoBehaviour
+public class MR_bruecke : MonoBehaviour
 {
     Mesh mesh;
-    //Mesh mesh2;
     GameObject bridge;
-    //GameObject seile;
-    //GameObject empty;
+    GameObject allBridge;
 
     public Texture texture;
-   // public Texture texture2;
 
     List<Vector3> vertices; 
     List<int> faces;     
     List<Vector3> normals;   
     List<Vector2> uvs; 
-
-    // List<Vector3> vertices2; 
-    // List<int> faces2;     
-    // List<Vector3> normals2;   
-    // List<Vector2> uvs2;    
 
     Vector3 a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t;  
     int z = 0;
@@ -31,68 +23,37 @@ public class bruecke : MonoBehaviour
     float x = 0.0f;
     float y = 0.0f;
 
-
     // Start is called before the first frame update
     void Start()
     {
-        vertices = new List<Vector3>();    
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Anzahl der Bretter eingeben: (Mind. 5)
+        int anzahl = 7;
+
+        //Länge der Brücke eingeben:
+        float laenge = 17.5f;
+
+        //Startpunkt eingeben:
+        float punktX = 268.26f;
+        float punktY = 7.96f;
+        float punktZ = 309.25f;
+
+        //Rotation eingeben:
+        float rot = -82.68f;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        vertices = new List<Vector3>();     
         faces = new List<int>();
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
-        // vertices2 = new List<Vector3>();    
-        // faces2 = new List<int>();
-        // normals2 = new List<Vector3>();
-        // uvs2 = new List<Vector2>();
+        
+        allBridge = new GameObject("GesamteBridge");  
 
-        bridge = new GameObject("bridge");  
-        //gruen = new GameObject("grün");  
- 
-        bridge.AddComponent<MeshFilter>();     
-        bridge.AddComponent<MeshRenderer>();  
-
-        // gruen.AddComponent<MeshFilter>();     
-        // gruen.AddComponent<MeshRenderer>();  
-
-        mesh = new Mesh();  
-        //mesh2 = new Mesh();                           
-                         
-        bridge.GetComponent<MeshFilter>().mesh = mesh; 
-        //gruen.GetComponent<MeshFilter>().mesh = mesh2;  
-
-        Renderer rend = bridge.GetComponent<Renderer>();   
-        rend.material = new Material(Shader.Find("Diffuse"));
-        rend.material.mainTexture = texture;
-
-        // Renderer rend2 = gruen.GetComponent<Renderer>();   
-        // rend2.material = new Material(Shader.Find("Diffuse"));
-        // rend2.material.mainTexture = texture2;
-
-        createBridge(13);
-        // createGreen();
-
-        // empty = new GameObject();
-        // gruen.transform.parent = empty.transform;
-        // karotte.transform.parent = empty.transform;
-
-        // empty.transform.localScale = new Vector3(0.3f,0.3f,0.3f);
-        // empty.transform.Rotate(200, 0, 0);
-
-        mesh.vertices = vertices.ToArray();         
-        mesh.normals = normals.ToArray();
-        mesh.triangles = faces.ToArray();
-        mesh.uv = uvs.ToArray();
-        // mesh2.vertices = vertices2.ToArray();         
-        // mesh2.normals = normals2.ToArray();
-        // mesh2.triangles = faces2.ToArray();
-        // mesh2.uv = uvs2.ToArray();
-    }
-
-    void createBridge(int anzahlBretter)
-    {
         Vector3 position;
-        for(int i=0; i<anzahlBretter; i++){
-            x=x+1.1f;
-            if(i<=anzahlBretter/2){
+        for(int i=0; i<anzahl; i++){
+            x=x+1.5f; //festgelegter abstand zw Brettern
+            if(i<=anzahl/2){
                 y-=0.3f;
             } else {
                 y+=0.3f;
@@ -100,7 +61,15 @@ public class bruecke : MonoBehaviour
             position = new Vector3(0, y, x);
             createBrett(position);
         }
+
+        float breite = laenge/anzahl; //dynamische Breite der Platten
+
+        allBridge.transform.Translate(punktX, punktY, punktZ);
+        allBridge.transform.Rotate(0, rot, 0);
+        allBridge.transform.localScale = new Vector3(1.0f, 2.2f, breite);
+
     }
+
     void createBrett(Vector3 position)
     {
         a = new Vector3(3.0f, 0.0f, 1.0f)+position;
@@ -121,7 +90,27 @@ public class bruecke : MonoBehaviour
         createFaces(d, a, e, h);
         createFaces(b, c, g, f);
 
-       // bridge.transform.position = position;
+        bridge = new GameObject("bridge");  
+ 
+        bridge.AddComponent<MeshFilter>();     
+        bridge.AddComponent<MeshRenderer>();  
+
+        mesh = new Mesh();  
+                         
+        bridge.GetComponent<MeshFilter>().mesh = mesh; 
+
+        Renderer rend = bridge.GetComponent<Renderer>();   
+        rend.material = new Material(Shader.Find("Diffuse"));
+        rend.material.mainTexture = texture;
+
+        MeshCollider mc = bridge.AddComponent<MeshCollider>();
+
+        bridge.transform.parent = allBridge.transform;
+
+        mesh.vertices = vertices.ToArray();         
+        mesh.normals = normals.ToArray();
+        mesh.triangles = faces.ToArray();
+        mesh.uv = uvs.ToArray();
     }
 
     Vector3 createNormals(Vector3 a, Vector3 b, Vector3 c)
@@ -146,24 +135,10 @@ public class bruecke : MonoBehaviour
         z+=4;  
     }
 
-    //    void createFaces2( Vector3 a, Vector3 b, Vector3 c, Vector3 d )
-    // {
-    //     vertices2.Add(a); vertices2.Add(b); vertices2.Add(c); vertices2.Add(d);       
-    //     normale = createNormals(c, b, a);
-    //     normals2.Add(normale);normals2.Add(normale);normals2.Add(normale); normals2.Add(normale);
-    //     uvs2.Add(new Vector2(0,0)); uvs2.Add(new Vector2(1,0)); uvs2.Add(new Vector2(0,1)); uvs2.Add(new Vector2(1,1)); 
-    //     faces2.Add(y);
-    //     faces2.Add(y+2);
-    //     faces2.Add(y+1);
-    //     faces2.Add(y+2);
-    //     faces2.Add(y+0);
-    //     faces2.Add(y+3);
-    //     y+=4;  
-    // }
-
     // Update is called once per frame
     void Update()
     {
-        //empty.transform.Rotate(0, 1, 0);
+
     }
+    
 }
